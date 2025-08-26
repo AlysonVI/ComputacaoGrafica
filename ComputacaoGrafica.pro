@@ -12,11 +12,13 @@ SOURCES += \
     linha.cpp \
     main.cpp \
     mainwindowalyson.cpp \
+    objeto.cpp \
     ponto.cpp
 
 HEADERS += \
     linha.h \
     mainwindowalyson.h \
+    objeto.h \
     ponto.h
 
 FORMS += \
