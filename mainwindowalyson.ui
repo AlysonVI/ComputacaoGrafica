@@ -17,14 +17,14 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>230</y>
-      <width>161</width>
-      <height>71</height>
+      <x>360</x>
+      <y>160</y>
+      <width>90</width>
+      <height>29</height>
      </rect>
     </property>
     <property name="text">
-     <string>Sair</string>
+     <string>PushButton</string>
     </property>
    </widget>
   </widget>
@@ -37,18 +37,6 @@
      <height>25</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuAAAA">
-    <property name="title">
-     <string>AAAA</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuBBBB">
-    <property name="title">
-     <string>BBBB</string>
-    </property>
-   </widget>
-   <addaction name="menuAAAA"/>
-   <addaction name="menuBBBB"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
@@ -61,12 +49,12 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>396</x>
-     <y>293</y>
+     <x>398</x>
+     <y>205</y>
     </hint>
     <hint type="destinationlabel">
-     <x>526</x>
-     <y>360</y>
+     <x>408</x>
+     <y>149</y>
     </hint>
    </hints>
   </connection>

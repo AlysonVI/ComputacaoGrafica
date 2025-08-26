@@ -10,10 +10,8 @@
 #define UI_MAINWINDOWALYSON_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
@@ -27,8 +25,6 @@ public:
     QWidget *centralwidget;
     QPushButton *pushButton;
     QMenuBar *menubar;
-    QMenu *menuAAAA;
-    QMenu *menuBBBB;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindowAlyson)
@@ -40,22 +36,15 @@ public:
         centralwidget->setObjectName("centralwidget");
         pushButton = new QPushButton(centralwidget);
         pushButton->setObjectName("pushButton");
-        pushButton->setGeometry(QRect(310, 230, 161, 71));
+        pushButton->setGeometry(QRect(360, 160, 90, 29));
         MainWindowAlyson->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindowAlyson);
         menubar->setObjectName("menubar");
         menubar->setGeometry(QRect(0, 0, 800, 25));
-        menuAAAA = new QMenu(menubar);
-        menuAAAA->setObjectName("menuAAAA");
-        menuBBBB = new QMenu(menubar);
-        menuBBBB->setObjectName("menuBBBB");
         MainWindowAlyson->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindowAlyson);
         statusbar->setObjectName("statusbar");
         MainWindowAlyson->setStatusBar(statusbar);
-
-        menubar->addAction(menuAAAA->menuAction());
-        menubar->addAction(menuBBBB->menuAction());
 
         retranslateUi(MainWindowAlyson);
         QObject::connect(pushButton, &QPushButton::clicked, MainWindowAlyson, qOverload<>(&QMainWindow::close));
@@ -66,9 +55,7 @@ public:
     void retranslateUi(QMainWindow *MainWindowAlyson)
     {
         MainWindowAlyson->setWindowTitle(QCoreApplication::translate("MainWindowAlyson", "MainWindowAlyson", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindowAlyson", "Sair", nullptr));
-        menuAAAA->setTitle(QCoreApplication::translate("MainWindowAlyson", "AAAA", nullptr));
-        menuBBBB->setTitle(QCoreApplication::translate("MainWindowAlyson", "BBBB", nullptr));
+        pushButton->setText(QCoreApplication::translate("MainWindowAlyson", "PushButton", nullptr));
     } // retranslateUi
 
 };
