@@ -1,23 +1,34 @@
-#include "mainwindowalyson.h"
-
+#include <ponto.h>
+#include <objeto.h>
+#include <mainwindowalyson.h>
 #include <QApplication>
-class Ponto{
-    float x;
-    float y;
+#include <iostream>
 
-    int cor;
+using namespace std;
 
-    ponto(){}
-    ~ponto(){}
-};
 
 int main(int argc, char *argv[])
 {
-    Ponto ponto = new Ponto();
-    Ponto.x = 2;
-    List list = new List();
     QApplication a(argc, argv);
+
+    Ponto p1(1,2);
+    Ponto p2(3,4);
+    Ponto p3(10,2);
+    Ponto p4(3,43);
+
+    Linha l1(p1,p2);
+    Linha l2(p3,p4);
+
+    Objeto o1("Reta");
+
+    o1.adicionaLinha(l1);
+    o1.adicionaLinha(l2);
+
+
+    o1.mostraLinhas();
+
     MainWindowAlyson w;
     w.show();
+
     return a.exec();
 }
