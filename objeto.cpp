@@ -18,9 +18,9 @@
     void Objeto::mostraLinhas(){
         for(int i =0; i<numLinhas; i++){
             Linha laux = vetorDeLinhas[i];
-            cout << "Linha[" << i << "] (x:" << laux.a.x
-                 << " y:" << laux.a.y << ") + " << "(x:"
-                 << laux.b.x <<" y:"<< laux.b.y <<")";
+            cout << "Linha[" << i << "] (x:" << laux.a.coordenadas[0][0]
+                 << " y:" << laux.a.coordenadas[1][0] << ") + " << "(x:"
+                 << laux.b.coordenadas[0][0] <<" y:"<< laux.b.coordenadas[1][0] <<")";
         }
     }
 
