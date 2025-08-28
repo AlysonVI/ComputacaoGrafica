@@ -16,6 +16,8 @@ int main(int argc, char *argv[])
     Ponto p3(10,2);
     Ponto p4(3,43);
 
+    //p1.mostraPonto();
+
     Linha l1(p1,p2);
     Linha l2(p3,p4);
 
