@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <ponto.h>
 #include <objeto.h>
 #include <mainwindowalyson.h>
@@ -9,6 +10,19 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
+=======
+#include "mainwindowalyson.h"
+#include "objeto.h"
+#include <QApplication>
+
+int main(int argc, char *argv[])
+{
+    Objeto objeto = new Objeto((1,2),(3,4));
+
+    objeto.revelaPontos();
+    Ponto.x = 2;
+    List list = new List();
+>>>>>>> pontos_linhas
     QApplication a(argc, argv);
 
     Ponto p1(1,2);
