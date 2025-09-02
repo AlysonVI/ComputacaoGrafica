@@ -1,16 +1,12 @@
 #ifndef LINHA_H
 #define LINHA_H
-#include <ponto.h>
 
-class Linha
-{
+#include "Drawable.h"
+
+class Linha : public Drawable {
 public:
-    Ponto a, b;
-
-    Linha();
-    Linha(Ponto a, Ponto b);
-    ~Linha();
-
+    Linha(const QString& n, const QPointF& p1, const QPointF& p2);
+    void draw(QPainter& painter) const override;
 };
 
-#endif // LINHA_H
+#endif
