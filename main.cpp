@@ -8,5 +8,6 @@ int main(int argc, char *argv[])
     MyCanvas canvas;
     MainWindow window;
     window.show();
+    //canvas.show();
     return a.exec();
 }
