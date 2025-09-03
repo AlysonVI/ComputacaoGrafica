@@ -1,8 +1,23 @@
-#include "Ponto.h"
+#include <iostream>
+#include <ponto.h>
+#include <vector>
 
-Ponto::Ponto(const QString& n, const QPointF& p)
-    : Drawable(n, ObjectType::Ponto, {p}) {}
+using namespace std;
 
-void Ponto::draw(QPainter& painter) const {
-    painter.drawPoint(points[0]);
-}
+    Ponto::Ponto(float x, float y){
+
+        this->coordenadas[0][0] = x;
+        this->coordenadas[1][0] = y;
+
+    }
+    Ponto::Ponto(){
+        this->coordenadas[0][0] = 0;
+        this->coordenadas[1][0]= 0;
+    }
+    Ponto::~Ponto(){}
+
+    void Ponto::mostraPonto(){
+
+        cout << coordenadas[0][0] << coordenadas[1][0];
+    }
+

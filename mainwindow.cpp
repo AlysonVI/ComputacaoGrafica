@@ -5,70 +5,35 @@
 #include "Polygon.h"
 #include <QPainter>
 
+// Garrafa garrafa1 = new Garrafa(40, 50);
+// display.add(garrafa1);
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    worldX= 400;
-    worldY= 400;
+    worldX= 600;
+    worldY= 600;
     setFixedSize(worldX, worldY);
 
     QPainter painter(this);
 
     painter.setViewport(0, 0, this->width(), this->height());
     painter.setWindow(-worldX / 2, worldY / 2, worldX, worldY);
-
-    offset = 100;
-
     //casinha 1
     display.add(new Polygon("quadrado", QVector<QPointF>{
-                                            {0, 200}, {100, 200},
-                                            {100, 300}, {0, 300}
+                                            {50, 200}, {150, 200},
+                                            {150, 300}, {50, 300}
                                          }));
 
     //telhado1
     display.add(new Polygon("triangulo", QVector<QPointF>{
-                                     {50, 100}, {100, 200}, {000, 200}
+                                     {250, 250}, {300, 300}, {200, 300}
                                  }));
 
-    //bandeira 1
-    display.add(new Linha("linha", QPoint(50, 100), QPoint(50, 50)));
+    display.add(new Linha("linha", QPointF(400, 200), QPointF(450, 270)));
 
-    display.add(new Polygon("quadrado", QVector<QPointF>{
-                                            {50, 75}, {50, 50},
-                                            {80, 50}, {80, 75}
-                                        }));
-
-    //bandeira 2
-    display.add(new Linha("linha", QPoint(349, 100), QPoint(349, 50)));
-
-    display.add(new Polygon("quadrado", QVector<QPointF>{
-                                            {349, 75}, {349, 50},
-                                            {379, 50}, {379, 75}
-                                        }));
-
-
-    //casinha 2
-    display.add(new Polygon("quadrado", QVector<QPointF>{
-                                            {299, 200}, {399, 200},
-                                            {399, 300}, {299, 300}
-                                        }));
-
-    //telhado 2
-    display.add(new Polygon("triangulo", QVector<QPointF>{
-                                             {349, 100}, {399, 200}, {299, 200}
-                                         }));
-
-
-    // muro
-    display.add(new Linha("linha", QPoint(100, 220), QPoint(299, 220)));
-    display.add(new Linha("linha", QPoint(100, 300), QPoint(299, 300)));
-
-    //portao
-    display.add(new Polygon("quadrado", QVector<QPointF>{
-                                            {170, 300}, {170, 250},
-                                            {230, 250}, {230, 300}
-                                        }));
+    display.add(new Ponto("ponto", QPointF(400, 400)));
 
     display.printAll();
     ui->setupUi(this);

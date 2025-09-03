@@ -1,12 +1,26 @@
 #ifndef PONTO_H
 #define PONTO_H
+#include <vector>
 
-#include "Drawable.h"
+using namespace std;
 
-class Ponto : public Drawable {
+class Ponto
+{
 public:
-    Ponto(const QString& n, const QPointF& p);
-    void draw(QPainter& painter) const override;
+
+    //O vetor de vetores de floats representa as coordenadas (x,y) escritas
+    //em matrizes M2x1; 2 linhas ; 1 coluna
+    //vector<vector<float>> coordenadas;
+    float coordenadas[2][1];
+
+
+
+
+    Ponto();
+    Ponto(float x, float y);
+    ~Ponto();
+
+    void mostraPonto();
 };
 
-#endif
+#endif // PONTO_H

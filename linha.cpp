@@ -1,8 +1,16 @@
-#include "Linha.h"
+#include "linha.h"
+#include <iostream>
 
-Linha::Linha(const QString& n, const QPointF& p1, const QPointF& p2)
-    : Drawable(n, ObjectType::Linha, {p1, p2}) {}
+using namespace std;
 
-void Linha::draw(QPainter& painter) const {
-    painter.drawLine(points[0], points[1]);
-}
+    Linha::Linha(){}
+
+    Linha::Linha(Ponto a, Ponto b){
+
+        this->a = a;
+        this->b = b;
+    }
+
+    Linha::~Linha(){}
+
+
