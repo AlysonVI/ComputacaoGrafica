@@ -1,0 +1,35 @@
+#ifndef DRAWABLE_H
+#define DRAWABLE_H
+
+
+#include <QPainter>
+
+#include <QPainter>
+#include <QVector>
+#include <QPoint>
+#include <QString>
+#include <iostream>
+#include "Ponto.h"
+
+enum class ObjectType {
+    Linha,
+    Polygon
+};
+
+class Drawable {
+protected:
+    QString nome;
+    ObjectType type;
+    QVector<Ponto> points; //Listagem de pontos (aquilo q é usado nos métodos .draw())
+public:
+    Drawable(const QString& n, ObjectType t, const QVector<Ponto>& pts);
+    virtual ~Drawable() {}
+
+    QString getNome() const { return nome; }
+    ObjectType getType() const { return type; }
+    QVector<Ponto> getPoints() const { return points; }
+    QVector<QPointF> *getQPoints();
+    virtual void draw(QPainter& painter)= 0; //draw a ser definido (implementação na herança)
+};
+
+#endif
