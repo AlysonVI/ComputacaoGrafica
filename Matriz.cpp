@@ -43,3 +43,13 @@ Matriz Matriz::operator + (Matriz m){
         return produto;
     }
 
+
+Matriz transladarObjeto(double dX, double dY) {
+    Matriz matrizTranslacao = new Matriz(3,3);
+
+    matrizTranslacao[0][0] = 1; matrizTranslacao[0][1] = 0; matrizTranslacao[0][2] = dX;
+    matrizTranslacao[1][0] = 0; matrizTranslacao[1][1] = 1; matrizTranslacao[1][2] = dY;
+    matrizTranslacao[2][0] = 0; matrizTranslacao[2][1] = 0; matrizTranslacao[2][2] = 1;
+
+    return matrizTranslacao * this->matriz;
+}
