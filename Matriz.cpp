@@ -1,40 +1,42 @@
 #include "Matriz.h"
-#include <vector>
+#include <iostream>
+
 using namespace std;
 
-    Matriz::Matriz(int& l, int& c) :
-        vector<vector<double>>(l,c) {}
+Matriz::Matriz(int l, int c) : vector<vector<double>>(l, vector<double>(c)) {}
 
-    Matriz operator * (Matriz m){
+Matriz Matriz::operator* (Matriz m){
 
-        if(this->l != m->c) {
+    if(this->size() != m[0].size()) {
             cout << "Numero de colunas da primeira matriz é diferente do numero de linhas da segunda matriz";
-            return NULL;
+            return m;
         }
-        Matriz aux(m->l, this->c);
 
-        for(int i = 0; i< this->c; i++){
-            for(int j = 0; j < this->l; j++){
-                for(int h=0; j < this->c; h++){
-                    aux[i][j] += this[i][h] * m[h][j];
+    Matriz produto(m.size(), this[0].size());
+
+        for(long unsigned int i = 0; i < this[0].size(); i++){
+            for(long unsigned int j = 0; j < this->size(); j++){
+                for(long unsigned int h = 0; j < this[0].size(); h++){
+                    produto[i][j] += (*this)[i][h] * m[h][j];
+                    cout << produto[i][j];
                 }
             }
         }
-        return aux; //retorna cópia, variavel criada é excluida ao fim da execução.
+        return produto; //retorna cópia, variavel criada é excluida ao fim da execução.
 
     }
 
 
-    Matriz operator + (Matriz m){
-        if(this->l != m->l && this->c != m->c) { //Se as matrizes não tiverem o msm tamanho fudeu!!
+Matriz Matriz::operator + (Matriz m){
+        if(this->size() != m.size() && this[0].size() != m[0].size()) { //Se as matrizes não tiverem o msm tamanho fudeu!!
             cout <<"Matrizes tem tamanhos diferentes";
         }
 
-        Matriz aux(this->l, this->c);
+        Matriz produto(this->size(), this[0].size());
 
-        for(int i = 0; i < this->l; i++){
-            for(int j = 0; j < this->c; j++){
-                aux[i][j] = this[i][j] + m[i][j];
+        for(long unsigned int i = 0; i < this->size(); i++){
+            for(long unsigned int j = 0; j < this[0].size(); j++){
+                produto[i][j] = (*this)[i][j] + m[i][j];
             }
         }
     }
