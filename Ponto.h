@@ -3,13 +3,13 @@
 
 #include <QPoint>
 #include <QPainter>
+#include <Matriz.h>
 
-class Ponto {
-    float coordenadas[3][1];
+class Ponto : public Matriz {
 public:
 
     Ponto();
-    Ponto(float x, float y);
+    Ponto(double x, double y);
     void draw(QPainter& painter) const;
     QPointF convertToQPointF();
 
