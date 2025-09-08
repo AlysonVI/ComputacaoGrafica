@@ -13,6 +13,7 @@ SOURCES += \
     Drawable.cpp \
     Implement.cpp \
     Linha.cpp \
+    Matriz.cpp \
     Polygon.cpp \
     Ponto.cpp \
     main.cpp \
@@ -23,6 +24,7 @@ HEADERS += \
     Drawable.h \
     Implement.h \
     Linha.h \
+    Matriz.h \
     Polygon.h \
     Ponto.h \
     mainwindow.h
