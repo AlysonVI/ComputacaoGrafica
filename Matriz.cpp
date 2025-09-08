@@ -30,6 +30,7 @@ Matriz Matriz::operator* (Matriz m){
 Matriz Matriz::operator + (Matriz m){
         if(this->size() != m.size() && this[0].size() != m[0].size()) { //Se as matrizes não tiverem o msm tamanho fudeu!!
             cout <<"Matrizes tem tamanhos diferentes";
+            return m;
         }
 
         Matriz produto(this->size(), this[0].size());
@@ -39,5 +40,6 @@ Matriz Matriz::operator + (Matriz m){
                 produto[i][j] = (*this)[i][j] + m[i][j];
             }
         }
+        return produto;
     }
 
