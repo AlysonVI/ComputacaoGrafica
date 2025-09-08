@@ -1,11 +1,11 @@
 #include "Ponto.h"
 
-
 Ponto::Ponto(double x, double y)
     : Matriz(3,1){
     (*this)[0][0]= x;
     (*this)[1][0]= y;
     (*this)[2][0]= 1;
+
 }
 
 QPointF Ponto::convertToQPointF(){
