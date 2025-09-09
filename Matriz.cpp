@@ -30,6 +30,7 @@ Matriz Matriz::operator* (Matriz m){
 Matriz Matriz::operator + (Matriz m){
         if(this->size() != m.size() && this[0].size() != m[0].size()) { //Se as matrizes não tiverem o msm tamanho fudeu!!
             cout <<"Matrizes tem tamanhos diferentes";
+            return m;
         }
 
         Matriz produto(this->size(), this[0].size());
@@ -39,5 +40,16 @@ Matriz Matriz::operator + (Matriz m){
                 produto[i][j] = (*this)[i][j] + m[i][j];
             }
         }
+        return produto;
     }
 
+
+void Matriz::transladarPonto(double dX, double dY) {
+    Matriz matrizTranslacao = *(new Matriz(3,3));
+
+    matrizTranslacao[0][0] = 1; matrizTranslacao[0][1] = 0; matrizTranslacao[0][2] = dX;
+    matrizTranslacao[1][0] = 0; matrizTranslacao[1][1] = 1; matrizTranslacao[1][2] = dY;
+    matrizTranslacao[2][0] = 0; matrizTranslacao[2][1] = 0; matrizTranslacao[2][2] = 1;
+
+    *this = matrizTranslacao * *this;
+}
