@@ -17,3 +17,6 @@ void DisplayFile::printAll() const{
     for(auto obj : objects)
         std::cout << "Objeto " << obj->getNome().toStdString() << "\n";
 }
+Drawable* DisplayFile::getObject(int n){
+    return objects[n];
+}

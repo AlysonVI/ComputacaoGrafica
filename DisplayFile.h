@@ -11,6 +11,7 @@ public:
     void add(Drawable* obj);
     void drawAll(QPainter& painter) const;
     void printAll() const;
+    Drawable* getObject(int n);
 };
 
 

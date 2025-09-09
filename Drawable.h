@@ -30,6 +30,7 @@ public:
     QVector<Ponto> getPoints() const { return points; }
     QVector<QPointF> *getQPoints();
     virtual void draw(QPainter& painter)= 0; //draw a ser definido (implementação na herança)
+    void transladar(double dX, double dY);
 };
 
 #endif

@@ -9,6 +9,9 @@ public:
     Matriz(int l, int c); //Construtor da matriz, l para Linha e C para colunas
     Matriz operator * (Matriz m); //operador de multiplicação de matriz
     Matriz operator + (Matriz m); //operador de soma de matriz
+    void transladarPonto(double dX, double dY);
+    void redimensionarPonto(double sX, double sY);
+    void rotacionarPonto(double ang);
 };
 
 #endif // MATRIZ_H
