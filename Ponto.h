@@ -10,7 +10,7 @@ public:
   
     Ponto(double x, double y);
     void draw(QPainter& painter) const;
-    QPointF convertToQPointF();
+    QPointF* convertToQPointF();
 
 };
 

@@ -8,8 +8,8 @@ Ponto::Ponto(double x, double y)
 
 }
 
-QPointF Ponto::convertToQPointF(){
-    return *(new QPointF((*this)[0][0], (*this)[1][0]));
+QPointF* Ponto::convertToQPointF(){
+    return (new QPointF((*this)[0][0], (*this)[1][0]));
 }
 void Ponto::draw(QPainter& painter) const {
     painter.drawPoint(*(new QPointF((*this)[0][0], (*this)[1][0])));

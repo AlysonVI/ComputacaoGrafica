@@ -11,7 +11,6 @@ CONFIG += c++17
 SOURCES += \
     DisplayFile.cpp \
     Drawable.cpp \
-    Implement.cpp \
     Linha.cpp \
     Matriz.cpp \
     Polygon.cpp \
@@ -22,7 +21,6 @@ SOURCES += \
 HEADERS += \
     DisplayFile.h \
     Drawable.h \
-    Implement.h \
     Linha.h \
     Matriz.h \
     Polygon.h \

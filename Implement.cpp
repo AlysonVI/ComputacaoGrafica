@@ -15,7 +15,7 @@ MyCanvas::MyCanvas() {
         {120, 0}, {220, 0}, {220, 100}, {120, 100}
     }));
 
-    display.printAll();
+    //display.printAll();
 }
 
 void MyCanvas::paintEvent(QPaintEvent* event) {

@@ -27,13 +27,11 @@ MainWindow::MainWindow(QWidget *parent)
             {170, 0}, {220, 100}, {120, 100}
         }));
 
-    display.getObject(4)->transladar(200,150);
+    display.getObject(4)->transladar(50, 100);
 
 
     display.printAll();
     ui->setupUi(this);
-
-
 
 }
 void MainWindow::paintEvent(QPaintEvent* event)
