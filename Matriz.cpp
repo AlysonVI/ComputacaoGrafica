@@ -9,8 +9,8 @@ Matriz::Matriz(int l, int c) : vector<vector<double>>(l, vector<double>(c)) {}
 Matriz Matriz::operator* (Matriz m){
 
     if((*this)[0].size() != m.size()) {
-            cout << "Numero de colunas da primeira matriz é diferente do numero de linhas da segunda matriz";
-            return m;
+        cout << "Numero de colunas da primeira matriz é diferente do numero de linhas da segunda matriz";
+        return m;
     }
 
     Matriz produto(this->size(), m[0].size());
@@ -24,12 +24,11 @@ Matriz Matriz::operator* (Matriz m){
     }
 
     return produto; //retorna cópia, variavel criada é excluida ao fim da execução.
-
 }
 
 Matriz Matriz::operator + (Matriz m){
     if (this->size() != m.size() || (*this)[0].size() != m[0].size()) {
-        std::cerr << "Matrizes têm tamanhos diferentes\n";
+        cout << "Matrizes têm tamanhos diferentes\n";
         return Matriz(0,0);
     }
 
@@ -41,7 +40,7 @@ Matriz Matriz::operator + (Matriz m){
         }
     }
     return soma;
-    }
+}
 
 
 void Matriz::transladarPonto(double dX, double dY) {

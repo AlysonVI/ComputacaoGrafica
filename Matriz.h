@@ -14,4 +14,4 @@ public:
     void rotacionarPonto(double ang);
 };
 
-#endif // MATRIZ_H
+#endif
