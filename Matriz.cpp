@@ -29,7 +29,7 @@ Matriz Matriz::operator* (Matriz m){
 
 Matriz Matriz::operator + (Matriz m){
     if (this->size() != m.size() || (*this)[0].size() != m[0].size()) {
-        std::cerr << "Matrizes têm tamanhos diferentes\n";
+        cout << "Matrizes têm tamanhos diferentes\n";
         return Matriz(0,0);
     }
 
@@ -41,7 +41,7 @@ Matriz Matriz::operator + (Matriz m){
         }
     }
     return soma;
-    }
+}
 
 
 void Matriz::transladarPonto(double dX, double dY) {
@@ -54,7 +54,6 @@ void Matriz::transladarPonto(double dX, double dY) {
     matrizTranslacao = matrizTranslacao * (*this);
 
     cout << matrizTranslacao[0][0] << " ";
-
     cout << matrizTranslacao[1][0] << " \n";
     (*this)[0][0]= matrizTranslacao[0][0];
     (*this)[1][0]= matrizTranslacao[1][0];
