@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
             {170, 0}, {220, 100}, {120, 100}
         }));
 
-    display.getObject(4)->transladar(50, 100);
+    display.getObject(4)->scaleObject(2, 2);
 
 
     display.printAll();
