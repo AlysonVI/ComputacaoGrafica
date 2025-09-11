@@ -26,10 +26,14 @@ MainWindow::MainWindow(QWidget *parent)
     display.add(new Polygon("rect", QVector<Ponto>{
             {170, 0}, {220, 100}, {120, 100}
         }));
-    display.add(new Polygon("rect", QVector<Ponto>{
+
+    display.add(new Polygon("new rect", QVector<Ponto>{
                                                    {120, 0}, {120, 100}, {220, 100}, {220, 0}
                                     }));
-    display.getObject(4)->transladar(-50, 100);
+
+    //display.getObject(5)->transformObject(50, 0);
+    display.getObject(5)->scaleObject(2, 2);
+
 
 
     display.printAll();

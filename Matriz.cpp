@@ -9,7 +9,9 @@ Matriz::Matriz(int l, int c) : vector<vector<double>>(l, vector<double>(c)) {}
 Matriz Matriz::operator* (Matriz m){
 
     if((*this)[0].size() != m.size()) {
+
         cout << "Numero de colunas da primeira matriz é diferente do numero de linhas da segunda matriz";
+
         return m;
     }
 
@@ -42,22 +44,36 @@ Matriz Matriz::operator + (Matriz m){
     return soma;
 }
 
+void Matriz::transformPoint(double dX, double dY) {
+    Matriz transformMatrix(3,3);
 
-void Matriz::transladarPonto(double dX, double dY) {
-    Matriz matrizTranslacao(3,3);
+    transformMatrix[0][0] = 1; transformMatrix[0][1] = 0; transformMatrix[0][2] = dX;
+    transformMatrix[1][0] = 0; transformMatrix[1][1] = 1; transformMatrix[1][2] = dY;
+    transformMatrix[2][0] = 0; transformMatrix[2][1] = 0; transformMatrix[2][2] = 1;
 
-    matrizTranslacao[0][0] = 1; matrizTranslacao[0][1] = 0; matrizTranslacao[0][2] = dX;
-    matrizTranslacao[1][0] = 0; matrizTranslacao[1][1] = 1; matrizTranslacao[1][2] = dY;
-    matrizTranslacao[2][0] = 0; matrizTranslacao[2][1] = 0; matrizTranslacao[2][2] = 1;
+    transformMatrix = transformMatrix * (*this);
 
-    matrizTranslacao = matrizTranslacao * (*this);
+    cout << "depois de transladar x: " << transformMatrix[0][0];
+    cout << " y: " << transformMatrix[1][0] << "\n";
+    (*this)[0][0]= transformMatrix[0][0];
+    (*this)[1][0]= transformMatrix[1][0];
+    (*this)[2][0]= transformMatrix[2][0];
+}
 
-    cout << matrizTranslacao[0][0] << " ";
 
-    cout << matrizTranslacao[1][0] << " \n";
-    (*this)[0][0]= matrizTranslacao[0][0];
-    (*this)[1][0]= matrizTranslacao[1][0];
-    (*this)[2][0]= matrizTranslacao[2][0];
+void Matriz::scalePoint(double sX, double sY) {
+    Matriz scaleMatrix(3,3);
 
+    scaleMatrix[0][0] = sX; scaleMatrix[0][1] = 0; scaleMatrix[0][2] = 0;
+    scaleMatrix[1][0] = 0; scaleMatrix[1][1] = sY; scaleMatrix[1][2] = 0;
+    scaleMatrix[2][0] = 0; scaleMatrix[2][1] = 0; scaleMatrix[2][2] = 1;
+
+    scaleMatrix = scaleMatrix * (*this);
+
+    //cout << scaleMatrix[0][0] << " ";
+    //cout << scaleMatrix[1][0] << " \n";
+    (*this)[0][0]= scaleMatrix[0][0];
+    (*this)[1][0]= scaleMatrix[1][0];
+    (*this)[2][0]= scaleMatrix[2][0];
 
 }

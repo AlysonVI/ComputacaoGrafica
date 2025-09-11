@@ -1,9 +1,6 @@
 #ifndef DRAWABLE_H
 #define DRAWABLE_H
 
-
-#include <QPainter>
-
 #include <QPainter>
 #include <QVector>
 #include <QPoint>
@@ -30,7 +27,15 @@ public:
     QVector<Ponto> getPoints() const { return points; }
     QVector<QPointF> *getQPoints();
     virtual void draw(QPainter& painter)= 0; //draw a ser definido (implementação na herança)
-    void transladar(double dX, double dY);
+
+    void transformObject(double dX, double dY);
+    void scaleObject(double sX, double sY);
+    void rotateObject(double ang);
+
+private:
+    vector<double>* getObjectAverage();
+    void goToOrigin(vector<double>*);
+    void returnFromOrigin(vector<double>*);
 };
 
 #endif
