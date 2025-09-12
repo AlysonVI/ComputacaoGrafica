@@ -4,6 +4,7 @@
 #include "Linha.h"
 #include "Polygon.h"
 #include <QPainter>
+#include <math.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -31,8 +32,13 @@ MainWindow::MainWindow(QWidget *parent)
                                                    {120, 0}, {120, 100}, {220, 100}, {220, 0}
                                     }));
 
-    //display.getObject(5)->transformObject(50, 0);
-    display.getObject(5)->scaleObject(2, 2);
+    display.getObject(4)->transformObject(100, 200);
+    display.getObject(4)->rotateObject(M_PI);
+    display.getObject(4)->scaleObject(0.7,0.7);
+
+    display.getObject(5)->transformObject(50, 150);
+    display.getObject(5)->rotateObject(M_PI/4);
+    display.getObject(5)->scaleObject(2,2);
 
 
 

@@ -27,7 +27,16 @@ void Drawable::scaleObject(double sX, double sY) {
         aux.scalePoint(sX, sY);
     }
     this->returnFromOrigin(avgPoint);
+}
 
+void Drawable::rotateObject(double ang) {
+    vector<double>* avgPoint= getObjectAverage();
+    this->goToOrigin(avgPoint);
+
+    for(auto& aux: points) {
+        aux.rotatePoint(ang);
+    }
+    this->returnFromOrigin(avgPoint);
 }
 
 vector<double>* Drawable::getObjectAverage() {

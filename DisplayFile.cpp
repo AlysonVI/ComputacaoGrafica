@@ -1,7 +1,7 @@
 #include "DisplayFile.h"
 
 DisplayFile::~DisplayFile(){
-    for(auto obj : objects) delete obj;
+    for(auto& obj : objects) delete obj;
 }
 
 void DisplayFile::add(Drawable* obj) {

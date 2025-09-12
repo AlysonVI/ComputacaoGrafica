@@ -70,10 +70,22 @@ void Matriz::scalePoint(double sX, double sY) {
 
     scaleMatrix = scaleMatrix * (*this);
 
-    //cout << scaleMatrix[0][0] << " ";
-    //cout << scaleMatrix[1][0] << " \n";
     (*this)[0][0]= scaleMatrix[0][0];
     (*this)[1][0]= scaleMatrix[1][0];
     (*this)[2][0]= scaleMatrix[2][0];
+}
 
+
+void Matriz::rotatePoint(double ang) {
+    Matriz rotateMatrix(3,3);
+
+    rotateMatrix[0][0] = cos(ang); rotateMatrix[0][1] = -sin(ang); rotateMatrix[0][2] = 0;
+    rotateMatrix[1][0] = sin(ang); rotateMatrix[1][1] = cos(ang); rotateMatrix[1][2] = 0;
+    rotateMatrix[2][0] = 0; rotateMatrix[2][1] = 0; rotateMatrix[2][2] = 1;
+
+    rotateMatrix = rotateMatrix * (*this);
+
+    (*this)[0][0]= rotateMatrix[0][0];
+    (*this)[1][0]= rotateMatrix[1][0];
+    (*this)[2][0]= rotateMatrix[2][0];
 }
