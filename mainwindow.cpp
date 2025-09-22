@@ -10,16 +10,16 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    worldX= 400;
-    worldY= 400;
+    worldX= 520;
+    worldY= 520;
     setFixedSize(worldX, worldY);
 
     QPainter painter(this);
 
-    painter.setViewport(0, 0, this->width(), this->height());
-    painter.setWindow(-worldX / 2, worldY / 2, worldX, worldY);
+    painter.setViewport(-worldX / 2,  worldY / 2, this->width(), this->height());
 
-    display.add(new Linha("cima", Ponto(0,0), Ponto(100,0)));
+
+    display.add(new Linha("cima", Ponto(0,0), Ponto(100,0   )));
     display.add(new Linha("direita", Ponto(100,0), Ponto(100,100)));
     display.add(new Linha("baixo", Ponto(100,100), Ponto(0,100)));
     display.add(new Linha("esquerda",  Ponto(0,100), Ponto(0,0)));
@@ -38,9 +38,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     display.getObject(5)->transformObject(50, 150);
     display.getObject(5)->rotateObject(M_PI/4);
-    display.getObject(5)->scaleObject(2,2);
+    display.getObject(5)->scaleObject(1,2);
 
 
+    painter.setWindow(-worldX / 2, worldY / 2, worldX, worldY);
 
     display.printAll();
     ui->setupUi(this);
