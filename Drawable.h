@@ -10,7 +10,8 @@
 
 enum class ObjectType {
     Linha,
-    Polygon
+    Polygon,
+    Camera
 };
 
 class Drawable {
@@ -18,6 +19,7 @@ protected:
     QString nome;
     ObjectType type;
     QVector<Ponto> points; //Listagem de pontos (aquilo q é usado nos métodos .draw())
+    QVector<Ponto> normPoints; //Pontos SCN
 public:
     Drawable(const QString& n, ObjectType t, const QVector<Ponto>& pts);
     virtual ~Drawable() {}
@@ -32,7 +34,6 @@ public:
     void scaleObject(double sX, double sY);
     void rotateObject(double ang);
 
-private:
     vector<double>* getObjectAverage();
     void goToOrigin(vector<double>*);
     void returnFromOrigin(vector<double>*);

@@ -12,6 +12,9 @@ public:
     void transformPoint(double dX, double dY);
     void scalePoint(double sX, double sY);
     void rotatePoint(double ang);
+    Matriz getTransformMatrix(double dX, double dY);
+    Matriz getScaleMatrix(double sX, double sY);
+    Matriz getRotateMatrix(double ang);
 };
 
 #endif

@@ -7,7 +7,7 @@ Drawable::Drawable(const QString& n, ObjectType t, const QVector<Ponto>& pts)
 
 QVector<QPointF>* Drawable::getQPoints(){
     QVector<QPointF> *pointerToVector= new QVector<QPointF>;
-    for(auto obj : points){
+    for(auto& obj : points){
         pointerToVector->append(*(obj.convertToQPointF()));
     }
     return pointerToVector;
