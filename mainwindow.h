@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "DisplayFile.h"
+#include "Camera.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -14,6 +15,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     DisplayFile display;
 public:
+    Camera* pToCamera;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 protected:

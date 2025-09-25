@@ -3,7 +3,6 @@
 #include "Ponto.h"
 #include "Linha.h"
 #include "Polygon.h"
-#include "Camera.h"
 #include <QPainter>
 #include <math.h>
 
@@ -16,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     setFixedSize(worldX, worldY);
 
     //painter.setViewport(-worldX,  worldY, this->width(), this->height());
-    Camera* pToCamera= new Camera("c1", QVector<Ponto>{
+    pToCamera= new Camera("c1", QVector<Ponto>{
                          {0, 0}, {0, 500}, {500, 500}, {500, 0}
                                          });
     display.add(pToCamera);
@@ -35,8 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
                                     }));
 
     pToCamera->rotateCamera(250,0);
-
-    display.getObject(0)->transformObject(250,250); //Camera
+    display.getObject(0)->scaleObject(4,4);
+    display.getObject(0)->transformObject(250,150); //Camera
 
     display.getObject(5)->transformObject(200, 200);
     //display.getObject(5)->rotateObject(M_PI);
@@ -59,6 +58,8 @@ void MainWindow::paintEvent(QPaintEvent* event) {
 
     //Matriz global(centraliza e rotaciona o mundo)
     display.applyGlobalTransform();
+
+    //QVector<Ponto> pPontosCamera= pToCamera->getPoints();
 
     //Normaliza todos os pontos para SCN eu acho
     display.triggerNormalize(500, 0,500,0); // window
