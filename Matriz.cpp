@@ -89,3 +89,51 @@ void Matriz::rotatePoint(double ang) {
     (*this)[1][0]= rotateMatrix[1][0];
     (*this)[2][0]= rotateMatrix[2][0];
 }
+void Matriz::toSCN(double Wxmin, double Wxmax, double Wymin, double Wymax, bool useMinusOneToOne) {
+
+    transformPoint(-Wxmin, -Wymin);
+
+    double sx = 1.0 / (Wxmax - Wxmin);
+    double sy = 1.0 / (Wymax - Wymin);
+    scalePoint(sx, sy);
+
+    if (useMinusOneToOne) {
+        transformPoint(-0.5, -0.5);
+        scalePoint(2, 2);
+    }
+
+    xSCN = (*this)[0][0];
+    ySCN = (*this)[1][0];
+    zSCN = (*this)[2][0];
+}
+
+void Matriz::toViewport(double Vxmin, double Vxmax, double Vymin, double Vymax, bool scnMinusOneToOne) {
+    double x = (*this)[0][0];
+    double y = (*this)[1][0];
+
+    if (scnMinusOneToOne) {
+        x = (x + 1.0) / 2.0;
+        y = (y + 1.0) / 2.0;
+    }
+
+    double xv = Vxmin + x * (Vxmax - Vxmin);
+    double yv = Vymin + (1 - y) * (Vymax - Vymin);
+    (*this)[0][0] = xv;
+    (*this)[1][0] = yv;
+}
+
+Matriz Matriz::getTransformMatrix(double dX, double dY) {
+    Matriz T(3,3);
+    T[0][0] = 1; T[0][1] = 0; T[0][2] = dX;
+    T[1][0] = 0; T[1][1] = 1; T[1][2] = dY;
+    T[2][0] = 0; T[2][1] = 0; T[2][2] = 1;
+    return T;
+}
+
+Matriz Matriz::getRotateMatrix(double ang) {
+    Matriz R(3,3);
+    R[0][0] = cos(ang); R[0][1] = -sin(ang); R[0][2] = 0;
+    R[1][0] = sin(ang); R[1][1] = cos(ang);  R[1][2] = 0;
+    R[2][0] = 0;        R[2][1] = 0;         R[2][2] = 1;
+    return R;
+}

@@ -68,3 +68,31 @@ void Drawable::returnFromOrigin(vector<double>* avgPoint) {
 
     transformObject(dX, dY);
 }
+
+void Drawable::normalizeObject(double Wxmin, double Wxmax, double Wymin, double Wymax) {
+    for (auto& ponto : points) {
+        ponto.toSCN(Wxmin, Wxmax, Wymin, Wymax, true);
+
+    }
+}
+
+void Drawable::viewportObject(double Vxmin, double Vxmax, double Vymin, double Vymax) {
+    for (auto& ponto : points) {
+        ponto.toViewport(Vxmin, Vxmax, Vymin, Vymax, true);
+
+    }
+}
+
+void Drawable::applyMatrix(Matriz &M) {
+    for (auto& p : points) {
+        Matriz pt(3,1);
+        pt[0][0] = p[0][0];
+        pt[1][0] = p[1][0];
+        pt[2][0] = 1;
+
+        pt = M * pt;
+
+        p[0][0] = pt[0][0];
+        p[1][0] = pt[1][0];
+    }
+}

@@ -7,9 +7,7 @@
 
 class Ponto : public Matriz {
 public:
-    double xSCN;
-    double ySCN;
-    double zSCN;
+
 
     Ponto(double x, double y);
     void draw(QPainter& painter) const;

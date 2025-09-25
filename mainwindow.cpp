@@ -15,13 +15,11 @@ MainWindow::MainWindow(QWidget *parent)
     worldY= 500;
     setFixedSize(worldX, worldY);
 
-    QPainter painter(this);
-
     //painter.setViewport(-worldX,  worldY, this->width(), this->height());
-
-    display.add(new Camera("c1", QVector<Ponto>{
-                                     {0, 0}, {0, 500}, {500, 500}, {500, 0}
-                                 }));
+    Camera* pToCamera= new Camera("c1", QVector<Ponto>{
+                         {0, 0}, {0, 500}, {500, 500}, {500, 0}
+                                         });
+    display.add(pToCamera);
 
     display.add(new Linha("cima", Ponto(0,0), Ponto(100,0   )));
     display.add(new Linha("direita", Ponto(100,0), Ponto(100,100)));
@@ -36,13 +34,18 @@ MainWindow::MainWindow(QWidget *parent)
                                                    {120, 0}, {120, 100}, {220, 100}, {220, 0}
                                     }));
 
+    pToCamera->rotateCamera(250,0);
+
+    display.getObject(0)->transformObject(500,200); //Camera
+
     display.getObject(5)->transformObject(100, 200);
-    display.getObject(5)->rotateObject(M_PI);
+    //display.getObject(5)->rotateObject(M_PI);
     display.getObject(5)->scaleObject(0.7,0.7);
 
     display.getObject(6)->transformObject(50, 150);
-    display.getObject(6)->rotateObject(M_PI/4);
+    //display.getObject(6)->rotateObject(M_PI/4);
     display.getObject(6)->scaleObject(5,5);
+
 
     //painter.setWindow(-worldX, worldY, this->width(), this->height());
 
@@ -50,13 +53,19 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
 }
-void MainWindow::paintEvent(QPaintEvent* event)
-{
+void MainWindow::paintEvent(QPaintEvent* event) {
     QMainWindow::paintEvent(event);
-
     QPainter painter(this);
-    Ponto *p= new Ponto(50, 50);
-    p->draw(painter);
+
+    //Matriz global(centraliza e rotaciona o mundo)
+    display.applyGlobalTransform();
+
+    //Normaliza todos os pontos para SCN eu acho
+    display.triggerNormalize(500, 0,500,0); // window
+
+    //Transforma SCN para viewport
+    display.triggerViewport(width(), height());
+
     display.drawAll(painter);
 }
 MainWindow::~MainWindow()
