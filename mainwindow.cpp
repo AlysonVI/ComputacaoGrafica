@@ -34,9 +34,9 @@ MainWindow::MainWindow(QWidget *parent)
                                                    {120, 0}, {120, 100}, {220, 100}, {220, 0}
                                     }));
 
-    pToCamera->rotateCamera(500,0);
+    pToCamera->rotateCamera(250,0);
 
-    display.getObject(0)->transformObject(500,350); //Camera
+    display.getObject(0)->transformObject(250,250); //Camera
 
     display.getObject(5)->transformObject(500, 200);
     //display.getObject(5)->rotateObject(M_PI);
