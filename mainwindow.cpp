@@ -25,23 +25,23 @@ MainWindow::MainWindow(QWidget *parent)
     display.add(new Linha("baixo", Ponto(100,100), Ponto(0,100)));
     display.add(new Linha("esquerda",  Ponto(0,100), Ponto(0,0)));
 
-    display.add(new Polygon("rect", QVector<Ponto>{
+    display.add(new Polygon("triangulo", QVector<Ponto>{
             {170, 0}, {220, 100}, {120, 100}
         }));
 
-    display.add(new Polygon("new rect", QVector<Ponto>{
-                                                   {120, 0}, {120, 100}, {220, 100}, {220, 0}
+    display.add(new Polygon("quadradao", QVector<Ponto>{
+                                                {120, 0}, {120, 100}, {220, 100}, {220, 0}
                                     }));
 
-    pToCamera->rotateCamera(250,0);
+    //pToCamera->rotateCamera(250,250);
     display.getObject(0)->scaleObject(4,4);
-    display.getObject(0)->transformObject(250,150); //Camera
+    display.getObject(0)->transformObject(0,0); //Camera
 
-    display.getObject(5)->transformObject(200, 200);
+    display.getObject(5)->transformObject(0, 0);
     //display.getObject(5)->rotateObject(M_PI);
     display.getObject(5)->scaleObject(0.7,0.7);
 
-    display.getObject(6)->transformObject(50, 150);
+    display.getObject(6)->transformObject(0, 0);
     //display.getObject(6)->rotateObject(M_PI/4);
     display.getObject(6)->scaleObject(5,5);
 
@@ -59,10 +59,10 @@ void MainWindow::paintEvent(QPaintEvent* event) {
     //Matriz global(centraliza e rotaciona o mundo)
     display.applyGlobalTransform();
 
-    //QVector<Ponto> pPontosCamera= pToCamera->getPoints();
+    QVector<Ponto> pPontosCamera= pToCamera->getPoints();
 
     //Normaliza todos os pontos para SCN eu acho
-    display.triggerNormalize(500, 0,500,0); // window
+    display.triggerNormalize(pPontosCamera[3][0][0]-pPontosCamera[0][0][0], pPontosCamera[2][0][0]-pPontosCamera[3][0][0], pPontosCamera[1][1][0]-pPontosCamera[0][1][0], pPontosCamera[1][1][0]-pPontosCamera[2][1][0]); // window
 
     //Transforma SCN para viewport
     display.triggerViewport(width(), height());
