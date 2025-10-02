@@ -54,10 +54,18 @@ MainWindow::MainWindow(QWidget *parent)
     //Matriz global(centraliza e rotaciona o mundo)
     display.applyGlobalTransform();
 
+    QVector<Ponto> pPontosCamera= pToCamera->getPoints();
+
+    //Normaliza todos os pontos para SCN eu acho
+    display.triggerNormalize(pPontosCamera[3][0][0]-pPontosCamera[0][0][0], pPontosCamera[2][0][0]-pPontosCamera[3][0][0], pPontosCamera[1][1][0]-pPontosCamera[0][1][0], pPontosCamera[1][1][0]-pPontosCamera[2][1][0]); // window
+
+    //Transforma SCN para viewport
+    display.triggerViewport(width(), height());
 }
 void MainWindow::paintEvent(QPaintEvent* event) {
     QMainWindow::paintEvent(event);
     QPainter painter(this);
+
 
     display.drawAll(painter);
 }
