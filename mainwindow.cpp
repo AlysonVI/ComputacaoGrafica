@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
                                          });
     display.add(pToCamera);
 
-    display.add(new Linha("cima", Ponto(0,0), Ponto(100,0   )));
+    display.add(new Linha("cima", Ponto(0,0), Ponto(100,0)));
     display.add(new Linha("direita", Ponto(100,0), Ponto(100,100)));
     display.add(new Linha("baixo", Ponto(100,100), Ponto(0,100)));
     display.add(new Linha("esquerda",  Ponto(0,100), Ponto(0,0)));
@@ -62,13 +62,14 @@ MainWindow::MainWindow(QWidget *parent)
     //Transforma SCN para viewport
     display.triggerViewport(width(), height());
 }
+
 void MainWindow::paintEvent(QPaintEvent* event) {
     QMainWindow::paintEvent(event);
     QPainter painter(this);
 
-
     display.drawAll(painter);
 }
+
 MainWindow::~MainWindow()
 {
     delete ui;

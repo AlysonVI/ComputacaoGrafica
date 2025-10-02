@@ -11,7 +11,8 @@
 enum class ObjectType {
     Linha,
     Polygon,
-    Camera
+    Camera,
+    Castelo
 };
 
 class Drawable {

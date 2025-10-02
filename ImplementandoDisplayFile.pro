@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     Camera.cpp \
+    Castelo.cpp \
     DisplayFile.cpp \
     Drawable.cpp \
     Linha.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
 
 HEADERS += \
     Camera.h \
+    Castelo.h \
     DisplayFile.h \
     Drawable.h \
     Linha.h \
