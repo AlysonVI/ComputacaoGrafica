@@ -34,16 +34,16 @@ MainWindow::MainWindow(QWidget *parent)
                                     }));
 
     //pToCamera->rotateCamera(250,250);
-    display.getObject(0)->scaleObject(1.2,1.2);
-    display.getObject(0)->transformObject(-300,-400); //Camera
+    //display.getObject(0)->scaleObject(1.2,1.2);
+    display.getObject(0)->transformObject(-310,-410); //Camera
 
-    display.getObject(5)->transformObject(0, 0);
+    //display.getObject(5)->transformObject(0, 0);
     //display.getObject(5)->rotateObject(M_PI);
-    display.getObject(5)->scaleObject(0.7,0.7);
+    //display.getObject(5)->scaleObject(0.7,0.7);
 
-    display.getObject(6)->transformObject(0, 0);
+    //display.getObject(6)->transformObject(0, 0);
     //display.getObject(6)->rotateObject(M_PI/4);
-    display.getObject(6)->scaleObject(5,5);
+    //display.getObject(6)->scaleObject(5,5);
 
 
     //painter.setWindow(-worldX, worldY, this->width(), this->height());
@@ -73,3 +73,27 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_right_clicked()
+{
+    //botão deve mover camera para direita
+}
+
+
+void MainWindow::on_down_clicked()
+{
+    //botão deve mover camera para baixo
+}
+
+
+void MainWindow::on_left_clicked()
+{
+    //botão deve mover camera para a esquerda
+}
+
+
+void MainWindow::on_up_clicked()
+{
+    //botão deve mover camera para cima
+}
+

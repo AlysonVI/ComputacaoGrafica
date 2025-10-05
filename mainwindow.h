@@ -20,6 +20,17 @@ public:
     ~MainWindow();
 protected:
     void paintEvent(QPaintEvent* event) override;
+private slots:
+    void on_right_clicked();
+
+    void on_down_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_left_clicked();
+
+    void on_up_clicked();
+
 private:
     int worldX;
     int worldY;
