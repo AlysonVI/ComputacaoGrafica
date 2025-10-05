@@ -68,8 +68,8 @@ void DisplayFile::triggerNormalize(double Wxmax, double Wxmin, double Wymax, dou
     }
 }
 
-void DisplayFile::triggerViewport(double Vxmax, double Vymax) {
-    double Vxmin = 0, Vymin = 0;
+void DisplayFile::triggerViewport(double Vxmax, double Vxmin, double Vymax, double Vymin) {
+
 
     for (auto& obj : objects) {
         if(obj->getType() == ObjectType::Camera) continue;

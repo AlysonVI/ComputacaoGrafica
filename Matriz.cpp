@@ -53,8 +53,7 @@ void Matriz::transformPoint(double dX, double dY) {
 
     transformMatrix = transformMatrix * (*this);
 
-    cout << "depois de transladar x: " << transformMatrix[0][0];
-    cout << " y: " << transformMatrix[1][0] << "\n";
+
     (*this)[0][0]= transformMatrix[0][0];
     (*this)[1][0]= transformMatrix[1][0];
     (*this)[2][0]= transformMatrix[2][0];

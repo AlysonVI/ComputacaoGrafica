@@ -15,7 +15,7 @@ public:
     void triggerTranslate();//Quando faz na window
     void triggerRotate();
     void triggerNormalize(double Wxmax, double Wxmin, double Wymax, double Wymin);
-    void triggerViewport(double Vxmax, double Vymax);
+    void triggerViewport(double Vxmax, double Vxmin, double Vymax, double Vymin);
     void applyGlobalTransform();
     Matriz getWorldToCameraMatrix();
     Drawable* getObject(int n);
