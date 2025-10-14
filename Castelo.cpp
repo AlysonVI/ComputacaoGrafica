@@ -31,52 +31,57 @@ Castelo::Castelo(const Ponto& p)
 }
 
 void Castelo::draw(QPainter& painter) {
-    // Função lambda que retorna o ponto convertido para QPointF e já com o deslocamento, para agilizar
-    auto getPoint = [&](double x, double y) {
-        return *(Ponto(x + this->dx, y + this->dy).convertToQPointF());
-    };
+    QVector<QPointF> pontos = *(this->getQPoints()); // Esses pontos ja incluem o deslocamento
 
-    // Desenha torre esquerda (com valores Y negativos)
-    painter.drawLine(getPoint(0, 0), getPoint(0, -50));
-    painter.drawLine(getPoint(0, -50), getPoint(5, -50));
-    painter.drawLine(getPoint(5, -50), getPoint(5, -45));
-    painter.drawLine(getPoint(5, -45), getPoint(10, -45));
-    painter.drawLine(getPoint(10, -45), getPoint(10, -50));
-    painter.drawLine(getPoint(10, -50), getPoint(15, -50));
-    painter.drawLine(getPoint(15, -50), getPoint(15, -45));
-    painter.drawLine(getPoint(15, -45), getPoint(20, -45));
-    painter.drawLine(getPoint(20, -45), getPoint(20, -50));
-    painter.drawLine(getPoint(20, -50), getPoint(25, -50));
-    painter.drawLine(getPoint(25, -50), getPoint(25, 0));
+    // ==== Desenha torre esquerda ====
+    // Linha vertical da parede da torre
+    painter.drawLine(pontos[0], pontos[11]);
+    // Topo da Torre
+    painter.drawLine(pontos[11], pontos[12]);
+    painter.drawLine(pontos[12], pontos[13]);
+    painter.drawLine(pontos[13], pontos[15]);
+    painter.drawLine(pontos[15], pontos[14]);
+    painter.drawLine(pontos[14], pontos[16]);
+    painter.drawLine(pontos[16], pontos[17]);
+    painter.drawLine(pontos[17], pontos[19]);
+    painter.drawLine(pontos[19], pontos[18]);
+    painter.drawLine(pontos[18], pontos[20]);
+    // Linha vertical até o chão
+    painter.drawLine(pontos[20], pontos[1]);
 
-    // Desenha torre direita (com valores Y negativos)
-    painter.drawLine(getPoint(75, 0), getPoint(75, -50));
-    painter.drawLine(getPoint(75, -50), getPoint(80, -50));
-    painter.drawLine(getPoint(80, -50), getPoint(80, -45));
-    painter.drawLine(getPoint(80, -45), getPoint(85, -45));
-    painter.drawLine(getPoint(85, -45), getPoint(85, -50));
-    painter.drawLine(getPoint(85, -50), getPoint(90, -50));
-    painter.drawLine(getPoint(90, -50), getPoint(90, -45));
-    painter.drawLine(getPoint(90, -45), getPoint(95, -45));
-    painter.drawLine(getPoint(95, -45), getPoint(95, -50));
-    painter.drawLine(getPoint(95, -50), getPoint(100, -50));
-    painter.drawLine(getPoint(100, -50), getPoint(100, 0));
+    // ==== Desenha torre direita ====
+    // Linha vertical da parede da torre
+    painter.drawLine(pontos[4], pontos[21]);
+    // Topo da torre
+    painter.drawLine(pontos[21], pontos[22]);
+    painter.drawLine(pontos[22], pontos[23]);
+    painter.drawLine(pontos[23], pontos[25]);
+    painter.drawLine(pontos[25], pontos[24]);
+    painter.drawLine(pontos[24], pontos[26]);
+    painter.drawLine(pontos[26], pontos[27]);
+    painter.drawLine(pontos[27], pontos[29]);
+    painter.drawLine(pontos[29], pontos[28]);
+    painter.drawLine(pontos[28], pontos[30]);
+    // Linha vertical até o chão
+    painter.drawLine(pontos[30], pontos[5]);
 
-    // Desenha paredes e chão (com valores Y negativos)
-    painter.drawLine(getPoint(0, 0), getPoint(25, 0));
-    painter.drawLine(getPoint(25, 0), getPoint(75, 0));
-    painter.drawLine(getPoint(75, 0), getPoint(100, 0));
-    painter.drawLine(getPoint(25, -35), getPoint(75, -35));
+    // ==== Desenha paredes e chão
+    // Linha do chão
+    painter.drawLine(pontos[0], pontos[5]);
+    // Topo da parece principal
+    painter.drawLine(pontos[6], pontos[7]);
 
-    // Desenha porta (com valores Y negativos)
-    painter.drawLine(getPoint(40, 0), getPoint(40, -20));
-    painter.drawLine(getPoint(40, -20), getPoint(50, -25));
-    painter.drawLine(getPoint(50, -25), getPoint(60, -20));
-    painter.drawLine(getPoint(60, -20), getPoint(60, 0));
+    // ==== Desenha porta ====
+    painter.drawLine(pontos[2], pontos[8]);
+    painter.drawLine(pontos[8], pontos[9]);
+    painter.drawLine(pontos[9], pontos[10]);
+    painter.drawLine(pontos[10], pontos[3]);
 
-    // Desenha bandeira (com valores Y negativos)
-    painter.drawLine(getPoint(50, -35), getPoint(50, -50));
-    painter.drawLine(getPoint(50, -50), getPoint(60, -50));
-    painter.drawLine(getPoint(60, -50), getPoint(60, -45));
-    painter.drawLine(getPoint(60, -45), getPoint(50, -45));
+    // ==== Desenha bandeira ====
+    // Mastro
+    painter.drawLine(pontos[31], pontos[33]);
+    // Tecido da bandeira
+    painter.drawLine(pontos[33], pontos[34]);
+    painter.drawLine(pontos[34], pontos[35]);
+    painter.drawLine(pontos[35], pontos[32]);
 }

@@ -16,10 +16,10 @@ void Ponto::draw(QPainter& painter) const {
     painter.drawPoint(*(new QPointF((*this)[0][0], (*this)[1][0])));
 }
 
-double Ponto::getX() const{
+double Ponto::getX() const {
     return (*this)[0][0];
 }
 
-double Ponto::getY() const{
+double Ponto::getY() const {
     return (*this)[1][0];
 }

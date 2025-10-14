@@ -14,13 +14,15 @@ QVector<QPointF>* Drawable::getQPoints(){
 }
 
 void Drawable::transformObject(double dX, double dY) {
+
+    cout<<"\nTRANSFORM: all x + "<< dX << ", all y + " << dY << "\n";
     for(auto& aux: points) {
         aux.transformPoint(dX, dY);
     }
 }
 
 void Drawable::scaleObject(double sX, double sY) {
-    vector<double>* avgPoint= getObjectAverage();
+    vector<double>* avgPoint = getObjectAverage();
     this->goToOrigin(avgPoint);
 
     for(auto& aux: points) {

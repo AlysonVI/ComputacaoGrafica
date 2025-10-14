@@ -12,8 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    viewportX= 500;
-    viewportY= 500;
+    viewportX= this->width();
+    viewportY= this->height();
     setFixedSize(viewportX, viewportY);
 
     //painter.setViewport(-worldX,  worldY, this->width(), this->height());
@@ -22,7 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
                                  });
 
     //pToCamera->rotateCamera(250,250); //Ponto "up"
-    pToCamera->scaleObject(1,1);
     pToCamera->transformObject(-180,-270); //Camera
 
 }
@@ -50,11 +49,11 @@ void MainWindow::criarMundo(DisplayFile& display){
 
     display.getObject(5)->transformObject(0, 0);
     display.getObject(5)->rotateObject(M_PI);
-    display.getObject(5)->scaleObject(0.7,0.7);
 
     display.getObject(6)->transformObject(0, 0);
     //display.getObject(6)->rotateObject(M_PI/4);
-    display.getObject(6)->scaleObject(5,5);
+    display.getObject(7)->scaleObject(4,4);
+    display.getObject(7)->rotateObject(M_PI/3);
 
     //painter.setWindow(-worldX, worldY, this->width(), this->height());
 
