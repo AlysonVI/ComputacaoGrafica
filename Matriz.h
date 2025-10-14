@@ -16,10 +16,9 @@ public:
     void transformPoint(double dX, double dY);
     void scalePoint(double sX, double sY);
     void rotatePoint(double ang);
+
     Matriz getTransformMatrix(double dX, double dY);
     Matriz getScaleMatrix(double sX, double sY);
-
-
     Matriz getRotateMatrix(double ang);
     void toViewport(double Vxmin, double Vxmax, double Vymin, double Vymax, bool scnMinusOneToOne);
     void toSCN(double Wxmin, double Wxmax, double Wymin, double Wymax, bool useMinusOneToOne);

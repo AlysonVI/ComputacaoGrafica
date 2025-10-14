@@ -5,6 +5,7 @@
 #include "Polygon.h"
 #include <QPainter>
 #include <math.h>
+#include "Castelo.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -33,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
                                                 {120, 0}, {120, 100}, {220, 100}, {220, 0}
                                     }));
 
+    display.add(new Castelo(Ponto(200,400)));
+
     //pToCamera->rotateCamera(250,250);
     display.getObject(0)->scaleObject(1.2,1.2);
     display.getObject(0)->transformObject(-300,-400); //Camera
@@ -44,7 +47,6 @@ MainWindow::MainWindow(QWidget *parent)
     display.getObject(6)->transformObject(0, 0);
     //display.getObject(6)->rotateObject(M_PI/4);
     display.getObject(6)->scaleObject(5,5);
-
 
     //painter.setWindow(-worldX, worldY, this->width(), this->height());
 
