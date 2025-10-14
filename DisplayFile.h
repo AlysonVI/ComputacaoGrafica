@@ -13,11 +13,11 @@ public:
     void printAll() const;
 
     void triggerTranslate();//Quando faz na window
-    void triggerRotate();
+    //void triggerRotate(double theta);
     void triggerNormalize(double Wxmax, double Wxmin, double Wymax, double Wymin);
-    void triggerViewport(double Vxmax, double Vymax);
-    void applyGlobalTransform();
-    Matriz getWorldToCameraMatrix();
+    void triggerViewport(double Vxmax, double Vxmin, double Vymax, double Vymin);
+    void applyGlobalTransform(double theta);
+    Matriz getWorldToCameraMatrix(double theta);
     Drawable* getObject(int n);
 };
 

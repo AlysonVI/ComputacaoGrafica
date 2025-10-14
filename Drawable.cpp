@@ -46,7 +46,7 @@ vector<double>* Drawable::getObjectAverage() {
         somaX += (points[i])[0][0];
         somaY += (points[i])[1][0];
     }
-    cout << "\n\n\nMedia: " << somaX/points.size() << " , " << somaY/points.size() << "\n\n\n";
+
     vector<double>* referencePoint= new vector<double>(2, 0);
     (*referencePoint)[0]= somaX/points.size();
     (*referencePoint)[1]= somaY/points.size();

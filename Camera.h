@@ -8,8 +8,8 @@ public:
     double angleRelativeToX;
     Camera(const QString& n, const QVector<Ponto>& pts);
     void draw(QPainter& painter) override;
-    double getVariable() override;
-    void generateSCNDescription();
+
+
     void rotateCamera(double Wupx, double Wupy);
 };
 

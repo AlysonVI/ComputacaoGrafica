@@ -13,15 +13,34 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#MainWindow{
+	color:#000;
+	border:5px solid #DCF5F5;
+	background-color:#BFD3F5;
+}
+
+
+</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <widget class="QPushButton" name="exit">
     <property name="geometry">
      <rect>
-      <x>420</x>
+      <x>400</x>
       <y>440</y>
-      <width>90</width>
+      <width>81</width>
       <height>29</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="palette">
      <palette>
@@ -131,6 +150,15 @@
           <red>0</red>
           <green>0</green>
           <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Highlight">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
          </color>
         </brush>
        </colorrole>
@@ -289,6 +317,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="Highlight">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
        <colorrole role="AlternateBase">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
@@ -444,6 +481,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="Highlight">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
        <colorrole role="AlternateBase">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
@@ -492,8 +538,135 @@
       </disabled>
      </palette>
     </property>
+    <property name="styleSheet">
+     <string notr="true">#up{
+	background-color:#D3DBE0;
+	border-radios: 10px;
+	border: 1px solid #222;
+}
+#eixt:hover{
+	background-color:#fff;
+}</string>
+    </property>
     <property name="text">
      <string>Sair</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="right">
+    <property name="geometry">
+     <rect>
+      <x>470</x>
+      <y>360</y>
+      <width>30</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#right{
+	background-color:#D3DBE0;
+	border-radios: 10px;
+	border: 1px solid #222;
+
+}
+#right:hover{
+	background-color:#fff;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="up">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>330</y>
+      <width>30</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#up{
+	background-color:#D3DBE0;
+	border-radios: 10px;
+	border: 1px solid #222;
+}
+#up:hover{
+	background-color:#fff;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="down">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>390</y>
+      <width>30</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#down{
+	background-color:#D3DBE0;
+	border-radios: 10px;
+	border: 1px solid #222;
+}
+#down:hover{
+	background-color:#fff;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="left">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>360</y>
+      <width>30</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#left{
+	background-color:#D3DBE0;
+	border-radios: 10px;
+	border: 1px solid #222;
+}
+#left:hover{
+	background-color:#fff;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
@@ -512,14 +685,14 @@
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton</sender>
+   <sender>exit</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>324</x>
-     <y>73</y>
+     <x>400</x>
+     <y>453</y>
     </hint>
     <hint type="destinationlabel">
      <x>353</x>

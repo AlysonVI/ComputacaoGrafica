@@ -53,8 +53,7 @@ void Matriz::transformPoint(double dX, double dY) {
 
     transformMatrix = transformMatrix * (*this);
 
-    cout << "depois de transladar x: " << transformMatrix[0][0];
-    cout << " y: " << transformMatrix[1][0] << "\n";
+
     (*this)[0][0]= transformMatrix[0][0];
     (*this)[1][0]= transformMatrix[1][0];
     (*this)[2][0]= transformMatrix[2][0];
@@ -83,7 +82,7 @@ void Matriz::rotatePoint(double ang) {
     rotateMatrix[1][0] = sin(ang); rotateMatrix[1][1] = cos(ang); rotateMatrix[1][2] = 0;
     rotateMatrix[2][0] = 0; rotateMatrix[2][1] = 0; rotateMatrix[2][2] = 1;
 
-    rotateMatrix = rotateMatrix * (*this);
+    rotateMatrix= rotateMatrix * (*this);
 
     (*this)[0][0]= rotateMatrix[0][0];
     (*this)[1][0]= rotateMatrix[1][0];
@@ -111,7 +110,7 @@ void Matriz::toViewport(double Vxmin, double Vxmax, double Vymin, double Vymax, 
     double x = (*this)[0][0];
     double y = (*this)[1][0];
 
-    if (scnMinusOneToOne) {
+    if(scnMinusOneToOne){
         x = (x + 1.0) / 2.0;
         y = (y + 1.0) / 2.0;
     }

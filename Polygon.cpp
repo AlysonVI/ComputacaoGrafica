@@ -6,6 +6,3 @@ Polygon::Polygon(const QString& n, const QVector<Ponto>& pts)
 void Polygon::draw(QPainter& painter){
     painter.drawPolygon(*getQPoints());
 }
-double Polygon::getVariable(){
-    return 0;
-}
