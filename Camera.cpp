@@ -16,6 +16,3 @@ void Camera::rotateCamera(double Wupx, double Wupy){//Os argumentos é o ponto o
 double Camera::getVariable(){
     return angleRelativeToX;
 }
-void Camera::generateSCNDescription(){
-
-}

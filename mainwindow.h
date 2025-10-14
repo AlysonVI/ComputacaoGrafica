@@ -32,8 +32,12 @@ private slots:
     void on_up_clicked();
 
 private:
-    int worldX;
-    int worldY;
+    int viewportX;
+    int viewportY;
+
+
+    void criarMundo(DisplayFile& display);
+
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

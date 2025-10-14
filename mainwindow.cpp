@@ -10,15 +10,24 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    worldX= 500;
-    worldY= 500;
-    setFixedSize(worldX, worldY);
+    ui->setupUi(this);
+    viewportX= 500;
+    viewportY= 500;
+    setFixedSize(viewportX, viewportY);
 
     //painter.setViewport(-worldX,  worldY, this->width(), this->height());
     pToCamera= new Camera("c1", QVector<Ponto>{
-                         {0, 0}, {0, 500}, {500, 500}, {500, 0}
-                                         });
-    display.add(pToCamera);
+                                     {0, 0}, {0, 500}, {500, 500}, {500, 0}
+                                 });
+
+    //pToCamera->rotateCamera(250,250); //Ponto "up"
+    pToCamera->scaleObject(1,1);
+    pToCamera->transformObject(-180,-270); //Camera
+
+
+}
+
+void MainWindow::criarMundo(DisplayFile& display){
 
     display.add(new Linha("cima", Ponto(0,0), Ponto(100,0   )));
     display.add(new Linha("direita", Ponto(100,0), Ponto(100,100)));
@@ -26,16 +35,13 @@ MainWindow::MainWindow(QWidget *parent)
     display.add(new Linha("esquerda",  Ponto(0,100), Ponto(0,0)));
 
     display.add(new Polygon("triangulo", QVector<Ponto>{
-            {170, 0}, {220, 100}, {120, 100}
-        }));
+                                             {170, 0}, {220, 100}, {120, 100}
+                                         }));
 
     display.add(new Polygon("quadradao", QVector<Ponto>{
-                                                {120, 0}, {120, 100}, {220, 100}, {220, 0}
-                                    }));
+                                             {120, 0}, {120, 100}, {220, 100}, {220, 0}
+                                         }));
 
-    //pToCamera->rotateCamera(250,250);
-    display.getObject(0)->scaleObject(1.2,1.2);
-    display.getObject(0)->transformObject(-180,-270); //Camera
 
     display.getObject(5)->transformObject(0, 0);
     display.getObject(5)->rotateObject(M_PI);
@@ -45,6 +51,16 @@ MainWindow::MainWindow(QWidget *parent)
     //display.getObject(6)->rotateObject(M_PI/4);
     display.getObject(6)->scaleObject(5,5);
 
+}
+
+void MainWindow::paintEvent(QPaintEvent* event){
+    QMainWindow::paintEvent(event);
+    QPainter painter(this);
+    DisplayFile display;
+
+    display.add(new Camera(*pToCamera));
+
+    criarMundo(display);
 
     QVector<Ponto> pPontosCamera= pToCamera->getPoints();
     double Wxmin = pPontosCamera[0][0][0];
@@ -64,27 +80,19 @@ MainWindow::MainWindow(QWidget *parent)
     //painter.setWindow(-worldX, worldY, this->width(), this->height());
 
     display.printAll();
-    ui->setupUi(this);
-
-
-}
-void MainWindow::paintEvent(QPaintEvent* event) {
-    QMainWindow::paintEvent(event);
-    QPainter painter(this);
-
-
     display.drawAll(painter);
     cout << "Update event\n";
 }
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete pToCamera;
 }
 
 void MainWindow::on_right_clicked()
 {
     //botão deve mover camera para direita
-    display.getObject(0)->transformObject(10,0);
+    pToCamera->transformObject(10,0);
     update();
 }
 
@@ -92,17 +100,23 @@ void MainWindow::on_right_clicked()
 void MainWindow::on_down_clicked()
 {
     //botão deve mover camera para baixo
+    pToCamera->transformObject(0,10);
+    update();
 }
 
 
 void MainWindow::on_left_clicked()
 {
     //botão deve mover camera para a esquerda
+    pToCamera->transformObject(-10,0);
+    update();
 }
 
 
 void MainWindow::on_up_clicked()
 {
     //botão deve mover camera para cima
+    pToCamera->transformObject(0,-10);
+    update();
 }
 
