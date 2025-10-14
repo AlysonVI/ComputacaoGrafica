@@ -29,7 +29,7 @@ public:
     QVector<Ponto> getPoints() const { return points; }
     QVector<QPointF> *getQPoints();
     virtual void draw(QPainter& painter)= 0; //draw a ser definido (implementação na herança)
-    virtual double getVariable()= 0; //Preciso para chamar no getObject(0) posso mudar
+
 
     void transformObject(double dX, double dY);
     void scaleObject(double sX, double sY);

@@ -68,7 +68,7 @@ void MainWindow::paintEvent(QPaintEvent* event){
     double Wxmax = pPontosCamera[2][0][0];
     double Wymax = pPontosCamera[2][1][0];
     //Matriz global(centraliza e rotaciona o mundo)
-    display.applyGlobalTransform();
+    display.applyGlobalTransform(pToCamera->angleRelativeToX);
 
 
     //Normaliza todos os pontos para SCN eu acho

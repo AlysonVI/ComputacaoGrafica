@@ -6,6 +6,3 @@ Linha::Linha(const QString& n, const Ponto& p1, const Ponto& p2)
 void Linha::draw(QPainter& painter){
     painter.drawLine(*(points[0].convertToQPointF()), *(points[1].convertToQPointF()));
 }
-double Linha::getVariable(){
-    return 0;
-}

@@ -29,27 +29,26 @@ void DisplayFile::triggerTranslate(){
     }
 }
 
-void DisplayFile::triggerRotate(){ //inutil por enquanto
-    double theta= getObject(0)->getVariable();
+/*void DisplayFile::triggerRotate(double theta){
     for(auto&obj : objects){
         if(obj->getType() == ObjectType::Camera) continue;
         obj->rotateObject(-theta);
     }
-}
+}*/
 
-void DisplayFile::applyGlobalTransform() {
-    Matriz globalMatrix = getWorldToCameraMatrix();
+void DisplayFile::applyGlobalTransform(double theta) {
+    Matriz globalMatrix = getWorldToCameraMatrix(theta);
 
     for(auto&obj : objects){
         if(obj->getType() == ObjectType::Camera) continue;
         obj->applyMatrix(globalMatrix);
     }
 }
-Matriz DisplayFile::getWorldToCameraMatrix() {//matriz global para fazer translaçãp para centro e rotação baseado no angulo calculado antes (relativeToX)
+Matriz DisplayFile::getWorldToCameraMatrix(double theta) {//matriz global para fazer translaçãp para centro e rotação baseado no angulo calculado antes (relativeToX)
     vector<double>* centroCamera = getObject(0)->getObjectAverage();
     double cx = (*centroCamera)[0];
     double cy = (*centroCamera)[1];
-    double theta = getObject(0)->getVariable();
+
 
     Matriz T(3,3), R(3,3);
     T = T.getTransformMatrix(-cx, -cy);

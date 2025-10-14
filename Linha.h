@@ -7,7 +7,7 @@ class Linha : public Drawable {
 public:
     Linha(const QString& n, const Ponto& p1, const Ponto& p2);
     void draw(QPainter& painter) override;
-    double getVariable() override;
+
 };
 
 #endif
