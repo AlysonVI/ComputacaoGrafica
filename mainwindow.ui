@@ -13,6 +13,15 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#MainWindow{
+	color:#000;
+	border:5px solid #DCF5F5;
+	background-color:#BFD3F5;
+}
+
+</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="exit">
     <property name="geometry">
@@ -131,6 +140,15 @@
           <red>0</red>
           <green>0</green>
           <blue>0</blue>
+         </color>
+        </brush>
+       </colorrole>
+       <colorrole role="Highlight">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
          </color>
         </brush>
        </colorrole>
@@ -289,6 +307,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="Highlight">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
        <colorrole role="AlternateBase">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
@@ -444,6 +471,15 @@
          </color>
         </brush>
        </colorrole>
+       <colorrole role="Highlight">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>255</red>
+          <green>255</green>
+          <blue>255</blue>
+         </color>
+        </brush>
+       </colorrole>
        <colorrole role="AlternateBase">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
@@ -505,6 +541,12 @@
       <height>26</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">#right{
+	background-color:#D3DBE0;
+	size: 30px;
+}</string>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -517,6 +559,12 @@
       <width>31</width>
       <height>26</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#up{
+	background-color:#D3DBE0;
+	size: 30px;
+}</string>
     </property>
     <property name="text">
      <string/>
@@ -531,6 +579,13 @@
       <height>26</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">#down{
+	background-color:#D3DBE0;
+	border-radios: 10px;
+	size: 30px;
+}</string>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -543,6 +598,12 @@
       <width>31</width>
       <height>26</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#left{
+	background-color:#D3DBE0;
+	size: 30px;
+}</string>
     </property>
     <property name="text">
      <string/>
@@ -570,8 +631,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>324</x>
-     <y>73</y>
+     <x>400</x>
+     <y>453</y>
     </hint>
     <hint type="destinationlabel">
      <x>353</x>
