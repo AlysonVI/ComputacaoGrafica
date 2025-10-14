@@ -41,11 +41,7 @@ void MainWindow::criarMundo(DisplayFile& display){
                                              {120, 0}, {120, 100}, {220, 100}, {220, 0}
                                          }));
 
-    display.add(new Castelo(Ponto(200,400)));
-
-    //pToCamera->rotateCamera(250,250);
-    display.getObject(0)->scaleObject(1.2,1.2);
-    display.getObject(0)->transformObject(-300,-400); //Camera
+    display.add(new Castelo(Ponto(400,400)));
 
     display.getObject(5)->transformObject(0, 0);
     display.getObject(5)->rotateObject(M_PI);
@@ -55,7 +51,12 @@ void MainWindow::criarMundo(DisplayFile& display){
     display.getObject(7)->scaleObject(4,4);
     display.getObject(7)->rotateObject(M_PI/3);
 
-    //painter.setWindow(-worldX, worldY, this->width(), this->height());
+}
+
+void MainWindow::paintEvent(QPaintEvent* event){
+    QMainWindow::paintEvent(event);
+    QPainter painter(this);
+    DisplayFile display;
 
     display.add(new Camera(*pToCamera));
 
@@ -74,17 +75,14 @@ void MainWindow::criarMundo(DisplayFile& display){
     display.triggerNormalize(Wxmax, Wxmin, Wymin, Wymax); // window
 
     //Transforma SCN para viewport
-    display.triggerViewport(width(), height());
-}
+    display.triggerViewport(width(), 0, height(), 0);
 
-void MainWindow::paintEvent(QPaintEvent* event) {
-    QMainWindow::paintEvent(event);
-    QPainter painter(this);
+    //painter.setWindow(-worldX, worldY, this->width(), this->height());
 
+    display.printAll();
     display.drawAll(painter);
     cout << "Update event\n";
 }
-
 MainWindow::~MainWindow()
 {
     delete ui;
