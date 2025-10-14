@@ -20,17 +20,27 @@
 	background-color:#BFD3F5;
 }
 
+
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <widget class="QPushButton" name="exit">
     <property name="geometry">
      <rect>
       <x>400</x>
       <y>440</y>
-      <width>90</width>
+      <width>81</width>
       <height>29</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="palette">
      <palette>
@@ -528,6 +538,16 @@
       </disabled>
      </palette>
     </property>
+    <property name="styleSheet">
+     <string notr="true">#up{
+	background-color:#D3DBE0;
+	border-radios: 10px;
+	border: 1px solid #222;
+}
+#eixt:hover{
+	background-color:#fff;
+}</string>
+    </property>
     <property name="text">
      <string>Sair</string>
     </property>
@@ -537,16 +557,25 @@
      <rect>
       <x>470</x>
       <y>360</y>
-      <width>31</width>
+      <width>30</width>
       <height>26</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="styleSheet">
      <string notr="true">#right{
 	background-color:#D3DBE0;
 	border-radios: 10px;
 	border: 1px solid #222;
-	size: 30px;
+
+}
+#right:hover{
+	background-color:#fff;
 }</string>
     </property>
     <property name="text">
@@ -558,16 +587,24 @@
      <rect>
       <x>430</x>
       <y>330</y>
-      <width>31</width>
+      <width>30</width>
       <height>26</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="styleSheet">
      <string notr="true">#up{
 	background-color:#D3DBE0;
 	border-radios: 10px;
 	border: 1px solid #222;
-	size: 30px;
+}
+#up:hover{
+	background-color:#fff;
 }</string>
     </property>
     <property name="text">
@@ -579,16 +616,24 @@
      <rect>
       <x>430</x>
       <y>390</y>
-      <width>31</width>
+      <width>30</width>
       <height>26</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="styleSheet">
      <string notr="true">#down{
 	background-color:#D3DBE0;
 	border-radios: 10px;
 	border: 1px solid #222;
-	size: 30px;
+}
+#down:hover{
+	background-color:#fff;
 }</string>
     </property>
     <property name="text">
@@ -600,16 +645,24 @@
      <rect>
       <x>390</x>
       <y>360</y>
-      <width>31</width>
+      <width>30</width>
       <height>26</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="styleSheet">
      <string notr="true">#left{
 	background-color:#D3DBE0;
 	border-radios: 10px;
 	border: 1px solid #222;
-	size: 30px;
+}
+#left:hover{
+	background-color:#fff;
 }</string>
     </property>
     <property name="text">
