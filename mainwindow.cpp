@@ -24,7 +24,6 @@ MainWindow::MainWindow(QWidget *parent)
     pToCamera->scaleObject(1,1);
     pToCamera->transformObject(-180,-270); //Camera
 
-
 }
 
 void MainWindow::criarMundo(DisplayFile& display){
