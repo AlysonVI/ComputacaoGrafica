@@ -5,6 +5,7 @@
 #include "Polygon.h"
 #include <QPainter>
 #include <math.h>
+#include "Castelo.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -28,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::criarMundo(DisplayFile& display){
 
-    display.add(new Linha("cima", Ponto(0,0), Ponto(100,0   )));
+    display.add(new Linha("cima", Ponto(0,0), Ponto(100,0)));
     display.add(new Linha("direita", Ponto(100,0), Ponto(100,100)));
     display.add(new Linha("baixo", Ponto(100,100), Ponto(0,100)));
     display.add(new Linha("esquerda",  Ponto(0,100), Ponto(0,0)));
@@ -41,6 +42,11 @@ void MainWindow::criarMundo(DisplayFile& display){
                                              {120, 0}, {120, 100}, {220, 100}, {220, 0}
                                          }));
 
+    display.add(new Castelo(Ponto(200,400)));
+
+    //pToCamera->rotateCamera(250,250);
+    display.getObject(0)->scaleObject(1.2,1.2);
+    display.getObject(0)->transformObject(-300,-400); //Camera
 
     display.getObject(5)->transformObject(0, 0);
     display.getObject(5)->rotateObject(M_PI);
@@ -50,12 +56,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     //display.getObject(6)->rotateObject(M_PI/4);
     display.getObject(6)->scaleObject(5,5);
 
-}
-
-void MainWindow::paintEvent(QPaintEvent* event){
-    QMainWindow::paintEvent(event);
-    QPainter painter(this);
-    DisplayFile display;
+    //painter.setWindow(-worldX, worldY, this->width(), this->height());
 
     display.add(new Camera(*pToCamera));
 
@@ -74,14 +75,17 @@ void MainWindow::paintEvent(QPaintEvent* event){
     display.triggerNormalize(Wxmax, Wxmin, Wymin, Wymax); // window
 
     //Transforma SCN para viewport
-    display.triggerViewport(width(), 0, height(), 0);
+    display.triggerViewport(width(), height());
+}
 
-    //painter.setWindow(-worldX, worldY, this->width(), this->height());
+void MainWindow::paintEvent(QPaintEvent* event) {
+    QMainWindow::paintEvent(event);
+    QPainter painter(this);
 
-    display.printAll();
     display.drawAll(painter);
     cout << "Update event\n";
 }
+
 MainWindow::~MainWindow()
 {
     delete ui;
