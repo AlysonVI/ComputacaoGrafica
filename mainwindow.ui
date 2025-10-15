@@ -19,7 +19,7 @@
   <property name="styleSheet">
    <string notr="true">#MainWindow{
 	color:#000;
-	background-color:#BFD3F5;
+	background-color:#D3DBE0;;
 	
 
 }
@@ -34,36 +34,13 @@
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>560</x>
-      <y>600</y>
+      <x>10</x>
+      <y>610</y>
       <width>134</width>
       <height>74</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="2" column="0">
-      <widget class="QPushButton" name="left">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">#left{
-	background-color:#D3DBE0;
-	border-radios: 10px;
-	border: 1px solid #222;
-}
-#left:hover{
-	background-color:#fff;
-}</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
      <item row="3" column="2">
       <widget class="QPushButton" name="down">
        <property name="sizePolicy">
@@ -86,8 +63,8 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="up">
+     <item row="2" column="0">
+      <widget class="QPushButton" name="left">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -95,12 +72,12 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">#up{
+        <string notr="true">#left{
 	background-color:#D3DBE0;
 	border-radios: 10px;
 	border: 1px solid #222;
 }
-#up:hover{
+#left:hover{
 	background-color:#fff;
 }</string>
        </property>
@@ -133,14 +110,37 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="up">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#up{
+	background-color:#D3DBE0;
+	border-radios: 10px;
+	border: 1px solid #222;
+}
+#up:hover{
+	background-color:#fff;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QTableView" name="FundoA">
     <property name="geometry">
      <rect>
-      <x>580</x>
+      <x>625</x>
       <y>0</y>
-      <width>125</width>
+      <width>75</width>
       <height>700</height>
      </rect>
     </property>
@@ -174,7 +174,7 @@
 }</string>
     </property>
    </widget>
-   <widget class="QTableView" name="FundoC">
+   <widget class="QTableView" name="FundoCuboA">
     <property name="geometry">
      <rect>
       <x>575</x>
@@ -184,16 +184,109 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">#FundoC{
+     <string notr="true">#FundoCuboA{
 	background-color:#fff;
    border: none;
 }</string>
     </property>
    </widget>
+   <widget class="QTableView" name="FundoC">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>700</width>
+      <height>10</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#FundoC{
+	min-width: 10px;
+	background-color:#fff;
+   border: 1px solid black;
+   border-right: none;
+	border-top: none;
+	border-left: none;
+}</string>
+    </property>
+   </widget>
+   <widget class="QTableView" name="FundoCuboB">
+    <property name="geometry">
+     <rect>
+      <x>625</x>
+      <y>0</y>
+      <width>75</width>
+      <height>10</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#FundoCuboB{
+	background-color:#fff;
+   border: none;
+}</string>
+    </property>
+   </widget>
+   <widget class="QTableView" name="FundoD">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>-1</y>
+      <width>11</width>
+      <height>700</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#FundoD{
+	min-width: 10px;
+	background-color:#fff;
+   border: 1px solid black;
+   border-left: none;
+	border-top: none;
+	border-bottom: none;
+}</string>
+    </property>
+   </widget>
+   <widget class="QTableView" name="FundoCuboC">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>599</y>
+      <width>10</width>
+      <height>75</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#FundoCuboC{
+	background-color:#fff;
+   border: none;
+}</string>
+    </property>
+   </widget>
+   <widget class="QTableView" name="FundoCuboD">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>10</width>
+      <height>75</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#FundoCuboD{
+	background-color:#fff;
+   border: none;
+}</string>
+    </property>
+   </widget>
+   <zorder>FundoD</zorder>
    <zorder>FundoB</zorder>
+   <zorder>FundoCuboC</zorder>
    <zorder>FundoA</zorder>
-   <zorder>FundoC</zorder>
+   <zorder>FundoCuboA</zorder>
    <zorder>gridLayoutWidget</zorder>
+   <zorder>FundoC</zorder>
+   <zorder>FundoCuboB</zorder>
+   <zorder>FundoCuboD</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
