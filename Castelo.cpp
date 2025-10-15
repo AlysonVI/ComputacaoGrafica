@@ -24,11 +24,7 @@ Castelo::Castelo(const Ponto& p)
                    {50 + p.getX(), -35 + p.getY()}, {50 + p.getX(), -45 + p.getY()}, {50 + p.getX(), -50 + p.getY()},
                    {60 + p.getX(), -50 + p.getY()}, {60 + p.getX(), -45 + p.getY()}
                })
-
-{
-    this->dx = p.getX();
-    this->dy = p.getY();
-}
+{}
 
 void Castelo::draw(QPainter& painter) {
     QVector<QPointF> pontos = *(this->getQPoints()); // Esses pontos ja incluem o deslocamento
