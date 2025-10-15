@@ -6,14 +6,18 @@
 #include <QPainter>
 #include <math.h>
 #include "Castelo.h"
+// necessarios para debug
+#include <memory>
+#include "Drawable.h"
+#include "Polygon.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    viewportX= this->width();
-    viewportY= this->height();
+    viewportX = this->width();
+    viewportY = this->height();
     setFixedSize(viewportX, viewportY);
 
     //painter.setViewport(-worldX,  worldY, this->width(), this->height());
@@ -22,34 +26,55 @@ MainWindow::MainWindow(QWidget *parent)
                                  });
 
     //pToCamera->rotateCamera(250,250); //Ponto "up"
-    pToCamera->transformObject(-180,-270); //Camera
+    pToCamera->transformObject(-100,-100); //Camera
+    pToCamera->scaleObject(2,2); //Camera
+
 
 }
 
 void MainWindow::criarMundo(DisplayFile& display){
 
-    display.add(new Linha("cima", Ponto(0,0), Ponto(100,0)));
-    display.add(new Linha("direita", Ponto(100,0), Ponto(100,100)));
-    display.add(new Linha("baixo", Ponto(100,100), Ponto(0,100)));
-    display.add(new Linha("esquerda",  Ponto(0,100), Ponto(0,0)));
+    Castelo* castelo1 = new Castelo(Ponto(200,200));
+    Castelo* castelo2 = new Castelo(Ponto(70,250));
+    Castelo* castelo3 = new Castelo(Ponto(300,400));
 
-    display.add(new Polygon("triangulo", QVector<Ponto>{
-                                             {170, 0}, {220, 100}, {120, 100}
-                                         }));
+    display.add(castelo1);
+    display.add(castelo2);
+    display.add(castelo3);
 
-    display.add(new Polygon("quadradao", QVector<Ponto>{
-                                             {120, 0}, {120, 100}, {220, 100}, {220, 0}
-                                         }));
+    Polygon* borderRectangle = new Polygon("borderRectangle", QVector<Ponto>{
+                                                                  {50, 50}, {50, 450}, {450, 450}, {450, 50}
+                                                              });
+    // Linha clipada 1
+    display.add(borderRectangle);
+    Ponto p11(500,300);
+    Ponto p21(-50,-50);
+    auto linha1 = borderRectangle->clipLine(p11, p21);
+    if(linha1)
+        display.add(linha1.release());
 
-    display.add(new Castelo(Ponto(400,400)));
+    // Linha clipada 2
+    Ponto p12(60,80);
+    Ponto p22(600,100);
+    auto linha2 = borderRectangle->clipLine(p12, p22);
+    if(linha2)
+        display.add(linha2.release());
 
-    display.getObject(5)->transformObject(0, 0);
-    display.getObject(5)->rotateObject(M_PI);
+    // Linha clipada 3
+    Ponto p13(300,300);
+    Ponto p23(200,400);
+    auto linha3 = borderRectangle->clipLine(p13, p23);
+    if(linha3)
+        display.add(linha3.release());
 
-    display.getObject(6)->transformObject(0, 0);
-    //display.getObject(6)->rotateObject(M_PI/4);
-    display.getObject(7)->scaleObject(4,4);
-    display.getObject(7)->rotateObject(M_PI/3);
+    castelo1->scaleObject(1.7, 1.7);
+    castelo1->rotateObject(M_PI);
+
+    castelo2->scaleObject(0.5, 0.5);
+    castelo2->transformObject(0, 100);
+
+    castelo3->rotateObject(-M_PI/5);
+
 
 }
 
