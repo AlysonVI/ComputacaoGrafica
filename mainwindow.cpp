@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
     viewportX = this->width();
     viewportY = this->height();
@@ -27,9 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //pToCamera->rotateCamera(250,250); //Ponto "up"
     pToCamera->transformObject(-100,-100); //Camera
-    pToCamera->scaleObject(1.3,1.3); //Camera
-
-
+    pToCamera->scaleObject(0.7,0.7); //Camera
 }
 
 void MainWindow::criarMundo(DisplayFile& display){
@@ -74,8 +73,6 @@ void MainWindow::criarMundo(DisplayFile& display){
     castelo2->transformObject(0, 100);
 
     castelo3->rotateObject(-M_PI/5);
-
-
 }
 
 void MainWindow::paintEvent(QPaintEvent* event){
@@ -117,7 +114,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_right_clicked()
 {
     //botão deve mover camera para direita
-    pToCamera->transformObject(10,0);
+    pToCamera->transformObject(100,0);
     update();
 }
 
@@ -125,7 +122,7 @@ void MainWindow::on_right_clicked()
 void MainWindow::on_down_clicked()
 {
     //botão deve mover camera para baixo
-    pToCamera->transformObject(0,10);
+    pToCamera->transformObject(0,100);
     update();
 }
 
@@ -133,7 +130,7 @@ void MainWindow::on_down_clicked()
 void MainWindow::on_left_clicked()
 {
     //botão deve mover camera para a esquerda
-    pToCamera->transformObject(-10,0);
+    pToCamera->transformObject(-100,0);
     update();
 }
 
@@ -141,7 +138,7 @@ void MainWindow::on_left_clicked()
 void MainWindow::on_up_clicked()
 {
     //botão deve mover camera para cima
-    pToCamera->transformObject(0,-10);
+    pToCamera->transformObject(0,-100);
     update();
 }
 

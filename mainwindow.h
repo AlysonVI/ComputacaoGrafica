@@ -18,6 +18,7 @@ public:
     Camera* pToCamera;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void casteljau(DisplayFile& display, Ponto &p0, Ponto &p1, Ponto &p2, int n);
 protected:
     void paintEvent(QPaintEvent* event) override;
 private slots:

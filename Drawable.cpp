@@ -116,8 +116,6 @@ std::unique_ptr<Linha> Drawable::clipLine(const Ponto& p1, const Ponto& p2) {
     const int BAIXO = 4;    // 0100
     const int CIMA = 8;     // 1000
 
-    // Começa assumindo que o ponto tá dentro
-
     int codigo1 = this->computeOutCode(x1, y1, X_MIN, X_MAX, Y_MIN, Y_MAX);
     int codigo2 = this->computeOutCode(x2, y2, X_MIN, X_MAX, Y_MIN, Y_MAX);
 
@@ -200,3 +198,5 @@ double Drawable::getYfromPoints(int i) {
     cout<<"\nErro, indice informado maior que a quantidade de pontos do objeto\n";
     return 0;
 }
+
+
