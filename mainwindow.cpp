@@ -10,11 +10,13 @@
 #include <memory>
 #include "Drawable.h"
 #include "Polygon.h"
+#include "Curva.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
     viewportX = this->width();
     viewportY = this->height();
@@ -27,9 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //pToCamera->rotateCamera(250,250); //Ponto "up"
     pToCamera->transformObject(-100,-100); //Camera
-    pToCamera->scaleObject(1.3,1.3); //Camera
-
-
+    pToCamera->scaleObject(1,1); //Camera
 }
 
 void MainWindow::criarMundo(DisplayFile& display){
@@ -37,10 +37,12 @@ void MainWindow::criarMundo(DisplayFile& display){
     Castelo* castelo1 = new Castelo(Ponto(200,200));
     Castelo* castelo2 = new Castelo(Ponto(70,250));
     Castelo* castelo3 = new Castelo(Ponto(300,400));
+    Curva* curva = new Curva("curva", Ponto(100,100), Ponto(200,300), Ponto(400,200), 5);
 
     display.add(castelo1);
     display.add(castelo2);
     display.add(castelo3);
+    display.add(curva);
 
     Polygon* borderRectangle = new Polygon("borderRectangle", QVector<Ponto>{
                                                                   {50, 50}, {50, 450}, {450, 450}, {450, 50}
@@ -74,8 +76,6 @@ void MainWindow::criarMundo(DisplayFile& display){
     castelo2->transformObject(0, 100);
 
     castelo3->rotateObject(-M_PI/5);
-
-
 }
 
 void MainWindow::paintEvent(QPaintEvent* event){
