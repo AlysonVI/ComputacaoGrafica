@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "DisplayFile.h"
 #include "Camera.h"
+#include "Polygon.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -16,6 +17,7 @@ class MainWindow : public QMainWindow
     DisplayFile display;
 public:
     Camera* pToCamera;
+    Polygon* pToBorderRectangle;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void casteljau(DisplayFile& display, Ponto &p0, Ponto &p1, Ponto &p2, int n);

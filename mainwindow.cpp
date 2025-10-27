@@ -23,13 +23,24 @@ MainWindow::MainWindow(QWidget *parent)
     setFixedSize(viewportX, viewportY);
 
     //painter.setViewport(-worldX,  worldY, this->width(), this->height());
-    pToCamera= new Camera("c1", QVector<Ponto>{
+    pToCamera = new Camera("c1", QVector<Ponto>{
                                      {0, 0}, {0, 500}, {500, 500}, {500, 0}
+                                 });
+
+    const double BORDA = 50; // Espessura da margem de desenho dentro da camera (retangulo de clipping)
+    pToBorderRectangle = new Polygon("border", QVector<Ponto>{
+                                     {pToCamera->getXfromPoints(0)+BORDA, pToCamera->getYfromPoints(0)+BORDA},
+                                     {pToCamera->getXfromPoints(1)+BORDA, pToCamera->getYfromPoints(1)-BORDA},
+                                     {pToCamera->getXfromPoints(2)-BORDA, pToCamera->getYfromPoints(2)-BORDA},
+                                     {pToCamera->getXfromPoints(3)-BORDA, pToCamera->getYfromPoints(3)+BORDA}
                                  });
 
     //pToCamera->rotateCamera(250,250); //Ponto "up"
     pToCamera->transformObject(-100,-100); //Camera
-    pToCamera->scaleObject(1,1); //Camera
+    pToCamera->scaleObject(1.2,1.2); //Camera
+
+    pToBorderRectangle->transformObject(20,10);
+    pToBorderRectangle->scaleObject(1.2,1.2); //Borda
 }
 
 void MainWindow::criarMundo(DisplayFile& display){
@@ -44,28 +55,25 @@ void MainWindow::criarMundo(DisplayFile& display){
     display.add(castelo3);
     display.add(curva);
 
-    Polygon* borderRectangle = new Polygon("borderRectangle", QVector<Ponto>{
-                                                                  {50, 50}, {50, 450}, {450, 450}, {450, 50}
-                                                              });
+
     // Linha clipada 1
-    display.add(borderRectangle);
     Ponto p11(500,300);
     Ponto p21(-50,-50);
-    auto linha1 = borderRectangle->clipLine(p11, p21);
+    auto linha1 = pToBorderRectangle->clipLine(p11, p21); // Se substituir pToBorderRectangle por pToCamera, o clipping ocorrera na camera ao inves da borda
     if(linha1)
         display.add(linha1.release());
 
     // Linha clipada 2
     Ponto p12(60,80);
     Ponto p22(600,100);
-    auto linha2 = borderRectangle->clipLine(p12, p22);
+    auto linha2 = pToBorderRectangle->clipLine(p12, p22);
     if(linha2)
         display.add(linha2.release());
 
     // Linha clipada 3
     Ponto p13(300,300);
     Ponto p23(200,400);
-    auto linha3 = borderRectangle->clipLine(p13, p23);
+    auto linha3 = pToBorderRectangle->clipLine(p13, p23);
     if(linha3)
         display.add(linha3.release());
 
@@ -84,6 +92,7 @@ void MainWindow::paintEvent(QPaintEvent* event){
     DisplayFile display;
 
     display.add(new Camera(*pToCamera));
+    display.add(new Polygon(*pToBorderRectangle));
 
     criarMundo(display);
 
@@ -94,7 +103,6 @@ void MainWindow::paintEvent(QPaintEvent* event){
     double Wymax = pPontosCamera[2][1][0];
     //Matriz global(centraliza e rotaciona o mundo)
     display.applyGlobalTransform(pToCamera->angleRelativeToX);
-
 
     //Normaliza todos os pontos para SCN eu acho
     display.triggerNormalize(Wxmax, Wxmin, Wymin, Wymax); // window
@@ -112,12 +120,14 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete pToCamera;
+    delete pToBorderRectangle;
 }
 
 void MainWindow::on_right_clicked()
 {
     //botão deve mover camera para direita
     pToCamera->transformObject(10,0);
+    pToBorderRectangle->transformObject(20,0);
     update();
 }
 
@@ -126,6 +136,7 @@ void MainWindow::on_down_clicked()
 {
     //botão deve mover camera para baixo
     pToCamera->transformObject(0,10);
+    pToBorderRectangle->transformObject(0,20);
     update();
 }
 
@@ -134,6 +145,7 @@ void MainWindow::on_left_clicked()
 {
     //botão deve mover camera para a esquerda
     pToCamera->transformObject(-10,0);
+    pToBorderRectangle->transformObject(-20,0);
     update();
 }
 
@@ -142,6 +154,7 @@ void MainWindow::on_up_clicked()
 {
     //botão deve mover camera para cima
     pToCamera->transformObject(0,-10);
+    pToBorderRectangle->transformObject(0,-20);
     update();
 }
 
