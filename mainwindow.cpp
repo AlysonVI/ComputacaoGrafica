@@ -10,6 +10,7 @@
 #include <memory>
 #include "Drawable.h"
 #include "Polygon.h"
+#include "Curva.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -28,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //pToCamera->rotateCamera(250,250); //Ponto "up"
     pToCamera->transformObject(-100,-100); //Camera
-    pToCamera->scaleObject(0.7,0.7); //Camera
+    pToCamera->scaleObject(1,1); //Camera
 }
 
 void MainWindow::criarMundo(DisplayFile& display){
@@ -36,10 +37,12 @@ void MainWindow::criarMundo(DisplayFile& display){
     Castelo* castelo1 = new Castelo(Ponto(200,200));
     Castelo* castelo2 = new Castelo(Ponto(70,250));
     Castelo* castelo3 = new Castelo(Ponto(300,400));
+    Curva* curva = new Curva("curva", Ponto(100,100), Ponto(200,300), Ponto(400,200), 5);
 
     display.add(castelo1);
     display.add(castelo2);
     display.add(castelo3);
+    display.add(curva);
 
     Polygon* borderRectangle = new Polygon("borderRectangle", QVector<Ponto>{
                                                                   {50, 50}, {50, 450}, {450, 450}, {450, 50}
@@ -114,7 +117,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_right_clicked()
 {
     //botão deve mover camera para direita
-    pToCamera->transformObject(100,0);
+    pToCamera->transformObject(10,0);
     update();
 }
 
@@ -122,7 +125,7 @@ void MainWindow::on_right_clicked()
 void MainWindow::on_down_clicked()
 {
     //botão deve mover camera para baixo
-    pToCamera->transformObject(0,100);
+    pToCamera->transformObject(0,10);
     update();
 }
 
@@ -130,7 +133,7 @@ void MainWindow::on_down_clicked()
 void MainWindow::on_left_clicked()
 {
     //botão deve mover camera para a esquerda
-    pToCamera->transformObject(-100,0);
+    pToCamera->transformObject(-10,0);
     update();
 }
 
@@ -138,7 +141,7 @@ void MainWindow::on_left_clicked()
 void MainWindow::on_up_clicked()
 {
     //botão deve mover camera para cima
-    pToCamera->transformObject(0,-100);
+    pToCamera->transformObject(0,-10);
     update();
 }
 

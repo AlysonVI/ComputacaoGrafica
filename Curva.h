@@ -5,10 +5,9 @@
 
 class Curva : public Drawable {
 private:
-    QVector<Ponto> linhas;
+    void casteljau(const Ponto &p0, const Ponto &p1, const Ponto &p2, int n);
 public:
-    Curva(const QString& n, const Ponto& p0, const Ponto& p1, const Ponto& p2, int altura);
-    void Curva::casteljau(Ponto &p0, Ponto &p1, Ponto &p2, int n);
+    Curva(const QString& n, const Ponto& p0, const Ponto& p1, const Ponto& p2, int suavidade);
     void draw(QPainter& painter) override;
 };
 

@@ -162,7 +162,7 @@ std::unique_ptr<Linha> Drawable::clipLine(const Ponto& p1, const Ponto& p2) {
     }
 }
 
-// Computa o codigo de saída do ponto da reta
+// Computa o codigo de saída do ponto da reta, usado para clipping
 int Drawable::computeOutCode(double x, double y, double X_MIN, double X_MAX, double Y_MIN, double Y_MAX) {
     // códigos de região
     const int DENTRO = 0;   // 0000
@@ -187,14 +187,14 @@ int Drawable::computeOutCode(double x, double y, double X_MIN, double X_MAX, dou
 
 double Drawable::getXfromPoints(int i) {
     if(i < this->points.size())
-        return (points[i])[0][0]; // x do ponto nesse indice
+        return points[i].getX();
     cout<<"\nErro, indice informado maior que a quantidade de pontos do objeto\n";
     return 0;
 }
 
 double Drawable::getYfromPoints(int i) {
     if(i < this->points.size())
-        return (points[i])[1][0]; // y do ponto nesse indices
+        return points[i].getY();
     cout<<"\nErro, indice informado maior que a quantidade de pontos do objeto\n";
     return 0;
 }
