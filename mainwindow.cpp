@@ -6,7 +6,6 @@
 #include <QPainter>
 #include <math.h>
 #include "Castelo.h"
-// necessarios para debug
 #include <memory>
 #include "Drawable.h"
 #include "Polygon.h"

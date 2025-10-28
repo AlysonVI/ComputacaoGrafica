@@ -31,7 +31,7 @@ Castelo::Castelo(const Ponto& p)
         {100, -50}, {100, 0},
 
         //Paredes e Chão
-        {0, 0}, {100, 0}, // Chão (era desenhado em 3 partes, agora uma linha)
+        {0, 0}, {100, 0}, // Chão
         {25, -35}, {75, -35}, // Topo da parede principal
 
         //Porta
@@ -50,14 +50,17 @@ Castelo::Castelo(const Ponto& p)
     for(auto& ponto : pontos)
         points.append(ponto);
 
-    this->transformObject(p.getX(), p.getY());
+    this->transformObject(p.getX(), p.getY(), p.getZ());
 }
 
-void Castelo::draw(QPainter& painter) {
+void Castelo::draw(QPainter& painter) { // faz projecao ortogonal
 
     int i = 0;
     for(i = 0; i < points.size(); i++){
-        painter.drawLine(*(points[i].convertToQPointF()), *(points[i+1].convertToQPointF()));
+        QPointF p12D(this->points[0].getX(), this->points[0].getY());
+        QPointF p22D(this->points[i+1].getX(), this->points[i+1].getY());
+
+        painter.drawLine((p12D), (p22D));
         i++;
     }
 }

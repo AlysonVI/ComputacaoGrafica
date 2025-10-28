@@ -38,19 +38,22 @@ public:
 
     void transformObject(double dX, double dY);
     void scaleObject(double sX, double sY);
-    void rotateObject(double ang);
+    void rotateObjectX(double ang);
+    void rotateObjectY(double ang);
+    void rotateObjectZ(double ang);
 
     void viewportObject(double Vxmin, double Vxmax, double Vymin, double Vymax);
     void normalizeObject(double Wxmin, double Wxmax, double Wymin, double Wymax);
     void applyMatrix(Matriz &M);
-    vector<double>* getObjectAverage();
-    void goToOrigin(vector<double>*);
-    void returnFromOrigin(vector<double>*);
+    Ponto getObjectAverage();
+    void goToOrigin(Ponto p);
+    void returnFromOrigin(Ponto p);
 
     std::unique_ptr<Linha> clipLine(const Ponto& p1, const Ponto& p2); // funciona para ponto tb, é só parrar pq e p2 iguais
     int computeOutCode(double x, double y, double X_MIN, double X_MAX, double Y_MIN, double Y_MAX);
     double getXfromPoints(int i);
     double getYfromPoints(int i);
+    double getZfromPoints(int i);
 
 };
 

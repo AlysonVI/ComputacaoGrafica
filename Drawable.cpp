@@ -7,68 +7,82 @@ using namespace std;
 Drawable::Drawable(const QString& n, ObjectType t, const QVector<Ponto>& pts)
     : nome(n), type(t), points(pts) {}
 
-QVector<QPointF>* Drawable::getQPoints(){
+QVector<QPointF>* Drawable::getQPoints() {
     QVector<QPointF> *pointerToVector= new QVector<QPointF>;
-    for(auto& obj : points){
-        pointerToVector->append(*(obj.convertToQPointF()));
+    for(auto& aux : points){
+        pointerToVector->append(*(aux.convertToQPointF()));
     }
     return pointerToVector;
 }
 
-void Drawable::transformObject(double dX, double dY) {
+void Drawable::transformObject(double dX, double dY, double dZ) {
     for(auto& aux: points) {
-        aux.transformPoint(dX, dY);
+        aux.transformPoint(dX, dY, dZ);
     }
 }
 
-void Drawable::scaleObject(double sX, double sY) {
-    vector<double>* avgPoint = getObjectAverage();
+void Drawable::scaleObject(double sX, double sY, double sZ) {
+    Ponto avgPoint = getObjectAverage();
     this->goToOrigin(avgPoint);
 
     for(auto& aux: points) {
-        aux.scalePoint(sX, sY);
+        aux.scalePoint(sX, sY, sZ);
     }
     this->returnFromOrigin(avgPoint);
 }
 
-void Drawable::rotateObject(double ang) {
-    vector<double>* avgPoint= getObjectAverage();
+void Drawable::rotateObjectX(double ang) {
+    Ponto avgPoint = getObjectAverage();
     this->goToOrigin(avgPoint);
 
     for(auto& aux: points) {
-        aux.rotatePoint(ang);
+        aux.rotatePointX(ang);
     }
     this->returnFromOrigin(avgPoint);
 }
 
-vector<double>* Drawable::getObjectAverage() {
-    double somaX= 0, somaY= 0;
+void Drawable::rotateObjectY(double ang) {
+    Ponto avgPoint = getObjectAverage();
+    this->goToOrigin(avgPoint);
 
-    for(int i=0; i<points.size(); i++) {
-        somaX += (points[i])[0][0];
-        somaY += (points[i])[1][0];
+    for(auto& aux: points) {
+        aux.rotatePointY(ang);
     }
+    this->returnFromOrigin(avgPoint);
+}
 
-    vector<double>* referencePoint= new vector<double>(2, 0);
-    (*referencePoint)[0]= somaX/points.size();
-    (*referencePoint)[1]= somaY/points.size();
-    return referencePoint;
+void Drawable::rotateObjectZ(double ang) {
+    Ponto avgPoint = getObjectAverage();
+    this->goToOrigin(avgPoint);
+
+    for(auto& aux: points) {
+        aux.rotatePointZ(ang);
+    }
+    this->returnFromOrigin(avgPoint);
+}
+
+Ponto Drawable::getObjectAverage() {
+    double somaX = 0, somaY = 0, somaZ = 0;
+
+    for(auto& aux: points) {
+        somaX += aux.getX();
+        somaY += aux.getY();
+        somaZ += aux.getZ();
+    }
+    int numPoints = points.size();
+    return Ponto(somaX/numPoints, somaY/numPoints, somaZ/numPoints);
 }
 
 // transporta matriz pro 0,0
-void Drawable::goToOrigin(vector<double> *avgPoint) {
+void Drawable::goToOrigin(Ponto p) {
 
-    double dX = (*avgPoint)[0];
-    double dY = (*avgPoint)[1];
-    transformObject(-dX, -dY);
+    transformObject(-p.getX(), -p.getY(), -p.getZ());
 }
 
 // tras objeto de volta do 0,0
-void Drawable::returnFromOrigin(vector<double>* avgPoint) {
-    double dX = (*avgPoint)[0];
-    double dY = (*avgPoint)[1];
+void Drawable::returnFromOrigin(Ponto p) {
 
-    transformObject(dX, dY);
+    transformObject(p.getX(), p.getY(), p.getZ());
 }
 
 void Drawable::normalizeObject(double Wxmin, double Wxmax, double Wymin, double Wymax) {
@@ -87,15 +101,17 @@ void Drawable::viewportObject(double Vxmin, double Vxmax, double Vymin, double V
 
 void Drawable::applyMatrix(Matriz &M) {
     for (auto& p : points) {
-        Matriz pt(3,1);
+        Matriz pt(4,1);
         pt[0][0] = p[0][0];
         pt[1][0] = p[1][0];
-        pt[2][0] = 1;
+        pt[2][0] = p[2][0];
+        pt[3][0] = 1;
 
         pt = M * pt;
 
         p[0][0] = pt[0][0];
         p[1][0] = pt[1][0];
+        p[2][0] = pt[2][0];
     }
 }
 
@@ -195,6 +211,13 @@ double Drawable::getXfromPoints(int i) {
 double Drawable::getYfromPoints(int i) {
     if(i < this->points.size())
         return points[i].getY();
+    cout<<"\nErro, indice informado maior que a quantidade de pontos do objeto\n";
+    return 0;
+}
+
+double Drawable::getZfromPoints(int i) {
+    if(i < this->points.size())
+        return points[i].getZ();
     cout<<"\nErro, indice informado maior que a quantidade de pontos do objeto\n";
     return 0;
 }

@@ -22,10 +22,10 @@ Drawable* DisplayFile::getObject(int n){
 }
 
 void DisplayFile::triggerTranslate(){
-    vector<double>* centroWindow= getObject(0)->getObjectAverage();
+    Ponto centroWindow = getObject(0)->getObjectAverage();
     for(auto&obj : objects){
         if(obj->getType() == ObjectType::Camera) continue;
-        obj->transformObject(-(*centroWindow)[0], -(*centroWindow)[1]);
+        obj->transformObject(-centroWindow.getX(), -centroWindow.getY());
     }
 }
 
@@ -45,9 +45,9 @@ void DisplayFile::applyGlobalTransform(double theta) {
     }
 }
 Matriz DisplayFile::getWorldToCameraMatrix(double theta) {//matriz global para fazer translaçãp para centro e rotação baseado no angulo calculado antes (relativeToX)
-    vector<double>* centroCamera = getObject(0)->getObjectAverage();
-    double cx = (*centroCamera)[0];
-    double cy = (*centroCamera)[1];
+    Ponto centroCamera = getObject(0)->getObjectAverage();
+    double cx = centroCamera.getX();
+    double cy = centroCamera.getY();
 
 
     Matriz T(3,3), R(3,3);

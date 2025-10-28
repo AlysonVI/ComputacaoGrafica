@@ -32,7 +32,10 @@ void Curva::draw(QPainter& painter){
 
     int i = 0;
     for(i = 0; i < points.size(); i++){
-        painter.drawLine(*(points[i].convertToQPointF()), *(points[i+1].convertToQPointF()));
+        QPointF p12D(this->points[0].getX(), this->points[0].getY());
+        QPointF p22D(this->points[i+1].getX(), this->points[i+1].getY());
+
+        painter.drawLine((p12D), (p22D));
         i++;
     }
 }
