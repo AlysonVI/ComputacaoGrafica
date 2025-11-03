@@ -45,6 +45,52 @@ Matriz Matriz::operator + (Matriz m){
 }
 
 void Matriz::transformPoint(double dX, double dY, double dZ) {
+    Matriz finalMatrix = getTransformMatrix(dX, dY, dZ) * (*this);
+
+    (*this)[0][0] = finalMatrix[0][0];
+    (*this)[1][0] = finalMatrix[1][0];
+    (*this)[2][0] = finalMatrix[2][0];
+    (*this)[3][0] = finalMatrix[3][0];
+}
+
+
+void Matriz::scalePoint(double sX, double sY, double sZ) {
+    Matriz finalMatrix = getScaleMatrix(sX, sY, sZ) * (*this);
+
+    (*this)[0][0] = finalMatrix[0][0];
+    (*this)[1][0] = finalMatrix[1][0];
+    (*this)[2][0] = finalMatrix[2][0];
+    (*this)[3][0] = finalMatrix[3][0];
+}
+
+void Matriz::rotatePointX(double ang) {
+    Matriz finalMatrix = getRotateMatrixX(ang) * (*this);
+
+    (*this)[0][0] = finalMatrix[0][0];
+    (*this)[1][0] = finalMatrix[1][0];
+    (*this)[2][0] = finalMatrix[2][0];
+    (*this)[3][0] = finalMatrix[3][0];
+}
+
+void Matriz::rotatePointY(double ang) {
+    Matriz finalMatrix = getRotateMatrixY(ang) * (*this);
+
+    (*this)[0][0] = finalMatrix[0][0];
+    (*this)[1][0] = finalMatrix[1][0];
+    (*this)[2][0] = finalMatrix[2][0];
+    (*this)[3][0] = finalMatrix[3][0];
+}
+
+void Matriz::rotatePointZ(double ang) {
+    Matriz finalMatrix = getRotateMatrixZ(ang) * (*this);
+
+    (*this)[0][0] = finalMatrix[0][0];
+    (*this)[1][0] = finalMatrix[1][0];
+    (*this)[2][0] = finalMatrix[2][0];
+    (*this)[3][0] = finalMatrix[3][0];
+}
+
+Matriz Matriz::getTransformMatrix(double dX, double dY, double dZ) {
     Matriz transformMatrix(4,4);
 
     transformMatrix[0][0] = 1; transformMatrix[0][1] = 0; transformMatrix[0][2] = 0; transformMatrix[0][3] = dX;
@@ -52,49 +98,32 @@ void Matriz::transformPoint(double dX, double dY, double dZ) {
     transformMatrix[2][0] = 0; transformMatrix[2][1] = 0; transformMatrix[2][2] = 1; transformMatrix[2][3] = dZ;
     transformMatrix[3][0] = 0; transformMatrix[3][1] = 0; transformMatrix[3][2] = 0; transformMatrix[3][3] = 1;
 
-    transformMatrix = transformMatrix * (*this);
-
-
-    (*this)[0][0]= transformMatrix[0][0];
-    (*this)[1][0]= transformMatrix[1][0];
-    (*this)[2][0]= transformMatrix[2][0];
-    (*this)[3][0]= transformMatrix[3][0];
+    return transformMatrix;
 }
 
-
-void Matriz::scalePoint(double sX, double sY, double sZ) {
+Matriz Matriz::getScaleMatrix(double sX, double sY, double sZ) {
     Matriz scaleMatrix(4,4);
 
     scaleMatrix[0][0] = sX;scaleMatrix[0][1] = 0;scaleMatrix[0][2] = 0;scaleMatrix[0][3] = 0;
     scaleMatrix[1][0] = 0; scaleMatrix[1][1] = sY;scaleMatrix[1][2] = 0;scaleMatrix[1][3] = 0;
     scaleMatrix[2][0] = 0; scaleMatrix[2][1] = 0; scaleMatrix[2][2] = sZ;scaleMatrix[2][3] = 0;
     scaleMatrix[3][0] = 0; scaleMatrix[3][1] = 0; scaleMatrix[3][2] = 0; scaleMatrix[3][3] = 1;
-    scaleMatrix = scaleMatrix * (*this);
 
-    (*this)[0][0]= scaleMatrix[0][0];
-    (*this)[1][0]= scaleMatrix[1][0];
-    (*this)[2][0]= scaleMatrix[2][0];
-    (*this)[3][0]= scaleMatrix[3][0];
-
+    return scaleMatrix;
 }
 
-
-void Matriz::rotatePointZ(double ang) {
+Matriz Matriz::getRotateMatrixX(double ang) {
     Matriz rotateMatrix(4,4);
 
-    rotateMatrix[0][0] = cos(ang); rotateMatrix[0][1] = -sin(ang); rotateMatrix[0][2] = 0; rotateMatrix[0][3]=0;
-    rotateMatrix[1][0] = sin(ang); rotateMatrix[1][1] = cos(ang); rotateMatrix[1][2] = 0; rotateMatrix[1][3]=0;
-    rotateMatrix[2][0] = 0; rotateMatrix[2][1] = 0; rotateMatrix[2][2] = 1; rotateMatrix[2][3]=0;
+    rotateMatrix[0][0] = 1; rotateMatrix[0][1] = 0; rotateMatrix[0][2] = 0; rotateMatrix[0][3]=0;
+    rotateMatrix[1][0] = 0; rotateMatrix[1][1] = cos(ang); rotateMatrix[1][2] = -sin(ang); rotateMatrix[1][3]=0;
+    rotateMatrix[2][0] = 0; rotateMatrix[2][1] = sin(ang); rotateMatrix[2][2] = cos(ang); rotateMatrix[2][3]=0;
     rotateMatrix[3][0] = 0; rotateMatrix[3][1] = 0; rotateMatrix[3][2] = 0; rotateMatrix[3][3]=1;
 
-    rotateMatrix= rotateMatrix * (*this);
-
-    (*this)[0][0]= rotateMatrix[0][0];
-    (*this)[1][0]= rotateMatrix[1][0];
-    (*this)[2][0]= rotateMatrix[2][0];
-    (*this)[3][0]= rotateMatrix[3][0];
+    return rotateMatrix;
 }
-void Matriz::rotatePointY(double ang) {
+
+Matriz Matriz::getRotateMatrixY(double ang) {
     Matriz rotateMatrix(4,4);
 
     rotateMatrix[0][0] = cos(ang); rotateMatrix[0][1] = 0; rotateMatrix[0][2] = sin(ang); rotateMatrix[0][3]=0;
@@ -102,29 +131,20 @@ void Matriz::rotatePointY(double ang) {
     rotateMatrix[2][0] = -sin(ang); rotateMatrix[2][1] = 0; rotateMatrix[2][2] = cos(ang); rotateMatrix[2][3]=0;
     rotateMatrix[3][0] = 0; rotateMatrix[3][1] = 0; rotateMatrix[3][2] = 0; rotateMatrix[3][3]=1;
 
-    rotateMatrix= rotateMatrix * (*this);
-
-    (*this)[0][0]= rotateMatrix[0][0];
-    (*this)[1][0]= rotateMatrix[1][0];
-    (*this)[2][0]= rotateMatrix[2][0];
-    (*this)[3][0]= rotateMatrix[3][0];
+    return rotateMatrix;
 }
 
-void Matriz::rotatePointX(double ang) {
+Matriz Matriz::getRotateMatrixZ(double ang) {
     Matriz rotateMatrix(4,4);
 
-    rotateMatrix[0][0] = 1; rotateMatrix[0][1] = 0; rotateMatrix[0][2] = 0; rotateMatrix[0][3]=0;
-    rotateMatrix[1][0] = 0; rotateMatrix[1][1] = cos(ang); rotateMatrix[1][2] = -sin(ang); rotateMatrix[1][3]=0;
-    rotateMatrix[2][0] = 0; rotateMatrix[2][1] = -sin(ang); rotateMatrix[2][2] = cos(ang); rotateMatrix[2][3]=0;
+    rotateMatrix[0][0] = cos(ang); rotateMatrix[0][1] = -sin(ang); rotateMatrix[0][2] = 0; rotateMatrix[0][3]=0;
+    rotateMatrix[1][0] = sin(ang); rotateMatrix[1][1] = cos(ang); rotateMatrix[1][2] = 0; rotateMatrix[1][3]=0;
+    rotateMatrix[2][0] = 0; rotateMatrix[2][1] = 0; rotateMatrix[2][2] = 1; rotateMatrix[2][3]=0;
     rotateMatrix[3][0] = 0; rotateMatrix[3][1] = 0; rotateMatrix[3][2] = 0; rotateMatrix[3][3]=1;
 
-    rotateMatrix= rotateMatrix * (*this);
-
-    (*this)[0][0]= rotateMatrix[0][0];
-    (*this)[1][0]= rotateMatrix[1][0];
-    (*this)[2][0]= rotateMatrix[2][0];
-    (*this)[3][0]= rotateMatrix[3][0];
+    return rotateMatrix;
 }
+
 void Matriz::toSCN(double Wxmin, double Wxmax, double Wymin, double Wymax, bool useMinusOneToOne) {
 
     transformPoint(-Wxmin, -Wymin,0);
@@ -156,20 +176,4 @@ void Matriz::toViewport(double Vxmin, double Vxmax, double Vymin, double Vymax, 
     double yv = Vymin + (1 - y) * (Vymax - Vymin);
     (*this)[0][0] = xv;
     (*this)[1][0] = yv;
-}
-
-Matriz Matriz::getTransformMatrix(double dX, double dY) {
-    Matriz T(3,3);
-    T[0][0] = 1; T[0][1] = 0; T[0][2] = dX;
-    T[1][0] = 0; T[1][1] = 1; T[1][2] = dY;
-    T[2][0] = 0; T[2][1] = 0; T[2][2] = 1;
-    return T;
-}
-
-Matriz Matriz::getRotateMatrix(double ang) {
-    Matriz R(3,3);
-    R[0][0] = cos(ang); R[0][1] = -sin(ang); R[0][2] = 0;
-    R[1][0] = sin(ang); R[1][1] = cos(ang);  R[1][2] = 0;
-    R[2][0] = 0;        R[2][1] = 0;         R[2][2] = 1;
-    return R;
 }

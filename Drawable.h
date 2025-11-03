@@ -36,8 +36,8 @@ public:
     virtual void draw(QPainter& painter)= 0; //draw a ser definido (implementação na herança)
 
 
-    void transformObject(double dX, double dY);
-    void scaleObject(double sX, double sY);
+    void transformObject(double dX, double dY, double dZ);
+    void scaleObject(double sX, double sY, double sZ);
     void rotateObjectX(double ang);
     void rotateObjectY(double ang);
     void rotateObjectZ(double ang);

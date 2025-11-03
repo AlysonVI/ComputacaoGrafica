@@ -35,11 +35,11 @@ MainWindow::MainWindow(QWidget *parent)
                                  });
 
     //pToCamera->rotateCamera(250,250); //Ponto "up"
-    pToCamera->transformObject(-100,-100); //Camera
-    pToCamera->scaleObject(1.2,1.2); //Camera
+    pToCamera->transformObject(-100,-100,0); //Camera
+    pToCamera->scaleObject(1.2,1.2,0); //Camera
 
-    pToBorderRectangle->transformObject(20,10);
-    pToBorderRectangle->scaleObject(1.2,1.2); //Borda
+    pToBorderRectangle->transformObject(20,10,0);
+    pToBorderRectangle->scaleObject(1.2,1.2,0); //Borda
 }
 
 void MainWindow::criarMundo(DisplayFile& display){
@@ -76,13 +76,13 @@ void MainWindow::criarMundo(DisplayFile& display){
     if(linha3)
         display.add(linha3.release());
 
-    castelo1->scaleObject(1.7, 1.7);
-    castelo1->rotateObject(M_PI);
+    castelo1->scaleObject(1.7, 1.7, 0);
+    castelo1->rotateObjectX(M_PI);
 
-    castelo2->scaleObject(0.5, 0.5);
-    castelo2->transformObject(0, 100);
+    castelo2->scaleObject(0.5, 0.5, 0);
+    castelo2->transformObject(0, 100, 0);
 
-    castelo3->rotateObject(-M_PI/5);
+    castelo3->rotateObjectX(-M_PI/5);
 }
 
 void MainWindow::paintEvent(QPaintEvent* event){
@@ -125,8 +125,8 @@ MainWindow::~MainWindow()
 void MainWindow::on_right_clicked()
 {
     //botão deve mover camera para direita
-    pToCamera->transformObject(10,0);
-    pToBorderRectangle->transformObject(20,0);
+    pToCamera->transformObject(10,0,0);
+    pToBorderRectangle->transformObject(20,0,0);
     update();
 }
 
@@ -134,8 +134,8 @@ void MainWindow::on_right_clicked()
 void MainWindow::on_down_clicked()
 {
     //botão deve mover camera para baixo
-    pToCamera->transformObject(0,10);
-    pToBorderRectangle->transformObject(0,20);
+    pToCamera->transformObject(0,10,0);
+    pToBorderRectangle->transformObject(0,20,0);
     update();
 }
 
@@ -143,8 +143,8 @@ void MainWindow::on_down_clicked()
 void MainWindow::on_left_clicked()
 {
     //botão deve mover camera para a esquerda
-    pToCamera->transformObject(-10,0);
-    pToBorderRectangle->transformObject(-20,0);
+    pToCamera->transformObject(-10,0,0);
+    pToBorderRectangle->transformObject(-20,0,0);
     update();
 }
 
@@ -152,8 +152,8 @@ void MainWindow::on_left_clicked()
 void MainWindow::on_up_clicked()
 {
     //botão deve mover camera para cima
-    pToCamera->transformObject(0,-10);
-    pToBorderRectangle->transformObject(0,-20);
+    pToCamera->transformObject(0,-10,0);
+    pToBorderRectangle->transformObject(0,-20,0);
     update();
 }
 
