@@ -4,6 +4,8 @@
 #include <QTextStream>
 #include <QStringList>
 #include <iostream>
+#include <QDebug>  // Use QDebug/qWarning em vez de iostream
+#include <QFileInfo> // Para pegar o nome do arquivo
 
 ModeloOBJ::ModeloOBJ(const QString &filePath)
     : Drawable("OBJ", ObjectType::OBJ, {}) {
@@ -17,10 +19,16 @@ void ModeloOBJ::loadModel(const QString &filePath) {
     QFile file(filePath);
 
     // Abre arquivo em read-only
+    // Nova versão de checagem de erro
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        cout << "Erro. Arquivo não foi aberto. ";
+        // qWarning() é o "cout" do Qt para erros
+        qWarning() << "ERRO: Não foi possível abrir o arquivo:" << filePath;
+        qWarning() << "Motivo do erro:" << file.errorString(); // <-- ISSO É O MAIS IMPORTANTE
         return;
     }
+
+    // Se chegou aqui, o arquivo abriu!
+    qDebug() << "Arquivo aberto com sucesso:" << filePath;
 
     // Leitor de arquivos
     QTextStream in(&file);
@@ -49,8 +57,6 @@ void ModeloOBJ::loadModel(const QString &filePath) {
             double z = partes.at(3).toDouble();
 
             points.append(Ponto(x, y, z));
-
-            cout << "Vertice encontrada: " << x << y << z;
         }
         else if (tipo == "f") { // face
             if (partes.count() < 4) continue; // f v1 v2 v3 ...
@@ -73,7 +79,7 @@ void ModeloOBJ::loadModel(const QString &filePath) {
 }
 
 void ModeloOBJ::draw(QPainter& painter) {
-    if (normPoints.isEmpty()) {
+    if (points.isEmpty()) {
         return;
     }
     for (const QVector<int>& face : faces) {
@@ -88,8 +94,8 @@ void ModeloOBJ::draw(QPainter& painter) {
             int p2Indice = face.at((i + 1) % face.count());
 
             // Pega os pontos 2D e desenha, fazendo projeção ortogonal
-            QPointF p12D((normPoints.at(p1Indice)).getX(), (normPoints.at(p1Indice)).getY());
-            QPointF p22D((normPoints.at(p2Indice)).getX(), (normPoints.at(p2Indice)).getY());
+            QPointF p12D((points.at(p1Indice)).getX(), (points.at(p1Indice)).getY());
+            QPointF p22D((points.at(p2Indice)).getX(), (points.at(p2Indice)).getY());
 
             painter.drawLine((p12D), (p22D));
         }

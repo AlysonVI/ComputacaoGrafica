@@ -85,9 +85,12 @@ void MainWindow::criarMundo(DisplayFile& display){
 
     castelo3->rotateObjectX(-M_PI/5);
 
-    ModeloOBJ* modelo = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/006 - Charizard");
+    ModeloOBJ* modelo = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/006 - Charizard/Charizard.obj");
     display.add(modelo);
-    modelo->scaleObject(5,5,5);
+    modelo->rotateObjectX(M_PI);
+    modelo->rotateObjectY(M_PI/5);
+    modelo->rotateObjectZ(M_PI/4);
+    modelo->scaleObject(15,15,15);
 }
 
 void MainWindow::paintEvent(QPaintEvent* event){
