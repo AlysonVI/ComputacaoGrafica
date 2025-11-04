@@ -16,6 +16,7 @@ SOURCES += \
     Drawable.cpp \
     Linha.cpp \
     Matriz.cpp \
+    OBJImporter.cpp \
     Polygon.cpp \
     Ponto.cpp \
     main.cpp \
@@ -29,6 +30,7 @@ HEADERS += \
     Drawable.h \
     Linha.h \
     Matriz.h \
+    OBJImporter.h \
     Polygon.h \
     Ponto.h \
     mainwindow.h
