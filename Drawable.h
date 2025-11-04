@@ -16,7 +16,8 @@ enum class ObjectType {
     Polygon,
     Camera,
     Castelo,
-    Curva
+    Curva,
+    OBJ
 };
 
 class Drawable {
@@ -54,7 +55,6 @@ public:
     double getXfromPoints(int i);
     double getYfromPoints(int i);
     double getZfromPoints(int i);
-
 };
 
 #endif
