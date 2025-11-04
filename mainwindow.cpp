@@ -10,6 +10,7 @@
 #include "Drawable.h"
 #include "Polygon.h"
 #include "Curva.h"
+#include "ModeloOBJ.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -34,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
                                      {pToCamera->getXfromPoints(3)-BORDA, pToCamera->getYfromPoints(3)+BORDA}
                                  });
 
-    //pToCamera->rotateCamera(250,250); //Ponto "up"
+    // pToCamera->rotateCamera(250,250); //Ponto "up"
     pToCamera->transformObject(-100,-100,0); //Camera
     pToCamera->scaleObject(1.2,1.2,0); //Camera
 
@@ -83,6 +84,10 @@ void MainWindow::criarMundo(DisplayFile& display){
     castelo2->transformObject(0, 100, 0);
 
     castelo3->rotateObjectX(-M_PI/5);
+
+    ModeloOBJ* modelo = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/006 - Charizard");
+    display.add(modelo);
+    modelo->scaleObject(5,5,5);
 }
 
 void MainWindow::paintEvent(QPaintEvent* event){
@@ -111,7 +116,7 @@ void MainWindow::paintEvent(QPaintEvent* event){
 
     //painter.setWindow(-worldX, worldY, this->width(), this->height());
 
-    display.printAll();
+    //display.printAll();
     display.drawAll(painter);
     cout << "Update event\n";
 }

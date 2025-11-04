@@ -31,7 +31,7 @@ void DisplayFile::triggerTranslate(){
     Ponto centroWindow = getObject(0)->getObjectAverage();
     for(auto&obj : objects){
         if(obj->getType() == ObjectType::Camera) continue;
-        obj->transformObject(-centroWindow.getX(), -centroWindow.getY());
+        obj->transformObject(-centroWindow.getX(), -centroWindow.getY(), -centroWindow.getZ());
     }
 }
 
@@ -54,11 +54,11 @@ Matriz DisplayFile::getWorldToCameraMatrix(double theta) {//matriz global para f
     Ponto centroCamera = getObject(0)->getObjectAverage();
     double cx = centroCamera.getX();
     double cy = centroCamera.getY();
-
+    double cz = centroCamera.getZ();
 
     Matriz T(3,3), R(3,3);
-    T = T.getTransformMatrix(-cx, -cy);
-    R = R.getRotateMatrix(-theta);
+    T = T.getTransformMatrix(-cx, -cy, -cz);
+    R = R.getRotateMatrixZ(-theta);
 
     Matriz globalMatrix = R * T;
     return globalMatrix;
