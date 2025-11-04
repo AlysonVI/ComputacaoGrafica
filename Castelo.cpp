@@ -56,9 +56,9 @@ Castelo::Castelo(const Ponto& p)
 void Castelo::draw(QPainter& painter) { // faz projecao ortogonal
 
     int i = 0;
-    for(i = 0; i < (points.size() - 1); i++){
-        QPointF p12D(this->points[i].getX(), this->points[i].getY());
-        QPointF p22D(this->points[i+1].getX(), this->points[i+1].getY());
+    for(i = 0; i < (normPoints.size() - 1); i++) {
+        QPointF p12D(normPoints[i].getX(), normPoints[i].getY());
+        QPointF p22D(normPoints[i+1].getX(), normPoints[i+1].getY());
 
         painter.drawLine((p12D), (p22D));
         i++;
