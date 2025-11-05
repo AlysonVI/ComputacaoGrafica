@@ -85,6 +85,7 @@ void MainWindow::criarMundo(DisplayFile& display){
 
     castelo3->rotateObjectX(-M_PI/5);
 
+    // modelos obj
     ModeloOBJ* modelo1 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/Projeto CG/objFiles/Lopunny.obj");
     display.add(modelo1);
     modelo1->transformObject(200,450,0);
