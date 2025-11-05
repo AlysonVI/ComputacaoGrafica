@@ -176,4 +176,5 @@ void Matriz::toViewport(double Vxmin, double Vxmax, double Vymin, double Vymax, 
     double yv = Vymin + (1 - y) * (Vymax - Vymin);
     (*this)[0][0] = xv;
     (*this)[1][0] = yv;
+
 }

@@ -85,11 +85,11 @@ void MainWindow::criarMundo(DisplayFile& display){
 
     castelo3->rotateObjectX(-M_PI/5);
 
-    ModeloOBJ* modelo = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/006 - Charizard/Charizard.obj");
+    ModeloOBJ* modelo = new ModeloOBJ("C:/ProjetoCG/ComputacaoGrafica/006 - Charizard/Charizard.obj");
     display.add(modelo);
-    modelo->rotateObjectX(M_PI);
-    modelo->rotateObjectY(M_PI/5);
-    modelo->rotateObjectZ(M_PI/4);
+    //modelo->rotateObjectX(M_PI);
+    modelo->rotateObjectY(M_PI/2);
+    //modelo->rotateObjectZ(M_PI/4);
     modelo->scaleObject(15,15,15);
 }
 
@@ -108,6 +108,17 @@ void MainWindow::paintEvent(QPaintEvent* event){
     double Wymin = pPontosCamera[0][1][0];
     double Wxmax = pPontosCamera[2][0][0];
     double Wymax = pPontosCamera[2][1][0];
+    for (const Ponto& p : pPontosCamera) {
+
+        if (p[0][0] < Wxmin) Wxmin = p[0][0];
+
+        if (p[0][0] > Wxmax) Wxmax = p[0][0];
+
+        if (p[1][0] > Wymin) Wymin = p[1][0];
+
+        if (p[1][0] < Wymax) Wymax = p[1][0];
+
+    }
     //Matriz global(centraliza e rotaciona o mundo)
     display.applyGlobalTransform(pToCamera->angleRelativeToX);
 
@@ -142,8 +153,8 @@ void MainWindow::on_right_clicked()
 void MainWindow::on_down_clicked()
 {
     //botão deve mover camera para baixo
-    pToCamera->transformObject(0,10,0);
-    pToBorderRectangle->transformObject(0,20,0);
+    pToCamera->transformObject(0,-10,0);
+    pToBorderRectangle->transformObject(0,-20,0);
     update();
 }
 
@@ -160,8 +171,8 @@ void MainWindow::on_left_clicked()
 void MainWindow::on_up_clicked()
 {
     //botão deve mover camera para cima
-    pToCamera->transformObject(0,-10,0);
-    pToBorderRectangle->transformObject(0,-20,0);
+    pToCamera->transformObject(0,10,0);
+    pToBorderRectangle->transformObject(0,20,0);
     update();
 }
 
