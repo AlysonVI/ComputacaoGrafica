@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
     pToCamera->transformObject(-100,-100,0); //Camera
     pToCamera->scaleObject(1.2,1.2,0); //Camera
 
-    pToBorderRectangle->transformObject(20,10,0);
+    pToBorderRectangle->transformObject(20,90,0);
     pToBorderRectangle->scaleObject(1.2,1.2,0); //Borda
 }
 
@@ -85,12 +85,21 @@ void MainWindow::criarMundo(DisplayFile& display){
 
     castelo3->rotateObjectX(-M_PI/5);
 
-    ModeloOBJ* modelo = new ModeloOBJ("C:/ProjetoCG/ComputacaoGrafica/006 - Charizard/Charizard.obj");
-    display.add(modelo);
-    //modelo->rotateObjectX(M_PI);
-    modelo->rotateObjectY(M_PI/2);
-    //modelo->rotateObjectZ(M_PI/4);
-    modelo->scaleObject(15,15,15);
+    ModeloOBJ* modelo1 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/Projeto CG/objFiles/Lopunny.obj");
+    display.add(modelo1);
+    modelo1->transformObject(200,450,0);
+    modelo1->rotateObjectX(M_PI/2-0.3);
+    modelo1->rotateObjectY(M_PI/5);
+    modelo1->rotateObjectZ(M_PI);
+    modelo1->scaleObject(2.5,2.5,2.5);
+
+    ModeloOBJ* modelo2 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/Projeto CG/objFiles/Vaporeon.obj");
+    display.add(modelo2);
+    modelo2->transformObject(350,200,0);
+    modelo2->rotateObjectX(M_PI/2);
+    modelo2->rotateObjectY(-M_PI/2-1);
+    modelo2->rotateObjectZ(M_PI-0.3);
+    modelo2->scaleObject(2.5,2.5,2.5);
 }
 
 void MainWindow::paintEvent(QPaintEvent* event){
@@ -144,8 +153,8 @@ MainWindow::~MainWindow()
 void MainWindow::on_right_clicked()
 {
     //botão deve mover camera para direita
-    pToCamera->transformObject(10,0,0);
-    pToBorderRectangle->transformObject(20,0,0);
+    pToCamera->transformObject(50,0,0);
+    pToBorderRectangle->transformObject(100,0,0);
     update();
 }
 
@@ -153,8 +162,8 @@ void MainWindow::on_right_clicked()
 void MainWindow::on_down_clicked()
 {
     //botão deve mover camera para baixo
-    pToCamera->transformObject(0,-10,0);
-    pToBorderRectangle->transformObject(0,-20,0);
+    pToCamera->transformObject(0,-50,0);
+    pToBorderRectangle->transformObject(0,-100,0);
     update();
 }
 
@@ -162,8 +171,8 @@ void MainWindow::on_down_clicked()
 void MainWindow::on_left_clicked()
 {
     //botão deve mover camera para a esquerda
-    pToCamera->transformObject(-10,0,0);
-    pToBorderRectangle->transformObject(-20,0,0);
+    pToCamera->transformObject(-50,0,0);
+    pToBorderRectangle->transformObject(-100,0,0);
     update();
 }
 
@@ -171,8 +180,8 @@ void MainWindow::on_left_clicked()
 void MainWindow::on_up_clicked()
 {
     //botão deve mover camera para cima
-    pToCamera->transformObject(0,10,0);
-    pToBorderRectangle->transformObject(0,20,0);
+    pToCamera->transformObject(0,50,0);
+    pToBorderRectangle->transformObject(0,100,0);
     update();
 }
 
