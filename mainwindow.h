@@ -42,5 +42,6 @@ private:
     void criarMundo(DisplayFile& display);
 
     Ui::MainWindow *ui;
+    QString getProjectRootPath();
 };
 #endif // MAINWINDOW_H
