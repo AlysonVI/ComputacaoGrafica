@@ -94,10 +94,24 @@ void Drawable::normalizeObject(double Wxmin, double Wxmax, double Wymin, double 
 }
 
 void Drawable::viewportObject(double Vxmin, double Vxmax, double Vymin, double Vymax) {
-    for (auto& ponto : points) {
-        ponto.toViewport(Vxmin, Vxmax, Vymin, Vymax, true);
 
-    }
+        for (int i = 0; i < points.length(); i++) {
+            int p1Indice = i;
+            int p2Indice = (i+1) % points.length();
+
+            Ponto p1((points.at(p1Indice)).getX(), (points.at(p1Indice)).getY());
+            Ponto p2((points.at(p2Indice)).getX(), (points.at(p2Indice)).getY());
+
+            Linha linhaClipada = clipLine(p1, p2);
+            if(linhaClipada) {
+                p1 = linhaClipada.points[0];
+                p2 = linhaClipada.points[1];
+
+                p1.toViewport(Vxmin, Vxmax, Vymin, Vymax, true);
+                p2.toViewport(Vxmin, Vxmax, Vymin, Vymax, true);
+
+            }
+        }
 }
 
 void Drawable::applyMatrix(Matriz &M) {

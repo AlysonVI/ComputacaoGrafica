@@ -86,7 +86,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     castelo3->rotateObjectX(-M_PI/5);
 
     // modelos obj
-    ModeloOBJ* modelo1 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/Projeto CG/objFiles/Lopunny.obj");
+    ModeloOBJ* modelo1 = new ModeloOBJ("C:/Qt/ComputacaoGrafica/objFiles/Lopunny.obj");
     display.add(modelo1);
     modelo1->transformObject(200,450,0);
     modelo1->rotateObjectX(M_PI/2-0.3);
@@ -94,7 +94,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     modelo1->rotateObjectZ(M_PI);
     modelo1->scaleObject(2.5,2.5,2.5);
 
-    ModeloOBJ* modelo2 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/Projeto CG/objFiles/Vaporeon.obj");
+    ModeloOBJ* modelo2 = new ModeloOBJ("C:/Qt/ComputacaoGrafica/objFiles/Vaporeon.obj");
     display.add(modelo2);
     modelo2->transformObject(350,200,0);
     modelo2->rotateObjectX(M_PI/2);
@@ -132,7 +132,7 @@ void MainWindow::paintEvent(QPaintEvent* event){
     //Matriz global(centraliza e rotaciona o mundo)
     display.applyGlobalTransform(pToCamera->angleRelativeToX);
 
-    //Normaliza todos os pontos para SCN eu acho
+    //Normaliza todos os pontos para SCN
     display.triggerNormalize(Wxmax, Wxmin, Wymin, Wymax); // window
 
     //Transforma SCN para viewport

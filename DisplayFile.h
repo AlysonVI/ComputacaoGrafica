@@ -6,6 +6,7 @@
 
 class DisplayFile {
     QVector<Drawable*> objects; //display file
+    QVector<Ponto> clippedPoints; // vetor de pontos que estam na tela
 public:
     ~DisplayFile();
     void add(Drawable* obj);
@@ -19,6 +20,7 @@ public:
     void applyGlobalTransform(double theta);
     Matriz getWorldToCameraMatrix(double theta);
     Drawable* getObject(int n);
+    void triggerClipping();
 };
 
 

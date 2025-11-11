@@ -35,6 +35,7 @@ void DisplayFile::triggerTranslate(){
     }
 }
 
+
 /*void DisplayFile::triggerRotate(double theta){
     for(auto&obj : objects){
         if(obj->getType() == ObjectType::Camera) continue;
@@ -73,6 +74,10 @@ void DisplayFile::triggerNormalize(double Wxmax, double Wxmin, double Wymax, dou
     }
 }
 
+void triggerClipping(double Wxmax, double Wxmin, double Wymax, double Wymin) {
+
+}
+
 void DisplayFile::triggerViewport(double Vxmax, double Vxmin, double Vymax, double Vymin) {
 
 
@@ -81,3 +86,5 @@ void DisplayFile::triggerViewport(double Vxmax, double Vxmin, double Vymax, doub
         obj->viewportObject(Vxmin, Vxmax, Vymin, Vymax);
     }
 }
+
+

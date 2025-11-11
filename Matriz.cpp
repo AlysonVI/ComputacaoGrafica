@@ -164,6 +164,7 @@ void Matriz::toSCN(double Wxmin, double Wxmax, double Wymin, double Wymax, bool 
 }
 
 void Matriz::toViewport(double Vxmin, double Vxmax, double Vymin, double Vymax, bool scnMinusOneToOne) {
+
     double x = (*this)[0][0];
     double y = (*this)[1][0];
 
