@@ -26,6 +26,7 @@ protected:
     ObjectType type;
     QVector<Ponto> points; //Listagem de pontos (aquilo q é usado nos métodos .draw())
     QVector<Ponto> normPoints; //Pontos SCN
+    QVector<Ponto> clippedPoints; // vetor de pontos que estam na tela
 public:
     Drawable(const QString& n, ObjectType t, const QVector<Ponto>& pts);
     virtual ~Drawable() {}
@@ -50,11 +51,12 @@ public:
     void goToOrigin(Ponto p);
     void returnFromOrigin(Ponto p);
 
-    std::unique_ptr<Linha> clipLine(const Ponto& p1, const Ponto& p2); // funciona para ponto tb, é só parrar pq e p2 iguais
+    std::unique_ptr<Linha> clipLine(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX, const Ponto& p1, const Ponto& p2); // funciona para ponto tb, é só parrar pq e p2 iguais
     int computeOutCode(double x, double y, double X_MIN, double X_MAX, double Y_MIN, double Y_MAX);
     double getXfromPoints(int i);
     double getYfromPoints(int i);
     double getZfromPoints(int i);
+    void clipObject(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX);
 };
 
 #endif

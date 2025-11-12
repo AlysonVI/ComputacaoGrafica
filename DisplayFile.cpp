@@ -74,12 +74,13 @@ void DisplayFile::triggerNormalize(double Wxmax, double Wxmin, double Wymax, dou
     }
 }
 
-void triggerClipping(double Wxmax, double Wxmin, double Wymax, double Wymin) {
-
+void DisplayFile::triggerClipping(double Wxmax, double Wxmin, double Wymax, double Wymin) {
+    for (auto& obj : objects) {
+        obj->clipObject(Wxmin, Wxmax, Wymin, Wymax);
+    }
 }
 
 void DisplayFile::triggerViewport(double Vxmax, double Vxmin, double Vymax, double Vymin) {
-
 
     for (auto& obj : objects) {
         if(obj->getType() == ObjectType::Camera) continue;

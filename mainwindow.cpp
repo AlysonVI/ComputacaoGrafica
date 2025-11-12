@@ -55,27 +55,16 @@ void MainWindow::criarMundo(DisplayFile& display){
     display.add(castelo3);
     display.add(curva);
 
-
+    /*
     // Linha clipada 1
     Ponto p11(500,300);
     Ponto p21(-50,-50);
-    auto linha1 = pToBorderRectangle->clipLine(p11, p21); // Se substituir pToBorderRectangle por pToCamera, o clipping ocorrera na camera ao inves da borda
+    auto linha1 = clipLine(pToBorderRectangle.getXfromPoints(1), pToBorderRectangle.getXfromPoints(2),
+                                            pToBorderRectangle.getYfromPoints(0), pToBorderRectangle.getYfromPoints(1), p11, p21);
+                                            // Se substituir pToBorderRectangle por pToCamera, o clipping ocorrera na camera ao inves da borda
     if(linha1)
         display.add(linha1.release());
-
-    // Linha clipada 2
-    Ponto p12(60,80);
-    Ponto p22(600,100);
-    auto linha2 = pToBorderRectangle->clipLine(p12, p22);
-    if(linha2)
-        display.add(linha2.release());
-
-    // Linha clipada 3
-    Ponto p13(300,300);
-    Ponto p23(200,400);
-    auto linha3 = pToBorderRectangle->clipLine(p13, p23);
-    if(linha3)
-        display.add(linha3.release());
+    */
 
     castelo1->scaleObject(1.7, 1.7, 0);
     castelo1->rotateObjectX(M_PI);
@@ -86,7 +75,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     castelo3->rotateObjectX(-M_PI/5);
 
     // modelos obj
-    ModeloOBJ* modelo1 = new ModeloOBJ("C:/Qt/ComputacaoGrafica/objFiles/Lopunny.obj");
+    ModeloOBJ* modelo1 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/Projeto CG/objFiles/Lopunny.obj");
     display.add(modelo1);
     modelo1->transformObject(200,450,0);
     modelo1->rotateObjectX(M_PI/2-0.3);
@@ -94,7 +83,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     modelo1->rotateObjectZ(M_PI);
     modelo1->scaleObject(2.5,2.5,2.5);
 
-    ModeloOBJ* modelo2 = new ModeloOBJ("C:/Qt/ComputacaoGrafica/objFiles/Vaporeon.obj");
+    ModeloOBJ* modelo2 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/Projeto CG/objFiles/Vaporeon.obj");
     display.add(modelo2);
     modelo2->transformObject(350,200,0);
     modelo2->rotateObjectX(M_PI/2);
@@ -134,6 +123,9 @@ void MainWindow::paintEvent(QPaintEvent* event){
 
     //Normaliza todos os pontos para SCN
     display.triggerNormalize(Wxmax, Wxmin, Wymin, Wymax); // window
+
+    //Faz o clipping, removendo todos os objetos fora da tela
+    display.triggerClipping(Wxmax, Wxmin, Wymin, Wymax);
 
     //Transforma SCN para viewport
     display.triggerViewport(width(), 0, height(), 0);

@@ -94,24 +94,9 @@ void Drawable::normalizeObject(double Wxmin, double Wxmax, double Wymin, double 
 }
 
 void Drawable::viewportObject(double Vxmin, double Vxmax, double Vymin, double Vymax) {
-
-        for (int i = 0; i < points.length(); i++) {
-            int p1Indice = i;
-            int p2Indice = (i+1) % points.length();
-
-            Ponto p1((points.at(p1Indice)).getX(), (points.at(p1Indice)).getY());
-            Ponto p2((points.at(p2Indice)).getX(), (points.at(p2Indice)).getY());
-
-            Linha linhaClipada = clipLine(p1, p2);
-            if(linhaClipada) {
-                p1 = linhaClipada.points[0];
-                p2 = linhaClipada.points[1];
-
-                p1.toViewport(Vxmin, Vxmax, Vymin, Vymax, true);
-                p2.toViewport(Vxmin, Vxmax, Vymin, Vymax, true);
-
-            }
-        }
+    for (auto& ponto : clippedPoints) {
+        ponto.toViewport(Vxmin, Vxmax, Vymin, Vymax, true);
+    }
 }
 
 void Drawable::applyMatrix(Matriz &M) {
@@ -130,15 +115,9 @@ void Drawable::applyMatrix(Matriz &M) {
     }
 }
 
-std::unique_ptr<Linha> Drawable::clipLine(const Ponto& p1, const Ponto& p2) {
+std::unique_ptr<Linha> Drawable::clipLine(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX, const Ponto& p1, const Ponto& p2) {
     double x1 = p1.getX(), y1 = p1.getY();
     double x2 = p2.getX(), y2 = p2.getY();
-
-    // calcula bordas
-    double X_MIN = getXfromPoints(1); // x do ponto inferior esquerdo da camera
-    double X_MAX = getXfromPoints(2); // x do ponto inferior direito da camera
-    double Y_MIN = getYfromPoints(0); // y do ponto superior esquerdo da camera
-    double Y_MAX = getYfromPoints(1); // y do ponto inferior esquerdo da camera
 
     // códigos de região
     const int DENTRO = 0;   // 0000
@@ -237,3 +216,20 @@ double Drawable::getZfromPoints(int i) {
     return 0;
 }
 
+void Drawable::clipObject(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX) {
+    for (int i = 0; i < points.length(); i++) {
+        int p1Indice = i;
+        int p2Indice = (i+1) % points.length();
+
+        Ponto p1((points.at(p1Indice)).getX(), (points.at(p1Indice)).getY());
+        Ponto p2((points.at(p2Indice)).getX(), (points.at(p2Indice)).getY());
+        auto linhaClipada = clipLine(X_MIN, X_MAX, Y_MIN, Y_MAX, p1, p2);
+        if(linhaClipada) {
+            p1 = linhaClipada.release()->points[0];
+            p2 = linhaClipada.release()->points[1];
+
+            clippedPoints.append(p1);
+            clippedPoints.append(p2);
+        }
+    }
+}
