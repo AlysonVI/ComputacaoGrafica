@@ -67,7 +67,6 @@ Matriz DisplayFile::getWorldToCameraMatrix(double theta) {//matriz global para f
 
 void DisplayFile::triggerNormalize(double Wxmax, double Wxmin, double Wymax, double Wymin) {
 
-
     for (auto& obj : objects) {
         if(obj->getType() == ObjectType::Camera) continue;
         obj->normalizeObject(Wxmin, Wxmax, Wymin, Wymax);
@@ -75,8 +74,9 @@ void DisplayFile::triggerNormalize(double Wxmax, double Wxmin, double Wymax, dou
 }
 
 void DisplayFile::triggerClipping(double Wxmax, double Wxmin, double Wymax, double Wymin) {
+
     for (auto& obj : objects) {
-        obj->clipObject(Wxmin, Wxmax, Wymin, Wymax);
+        obj->clipObject(Wxmax, Wxmin, Wymax, Wymin);
     }
 }
 

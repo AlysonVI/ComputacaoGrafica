@@ -89,7 +89,6 @@ void Drawable::returnFromOrigin(Ponto p) {
 void Drawable::normalizeObject(double Wxmin, double Wxmax, double Wymin, double Wymax) {
     for (auto& ponto : points) {
         ponto.toSCN(Wxmin, Wxmax, Wymin, Wymax, true);
-
     }
 }
 
@@ -115,7 +114,7 @@ void Drawable::applyMatrix(Matriz &M) {
     }
 }
 
-std::unique_ptr<Linha> Drawable::clipLine(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX, const Ponto& p1, const Ponto& p2) {
+QVector<Ponto> Drawable::clipLine(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX, const Ponto& p1, const Ponto& p2) {
     double x1 = p1.getX(), y1 = p1.getY();
     double x2 = p2.getX(), y2 = p2.getY();
 
@@ -131,12 +130,18 @@ std::unique_ptr<Linha> Drawable::clipLine(double X_MIN, double X_MAX, double Y_M
 
     while(true) {
         // Caso 1. Segmento completamente contido na window
-        if(codigo1 == DENTRO && codigo2 == DENTRO)
-            return std::make_unique<Linha>("", Ponto(x1,y1), Ponto(x2,y2));
+        if(codigo1 == DENTRO && codigo2 == DENTRO) {
+            QVector<Ponto> linha;
+            linha[0] = Ponto(x1,y1);
+            linha[1] = Ponto(x2,y2);
+            return linha;
+        }
 
         // Case 2. Segmento completamente fora da window
-        else if((codigo1 & codigo2) != DENTRO)
-            return nullptr;
+        else if((codigo1 & codigo2) != DENTRO) {
+            QVector<Ponto> linha;
+            return linha;
+        }
 
         // Caso 3. Segmento parcialmente contido na window
         else {
@@ -216,17 +221,19 @@ double Drawable::getZfromPoints(int i) {
     return 0;
 }
 
-void Drawable::clipObject(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX) {
+void Drawable::clipObject(double X_MAX, double X_MIN, double Y_MAX, double Y_MIN) {
+
     for (int i = 0; i < points.length(); i++) {
         int p1Indice = i;
         int p2Indice = (i+1) % points.length();
 
         Ponto p1((points.at(p1Indice)).getX(), (points.at(p1Indice)).getY());
         Ponto p2((points.at(p2Indice)).getX(), (points.at(p2Indice)).getY());
-        auto linhaClipada = clipLine(X_MIN, X_MAX, Y_MIN, Y_MAX, p1, p2);
-        if(linhaClipada) {
-            p1 = linhaClipada.release()->points[0];
-            p2 = linhaClipada.release()->points[1];
+        QVector<Ponto> linhaClipada = clipLine(X_MIN, X_MAX, Y_MIN, Y_MAX, p1, p2);
+
+        if(!linhaClipada.empty()) {
+            p1 = linhaClipada[0];
+            p2 = linhaClipada[1];
 
             clippedPoints.append(p1);
             clippedPoints.append(p2);

@@ -55,6 +55,8 @@ void MainWindow::criarMundo(DisplayFile& display){
     display.add(castelo3);
     display.add(curva);
 
+    Linha* linha = new Linha("", Ponto(-1, -1), Ponto (1, 1));
+    display.add(linha);
     /*
     // Linha clipada 1
     Ponto p11(500,300);
@@ -73,7 +75,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     castelo2->transformObject(0, 100, 0);
 
     castelo3->rotateObjectX(-M_PI/5);
-
+    /*
     // modelos obj
     ModeloOBJ* modelo1 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/Projeto CG/objFiles/Lopunny.obj");
     display.add(modelo1);
@@ -90,6 +92,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     modelo2->rotateObjectY(-M_PI/2-1);
     modelo2->rotateObjectZ(M_PI-0.3);
     modelo2->scaleObject(2.5,2.5,2.5);
+    */
 }
 
 void MainWindow::paintEvent(QPaintEvent* event){
@@ -107,25 +110,15 @@ void MainWindow::paintEvent(QPaintEvent* event){
     double Wymin = pPontosCamera[0][1][0];
     double Wxmax = pPontosCamera[2][0][0];
     double Wymax = pPontosCamera[2][1][0];
-    for (const Ponto& p : pPontosCamera) {
 
-        if (p[0][0] < Wxmin) Wxmin = p[0][0];
-
-        if (p[0][0] > Wxmax) Wxmax = p[0][0];
-
-        if (p[1][0] > Wymin) Wymin = p[1][0];
-
-        if (p[1][0] < Wymax) Wymax = p[1][0];
-
-    }
     //Matriz global(centraliza e rotaciona o mundo)
     display.applyGlobalTransform(pToCamera->angleRelativeToX);
 
     //Normaliza todos os pontos para SCN
-    display.triggerNormalize(Wxmax, Wxmin, Wymin, Wymax); // window
+    display.triggerNormalize(Wxmax, Wxmin, Wymax, Wymin); // window
 
     //Faz o clipping, removendo todos os objetos fora da tela
-    display.triggerClipping(Wxmax, Wxmin, Wymin, Wymax);
+    display.triggerClipping(Wxmax-50, Wxmin+50, Wymax-50, Wymin+50);
 
     //Transforma SCN para viewport
     display.triggerViewport(width(), 0, height(), 0);
