@@ -27,20 +27,9 @@ MainWindow::MainWindow(QWidget *parent)
                                      {0, 0}, {0, 500}, {500, 500}, {500, 0}
                                  });
 
-    const double BORDA = 50; // Espessura da margem de desenho dentro da camera (retangulo de clipping)
-    pToBorderRectangle = new Polygon("border", QVector<Ponto>{
-                                     {pToCamera->getXfromPoints(0)+BORDA, pToCamera->getYfromPoints(0)+BORDA},
-                                     {pToCamera->getXfromPoints(1)+BORDA, pToCamera->getYfromPoints(1)-BORDA},
-                                     {pToCamera->getXfromPoints(2)-BORDA, pToCamera->getYfromPoints(2)-BORDA},
-                                     {pToCamera->getXfromPoints(3)-BORDA, pToCamera->getYfromPoints(3)+BORDA}
-                                 });
-
-    // pToCamera->rotateCamera(250,250); //Ponto "up"
+    //pToCamera->rotateCamera(-250,-250); //Ponto "up"
     pToCamera->transformObject(-100,-100,0); //Camera
     pToCamera->scaleObject(1.2,1.2,0); //Camera
-
-    pToBorderRectangle->transformObject(20,90,0);
-    pToBorderRectangle->scaleObject(1.2,1.2,0); //Borda
 }
 
 void MainWindow::criarMundo(DisplayFile& display){
@@ -75,7 +64,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     castelo2->transformObject(0, 100, 0);
 
     castelo3->rotateObjectX(-M_PI/5);
-    /*
+
     // modelos obj
     ModeloOBJ* modelo1 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/Projeto CG/objFiles/Lopunny.obj");
     display.add(modelo1);
@@ -84,7 +73,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     modelo1->rotateObjectY(M_PI/5);
     modelo1->rotateObjectZ(M_PI);
     modelo1->scaleObject(2.5,2.5,2.5);
-
+    /*
     ModeloOBJ* modelo2 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/Projeto CG/objFiles/Vaporeon.obj");
     display.add(modelo2);
     modelo2->transformObject(350,200,0);
@@ -101,7 +90,6 @@ void MainWindow::paintEvent(QPaintEvent* event){
     DisplayFile display;
 
     display.add(new Camera(*pToCamera));
-    display.add(new Polygon(*pToBorderRectangle));
 
     criarMundo(display);
 
@@ -117,8 +105,8 @@ void MainWindow::paintEvent(QPaintEvent* event){
     //Normaliza todos os pontos para SCN
     display.triggerNormalize(Wxmax, Wxmin, Wymax, Wymin); // window
 
-    //Faz o clipping, removendo todos os objetos fora da tela
-    display.triggerClipping(Wxmax-50, Wxmin+50, Wymax-50, Wymin+50);
+    //Faz o clipping, removendo todos os objetos fora da tela NAO FUNCIONA AINDA, DEVE TER ALGUM ERRINHO
+    //display.triggerClipping(Wxmax-50, Wxmin+50, Wymax-50, Wymin+50);
 
     //Transforma SCN para viewport
     display.triggerViewport(width(), 0, height(), 0);
@@ -133,14 +121,12 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete pToCamera;
-    delete pToBorderRectangle;
 }
 
 void MainWindow::on_right_clicked()
 {
     //botão deve mover camera para direita
     pToCamera->transformObject(50,0,0);
-    pToBorderRectangle->transformObject(100,0,0);
     update();
 }
 
@@ -149,7 +135,6 @@ void MainWindow::on_down_clicked()
 {
     //botão deve mover camera para baixo
     pToCamera->transformObject(0,-50,0);
-    pToBorderRectangle->transformObject(0,-100,0);
     update();
 }
 
@@ -158,7 +143,6 @@ void MainWindow::on_left_clicked()
 {
     //botão deve mover camera para a esquerda
     pToCamera->transformObject(-50,0,0);
-    pToBorderRectangle->transformObject(-100,0,0);
     update();
 }
 
@@ -167,7 +151,6 @@ void MainWindow::on_up_clicked()
 {
     //botão deve mover camera para cima
     pToCamera->transformObject(0,50,0);
-    pToBorderRectangle->transformObject(0,100,0);
     update();
 }
 

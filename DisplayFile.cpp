@@ -27,14 +27,13 @@ Drawable* DisplayFile::getObject(int n){
     return objects[n];
 }
 
-void DisplayFile::triggerTranslate(){
+void DisplayFile::triggerTranslate() {
     Ponto centroWindow = getObject(0)->getObjectAverage();
     for(auto&obj : objects){
         if(obj->getType() == ObjectType::Camera) continue;
         obj->transformObject(-centroWindow.getX(), -centroWindow.getY(), -centroWindow.getZ());
     }
 }
-
 
 /*void DisplayFile::triggerRotate(double theta){
     for(auto&obj : objects){
@@ -51,6 +50,7 @@ void DisplayFile::applyGlobalTransform(double theta) {
         obj->applyMatrix(globalMatrix);
     }
 }
+
 Matriz DisplayFile::getWorldToCameraMatrix(double theta) {//matriz global para fazer translaçãp para centro e rotação baseado no angulo calculado antes (relativeToX)
     Ponto centroCamera = getObject(0)->getObjectAverage();
     double cx = centroCamera.getX();
@@ -73,6 +73,7 @@ void DisplayFile::triggerNormalize(double Wxmax, double Wxmin, double Wymax, dou
     }
 }
 
+// (COM ERROS) Faz o clip de cada objeto do display file, e salva seus novos pontos clipados em clippedPoints de cada objeto
 void DisplayFile::triggerClipping(double Wxmax, double Wxmin, double Wymax, double Wymin) {
 
     for (auto& obj : objects) {
