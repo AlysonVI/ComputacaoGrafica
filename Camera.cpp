@@ -15,7 +15,6 @@ void Camera::draw(QPainter &painter){}
 // Alyson- ta com problemas, não ta concertando o up-vector de novo quando a camera é girada.
 void Camera::rotateCamera(double Wupx, double Wupy) { // Os argumentos é o ponto onde a camera vai olhar
     Ponto avgPoint = getObjectAverage();
-    //Ponto avgPoint = Ponto(0,0,0);
     angleRelativeToY = atan2(Wupx-avgPoint.getX(), Wupy-avgPoint.getY());
 }
 

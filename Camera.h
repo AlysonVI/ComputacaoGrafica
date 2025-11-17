@@ -13,7 +13,7 @@ private:
     const Ponto v; // u
     const Ponto vpn; // Vetor normal ao plano de projeção
 public:
-    double angleRelativeToX;
+    double angleRelativeToY;
     Camera(const QString& n, const QVector<Ponto>& pts);
     void draw(QPainter& painter) override;
 

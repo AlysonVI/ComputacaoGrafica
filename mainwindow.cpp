@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
                                  });
 
     pToCamera->transformObject(150,150,0); //Camera
-    pToCamera->rotateCamera(150,149); //Ponto "up"
+    pToCamera->rotateCamera(150,149);
     pToCamera->scaleObject(1.2,1.2,0); //Camera
 }
 
@@ -100,7 +100,7 @@ void MainWindow::paintEvent(QPaintEvent* event){
     double Wymax = pPontosCamera[2][1][0];
 
     //Matriz global(centraliza e rotaciona o mundo)
-    display.applyGlobalTransform(pToCamera->angleRelativeToX);
+    display.applyGlobalTransform(pToCamera->angleRelativeToY);
 
     //Normaliza todos os pontos para SCN
     display.triggerNormalize(Wxmax, Wxmin, Wymax, Wymin); // window
@@ -123,34 +123,31 @@ MainWindow::~MainWindow()
     delete pToCamera;
 }
 
-void MainWindow::on_right_clicked()
-{
-    //botão deve mover camera para direita
-    pToCamera->transformObject(50,0,0);
+// "Direita" (Strafe Right)
+void MainWindow::on_right_clicked() {
+    double d = 50; double t = pToCamera->angleRelativeToY;
+    pToCamera->transformObject(d * cos(t), d * -sin(t), 0);
     update();
 }
 
-
-void MainWindow::on_down_clicked()
-{
-    //botão deve mover camera para baixo
-    pToCamera->transformObject(0,-50,0);
+// "Esquerda" (Strafe Left)
+void MainWindow::on_left_clicked() {
+    double d = 50; double t = pToCamera->angleRelativeToY;
+    pToCamera->transformObject(-d * cos(t), d * sin(t), 0); // Inverso do v_right
     update();
 }
 
-
-void MainWindow::on_left_clicked()
-{
-    //botão deve mover camera para a esquerda
-    pToCamera->transformObject(-50,0,0);
+// "Cima" (Move Forward)
+void MainWindow::on_up_clicked() {
+    double d = 50; double t = pToCamera->angleRelativeToY;
+    pToCamera->transformObject(d * sin(t), d * cos(t), 0); // Usa v_up
     update();
 }
 
-
-void MainWindow::on_up_clicked()
-{
-    //botão deve mover camera para cima
-    pToCamera->transformObject(0,50,0);
+// "Baixo" (Move Backward)
+void MainWindow::on_down_clicked() {
+    double d = 50; double t = pToCamera->angleRelativeToY;
+    pToCamera->transformObject(-d * sin(t), -d * cos(t), 0); // Inverso do v_up
     update();
 }
 
