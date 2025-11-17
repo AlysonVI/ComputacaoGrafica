@@ -5,7 +5,7 @@ Camera::Camera(const QString& n, const QVector<Ponto>& pts)
     u(0,0,1), v(0,1,0), vpn(0,0,1),
     centerOfProjection(0,0,0) // rascunho
 {
-    this->angleRelativeToX = 0.0;
+    this->angleRelativeToY = 0.0;
 
     FOV = 60; // Angulo de visao da camera na projecao paralela (rascunho)
 }
@@ -16,7 +16,7 @@ void Camera::draw(QPainter &painter){}
 void Camera::rotateCamera(double Wupx, double Wupy) { // Os argumentos é o ponto onde a camera vai olhar
     Ponto avgPoint = getObjectAverage();
     //Ponto avgPoint = Ponto(0,0,0);
-    angleRelativeToX = atan2(Wupy-avgPoint.getY(), Wupx-avgPoint.getX());
+    angleRelativeToY = atan2(Wupx-avgPoint.getX(), Wupy-avgPoint.getY());
 }
 
 // funcao rascunho, ignore
