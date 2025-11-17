@@ -51,7 +51,7 @@ void DisplayFile::applyGlobalTransform(double theta) {
     }
 }
 
-Matriz DisplayFile::getWorldToCameraMatrix(double theta) {//matriz global para fazer translaçãp para centro e rotação baseado no angulo calculado antes (relativeToX)
+Matriz DisplayFile::getWorldToCameraMatrix(double theta) {  // matriz global para fazer translaçãp para centro e rotação baseado no angulo calculado antes (relativeToX)
     Ponto centroCamera = getObject(0)->getObjectAverage();
     double cx = centroCamera.getX();
     double cy = centroCamera.getY();

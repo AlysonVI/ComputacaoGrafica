@@ -2,6 +2,7 @@
 
 Camera::Camera(const QString& n, const QVector<Ponto>& pts)
     : Drawable(n, ObjectType::Camera, pts),
+    u(0,0,1), v(0,1,0), vpn(0,0,1),
     centerOfProjection(0,0,0) // rascunho
 {
     this->angleRelativeToX = 0.0;
@@ -12,9 +13,10 @@ Camera::Camera(const QString& n, const QVector<Ponto>& pts)
 void Camera::draw(QPainter &painter){}
 
 // Alyson- ta com problemas, não ta concertando o up-vector de novo quando a camera é girada.
-void Camera::rotateCamera(double Wupx, double Wupy){ // Os argumentos é o ponto onde a camera vai olhar
+void Camera::rotateCamera(double Wupx, double Wupy) { // Os argumentos é o ponto onde a camera vai olhar
     Ponto avgPoint = getObjectAverage();
-    angleRelativeToX = atan2(Wupx-avgPoint.getX(), Wupy-avgPoint.getY());
+    //Ponto avgPoint = Ponto(0,0,0);
+    angleRelativeToX = atan2(Wupy-avgPoint.getY(), Wupx-avgPoint.getX());
 }
 
 // funcao rascunho, ignore

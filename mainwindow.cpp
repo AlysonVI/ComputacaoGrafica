@@ -24,11 +24,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     //painter.setViewport(-worldX,  worldY, this->width(), this->height());
     pToCamera = new Camera("c1", QVector<Ponto>{
-                                     {0, 0}, {0, 500}, {500, 500}, {500, 0}
+                                     {-250, -250}, {-250, 250}, {250, 250}, {250, -250}
                                  });
 
-    //pToCamera->rotateCamera(-250,-250); //Ponto "up"
-    pToCamera->transformObject(-100,-100,0); //Camera
+    pToCamera->transformObject(150,150,0); //Camera
+    pToCamera->rotateCamera(150,149); //Ponto "up"
     pToCamera->scaleObject(1.2,1.2,0); //Camera
 }
 
