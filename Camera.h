@@ -9,9 +9,9 @@ private:
     Ponto centerOfProjection; // ponto que traça linhas imaginarias ate os pontos da window para criar o frustrum
     void getVPN(); // retorna View Plane Normal (vetor normal do plano de projeção)
 
-    const Ponto u; // vetorUp
-    const Ponto v; // u
-    const Ponto vpn; // Vetor normal ao plano de projeção
+    Ponto u; // vetorUp
+    Ponto v; // u
+    Ponto vpn; // Vetor normal ao plano de projeção
 public:
     double angleRelativeToY;
     Camera(const QString& n, const QVector<Ponto>& pts);
@@ -20,6 +20,10 @@ public:
     void rotateCamera(double Wupx, double Wupy);
 
     void projectPerspective();
+
+    void setVectorU(Ponto u);
+    void setVectorV(Ponto v);
+    void setVectorVpn(Ponto vpn);
 };
 
 #endif // CAMERA_H
