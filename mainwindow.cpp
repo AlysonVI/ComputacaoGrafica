@@ -24,23 +24,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     //painter.setViewport(-worldX,  worldY, this->width(), this->height());
     pToCamera = new Camera("c1", QVector<Ponto>{
-                                     {0, 0}, {0, 500}, {500, 500}, {500, 0}
+                                     {-250, -250}, {-250, 250}, {250, 250}, {250, -250}
                                  });
 
-    const double BORDA = 50; // Espessura da margem de desenho dentro da camera (retangulo de clipping)
-    pToBorderRectangle = new Polygon("border", QVector<Ponto>{
-                                     {pToCamera->getXfromPoints(0)+BORDA, pToCamera->getYfromPoints(0)+BORDA},
-                                     {pToCamera->getXfromPoints(1)+BORDA, pToCamera->getYfromPoints(1)-BORDA},
-                                     {pToCamera->getXfromPoints(2)-BORDA, pToCamera->getYfromPoints(2)-BORDA},
-                                     {pToCamera->getXfromPoints(3)-BORDA, pToCamera->getYfromPoints(3)+BORDA}
-                                 });
-
-    // pToCamera->rotateCamera(250,250); //Ponto "up"
-    pToCamera->transformObject(-100,-100,0); //Camera
+    pToCamera->transformObject(150,150,0); //Camera
+    //pToCamera->rotateCamera(150,149);
     pToCamera->scaleObject(1.2,1.2,0); //Camera
-
-    pToBorderRectangle->transformObject(20,90,0);
-    pToBorderRectangle->scaleObject(1.2,1.2,0); //Borda
 }
 
 void MainWindow::criarMundo(DisplayFile& display){
@@ -55,6 +44,8 @@ void MainWindow::criarMundo(DisplayFile& display){
     display.add(castelo3);
     display.add(curva);
 
+    Linha* linha = new Linha("", Ponto(-1, -1), Ponto (1, 1));
+    display.add(linha);
     /*
     // Linha clipada 1
     Ponto p11(500,300);
@@ -82,7 +73,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     modelo1->rotateObjectY(M_PI/5);
     modelo1->rotateObjectZ(M_PI);
     modelo1->scaleObject(2.5,2.5,2.5);
-
+    /*
     ModeloOBJ* modelo2 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/Projeto CG/objFiles/Vaporeon.obj");
     display.add(modelo2);
     modelo2->transformObject(350,200,0);
@@ -90,6 +81,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     modelo2->rotateObjectY(-M_PI/2-1);
     modelo2->rotateObjectZ(M_PI-0.3);
     modelo2->scaleObject(2.5,2.5,2.5);
+    */
 }
 
 void MainWindow::paintEvent(QPaintEvent* event){
@@ -98,7 +90,6 @@ void MainWindow::paintEvent(QPaintEvent* event){
     DisplayFile display;
 
     display.add(new Camera(*pToCamera));
-    display.add(new Polygon(*pToBorderRectangle));
 
     criarMundo(display);
 
@@ -107,25 +98,15 @@ void MainWindow::paintEvent(QPaintEvent* event){
     double Wymin = pPontosCamera[0][1][0];
     double Wxmax = pPontosCamera[2][0][0];
     double Wymax = pPontosCamera[2][1][0];
-    for (const Ponto& p : pPontosCamera) {
 
-        if (p[0][0] < Wxmin) Wxmin = p[0][0];
-
-        if (p[0][0] > Wxmax) Wxmax = p[0][0];
-
-        if (p[1][0] > Wymin) Wymin = p[1][0];
-
-        if (p[1][0] < Wymax) Wymax = p[1][0];
-
-    }
     //Matriz global(centraliza e rotaciona o mundo)
-    display.applyGlobalTransform(pToCamera->angleRelativeToX);
+    display.applyGlobalTransform(pToCamera->angleRelativeToY);
 
     //Normaliza todos os pontos para SCN
-    display.triggerNormalize(Wxmax, Wxmin, Wymin, Wymax); // window
+    display.triggerNormalize(Wxmax, Wxmin, Wymax, Wymin); // window
 
-    //Faz o clipping, removendo todos os objetos fora da tela
-    display.triggerClipping(Wxmax, Wxmin, Wymin, Wymax);
+    //Faz o clipping, removendo todos os objetos fora da tela NAO FUNCIONA AINDA, DEVE TER ALGUM ERRINHO
+    //display.triggerClipping(Wxmax-50, Wxmin+50, Wymax-50, Wymin+50);
 
     //Transforma SCN para viewport
     display.triggerViewport(width(), 0, height(), 0);
@@ -140,41 +121,33 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete pToCamera;
-    delete pToBorderRectangle;
 }
 
-void MainWindow::on_right_clicked()
-{
-    //botão deve mover camera para direita
-    pToCamera->transformObject(50,0,0);
-    pToBorderRectangle->transformObject(100,0,0);
+// "Direita" (Strafe Right)
+void MainWindow::on_right_clicked() {
+    double d = 50; double t = pToCamera->angleRelativeToY;
+    pToCamera->transformObject(d * cos(t), d * -sin(t), 0);
     update();
 }
 
-
-void MainWindow::on_down_clicked()
-{
-    //botão deve mover camera para baixo
-    pToCamera->transformObject(0,-50,0);
-    pToBorderRectangle->transformObject(0,-100,0);
+// "Esquerda" (Strafe Left)
+void MainWindow::on_left_clicked() {
+    double d = 50; double t = pToCamera->angleRelativeToY;
+    pToCamera->transformObject(-d * cos(t), d * sin(t), 0); // Inverso do v_right
     update();
 }
 
-
-void MainWindow::on_left_clicked()
-{
-    //botão deve mover camera para a esquerda
-    pToCamera->transformObject(-50,0,0);
-    pToBorderRectangle->transformObject(-100,0,0);
+// "Cima" (Move Forward)
+void MainWindow::on_up_clicked() {
+    double d = 50; double t = pToCamera->angleRelativeToY;
+    pToCamera->transformObject(d * sin(t), d * cos(t), 0); // Usa v_up
     update();
 }
 
-
-void MainWindow::on_up_clicked()
-{
-    //botão deve mover camera para cima
-    pToCamera->transformObject(0,50,0);
-    pToBorderRectangle->transformObject(0,100,0);
+// "Baixo" (Move Backward)
+void MainWindow::on_down_clicked() {
+    double d = 50; double t = pToCamera->angleRelativeToY;
+    pToCamera->transformObject(-d * sin(t), -d * cos(t), 0); // Inverso do v_up
     update();
 }
 

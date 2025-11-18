@@ -10,7 +10,7 @@ Drawable::Drawable(const QString& n, ObjectType t, const QVector<Ponto>& pts)
 
 QVector<QPointF>* Drawable::getQPoints() {
     QVector<QPointF> *pointerToVector= new QVector<QPointF>;
-    for(auto& aux : points){
+    for(auto& aux : normPoints){
         pointerToVector->append(*(aux.convertToQPointF()));
     }
     return pointerToVector;
@@ -62,13 +62,14 @@ void Drawable::rotateObjectZ(double ang) {
     this->returnFromOrigin(avgPoint);
 }
 
+// Retorna o ponto da média entre todos os pontos do objetos, em todas as coordenadas (pode ser usado para retornar o centro da camera)
 Ponto Drawable::getObjectAverage() {
     double somaX = 0, somaY = 0, somaZ = 0;
 
-    for(auto& aux: points) {
-        somaX += aux.getX();
-        somaY += aux.getY();
-        somaZ += aux.getZ();
+    for(auto& ponto: points) {
+        somaX += ponto.getX();
+        somaY += ponto.getY();
+        somaZ += ponto.getZ();
     }
     int numPoints = points.size();
     return Ponto(somaX/numPoints, somaY/numPoints, somaZ/numPoints);
@@ -88,13 +89,15 @@ void Drawable::returnFromOrigin(Ponto p) {
 
 void Drawable::normalizeObject(double Wxmin, double Wxmax, double Wymin, double Wymax) {
     for (auto& ponto : points) {
+        normPoints.append(ponto);
+    }
+    for (auto& ponto : normPoints) {
         ponto.toSCN(Wxmin, Wxmax, Wymin, Wymax, true);
-
     }
 }
 
 void Drawable::viewportObject(double Vxmin, double Vxmax, double Vymin, double Vymax) {
-    for (auto& ponto : clippedPoints) {
+    for (auto& ponto : normPoints) { // MUDE ESSA SEÇAO DE points PARA clippedPoints PARA A VIEWPORT DOS PONTOS CLIPADOS FUNCIONAR
         ponto.toViewport(Vxmin, Vxmax, Vymin, Vymax, true);
     }
 }
@@ -115,7 +118,11 @@ void Drawable::applyMatrix(Matriz &M) {
     }
 }
 
-std::unique_ptr<Linha> Drawable::clipLine(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX, const Ponto& p1, const Ponto& p2) {
+// Tem como entrada o retangulo onde ocorrera o clipping (geralmente vai ser as coordenadas da window), assim como dois pontos
+// Então, a funcao calcula se a linha formada pelos pontos aparece na tela.
+// Daí, retorna vetor de pontos vazio se estiver completamnete fora,
+// ou retorna vetor de pontos dos pontos ja clipados, pra estar dentro do espaço informado
+QVector<Ponto> Drawable::clipLine(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX, const Ponto& p1, const Ponto& p2) {
     double x1 = p1.getX(), y1 = p1.getY();
     double x2 = p2.getX(), y2 = p2.getY();
 
@@ -131,12 +138,18 @@ std::unique_ptr<Linha> Drawable::clipLine(double X_MIN, double X_MAX, double Y_M
 
     while(true) {
         // Caso 1. Segmento completamente contido na window
-        if(codigo1 == DENTRO && codigo2 == DENTRO)
-            return std::make_unique<Linha>("", Ponto(x1,y1), Ponto(x2,y2));
+        if(codigo1 == DENTRO && codigo2 == DENTRO) {
+            QVector<Ponto> linha;
+            linha[0] = Ponto(x1,y1);
+            linha[1] = Ponto(x2,y2);
+            return linha;
+        }
 
         // Case 2. Segmento completamente fora da window
-        else if((codigo1 & codigo2) != DENTRO)
-            return nullptr;
+        else if((codigo1 & codigo2) != DENTRO) {
+            QVector<Ponto> linha;
+            return linha;
+        }
 
         // Caso 3. Segmento parcialmente contido na window
         else {
@@ -216,17 +229,22 @@ double Drawable::getZfromPoints(int i) {
     return 0;
 }
 
-void Drawable::clipObject(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX) {
+// (ESTA COM ERROS) Tem como entrada as coordenadas do retangulo de corte (geralmente vai ser as coordenadas da window)
+// Funçao computa o clipping de cada linha formada pelos pontos no vetor pointws do objeto, de forma sequencial
+// Todas as linhas feitas a partir desse processo são clippadas e salvas no vetor clippedPoints, em cada objeto
+void Drawable::clipObject(double X_MAX, double X_MIN, double Y_MAX, double Y_MIN) {
+
     for (int i = 0; i < points.length(); i++) {
         int p1Indice = i;
         int p2Indice = (i+1) % points.length();
 
         Ponto p1((points.at(p1Indice)).getX(), (points.at(p1Indice)).getY());
         Ponto p2((points.at(p2Indice)).getX(), (points.at(p2Indice)).getY());
-        auto linhaClipada = clipLine(X_MIN, X_MAX, Y_MIN, Y_MAX, p1, p2);
-        if(linhaClipada) {
-            p1 = linhaClipada.release()->points[0];
-            p2 = linhaClipada.release()->points[1];
+        QVector<Ponto> linhaClipada = clipLine(X_MIN, X_MAX, Y_MIN, Y_MAX, p1, p2);
+
+        if(!linhaClipada.empty()) {
+            p1 = linhaClipada[0];
+            p2 = linhaClipada[1];
 
             clippedPoints.append(p1);
             clippedPoints.append(p2);

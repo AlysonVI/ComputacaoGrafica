@@ -17,7 +17,6 @@ class MainWindow : public QMainWindow
     DisplayFile display;
 public:
     Camera* pToCamera;
-    Polygon* pToBorderRectangle;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     void casteljau(DisplayFile& display, Ponto &p0, Ponto &p1, Ponto &p2, int n);
