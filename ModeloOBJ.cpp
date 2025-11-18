@@ -79,7 +79,7 @@ void ModeloOBJ::loadModel(const QString &filePath) {
 }
 
 void ModeloOBJ::draw(QPainter& painter) {
-    if (points.isEmpty()) {
+    if (normPoints.isEmpty()) {
         return;
     }
     for (const QVector<int>& face : faces) {
@@ -94,8 +94,8 @@ void ModeloOBJ::draw(QPainter& painter) {
             int p2Indice = face.at((i + 1) % face.count());
 
             // Pega os pontos 2D e desenha, fazendo projeção ortogonal
-            QPointF p12D((points.at(p1Indice)).getX(), (points.at(p1Indice)).getY());
-            QPointF p22D((points.at(p2Indice)).getX(), (points.at(p2Indice)).getY());
+            QPointF p12D((normPoints.at(p1Indice)).getX(), (normPoints.at(p1Indice)).getY());
+            QPointF p22D((normPoints.at(p2Indice)).getX(), (normPoints.at(p2Indice)).getY());
 
             painter.drawLine((p12D), (p22D));
         }

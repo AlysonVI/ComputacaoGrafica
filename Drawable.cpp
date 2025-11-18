@@ -10,7 +10,7 @@ Drawable::Drawable(const QString& n, ObjectType t, const QVector<Ponto>& pts)
 
 QVector<QPointF>* Drawable::getQPoints() {
     QVector<QPointF> *pointerToVector= new QVector<QPointF>;
-    for(auto& aux : points){
+    for(auto& aux : normPoints){
         pointerToVector->append(*(aux.convertToQPointF()));
     }
     return pointerToVector;
@@ -89,12 +89,15 @@ void Drawable::returnFromOrigin(Ponto p) {
 
 void Drawable::normalizeObject(double Wxmin, double Wxmax, double Wymin, double Wymax) {
     for (auto& ponto : points) {
+        normPoints.append(ponto);
+    }
+    for (auto& ponto : normPoints) {
         ponto.toSCN(Wxmin, Wxmax, Wymin, Wymax, true);
     }
 }
 
 void Drawable::viewportObject(double Vxmin, double Vxmax, double Vymin, double Vymax) {
-    for (auto& ponto : points) { // MUDE ESSA SEÇAO DE points PARA clippedPoints PARA A VIEWPORT DOS PONTOS CLIPADOS FUNCIONAR
+    for (auto& ponto : normPoints) { // MUDE ESSA SEÇAO DE points PARA clippedPoints PARA A VIEWPORT DOS PONTOS CLIPADOS FUNCIONAR
         ponto.toViewport(Vxmin, Vxmax, Vymin, Vymax, true);
     }
 }
