@@ -2,7 +2,7 @@
 
 Camera::Camera(const QString& n, const QVector<Ponto>& pts)
     : Drawable(n, ObjectType::Camera, pts),
-    u(0,0,1), v(0,1,0), vpn(0,0,1),
+    u(1,0,0), v(0,1,0), vpn(0,0,1),
     centerOfProjection(0,0,0) // rascunho
 {
     this->angleRelativeToY = 0.0;
@@ -27,14 +27,14 @@ void Camera::projectPerspective() {
     QVector<double> viewPlaneNormal; // VPN
 }
 
-// funcao rascunho, ignore
-void Camera::getVPN() {
+void Camera::setVectorU(Ponto u) {
+    this->u = u;
+}
 
-    Ponto p1(0,0,0);
-    Ponto p2(0,0,0);
-    Ponto p3(0,0,0);
+void Camera::setVectorV(Ponto v) {
+    this->v = v;
+}
 
-    p1.transformPoint(-p1.getX(), -p1.getY(), -p1.getZ());
-    p2.transformPoint(-p1.getX(), -p1.getY(), -p1.getZ());
-    p3.transformPoint(-p1.getX(), -p1.getY(), -p1.getZ());
+void Camera::setVectorVpn(Ponto vpn) {
+    this->vpn = vpn;
 }
