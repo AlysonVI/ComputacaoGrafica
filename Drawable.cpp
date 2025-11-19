@@ -87,9 +87,37 @@ void Drawable::returnFromOrigin(Ponto p) {
     transformObject(p.getX(), p.getY(), p.getZ());
 }
 
-void Drawable::normalizeObject(double Wxmin, double Wxmax, double Wymin, double Wymax) {
+void Drawable::projectObject(double Wxmin, double Wxmax, double Wymin, double Wymax, double d) {
+
+    Matriz MPer(4,4);
+
+    MPer[0][0] = 1; MPer[0][1] = 0; MPer[0][2] = 0; MPer[0][3] = 0;
+    MPer[1][0] = 0; MPer[1][1] = 1; MPer[1][2] = 0; MPer[1][3] = 0;
+    MPer[2][0] = 0; MPer[2][1] = 0; MPer[2][2] = 1; MPer[2][3] = 0;
+    MPer[3][0] = 0; MPer[3][1] = 0; MPer[3][2] = 1/d; MPer[3][3] = 0;
+
     for (auto& ponto : points) {
         normPoints.append(ponto);
+    }
+    for (auto& ponto : normPoints) {
+        Matriz pontoMatriz(4,1);
+        pontoMatriz[0][0] = ponto.getX();
+        pontoMatriz[1][0] = ponto.getY();
+        pontoMatriz[2][0] = ponto.getZ();
+        pontoMatriz[3][0] = 1;
+
+        Matriz MResultado(4,4);
+        MResultado = MPer * pontoMatriz;
+
+        ponto = Ponto(MResultado[0][0], MResultado[0][1], MResultado[0][2]);
+    }
+}
+
+void Drawable::normalizeObject(double Wxmin, double Wxmax, double Wymin, double Wymax) {
+    if(normPoints.empty()) {
+        for (auto& ponto : points) {
+            normPoints.append(ponto);
+        }
     }
     for (auto& ponto : normPoints) {
         ponto.toSCN(Wxmin, Wxmax, Wymin, Wymax, true);

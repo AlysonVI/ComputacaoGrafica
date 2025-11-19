@@ -28,8 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
                                  });
 
     pToCamera->transformObject(150,150,0); //Camera
-    //pToCamera->rotateCamera(150,149);
-    pToCamera->scaleObject(1.2,1.2,0); //Camera
+    pToCamera->rotateCamera(Ponto(150,149,0));
+    pToCamera->scaleObject(2,2,0); //Camera
 }
 
 void MainWindow::criarMundo(DisplayFile& display){
@@ -44,7 +44,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     display.add(castelo3);
     display.add(curva);
 
-    Linha* linha = new Linha("", Ponto(-1, -1), Ponto (1, 1));
+    Linha* linha = new Linha("", Ponto(-1000, -1000), Ponto (1000, 1000));
     display.add(linha);
     /*
     // Linha clipada 1
@@ -66,6 +66,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     castelo3->rotateObjectX(-M_PI/5);
 
     // modelos obj
+    /*
     ModeloOBJ* modelo1 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/Projeto CG/objFiles/Lopunny.obj");
     display.add(modelo1);
     modelo1->transformObject(200,450,0);
@@ -73,7 +74,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     modelo1->rotateObjectY(M_PI/5);
     modelo1->rotateObjectZ(M_PI);
     modelo1->scaleObject(2.5,2.5,2.5);
-    /*
+    */
     ModeloOBJ* modelo2 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/Projeto CG/objFiles/Vaporeon.obj");
     display.add(modelo2);
     modelo2->transformObject(350,200,0);
@@ -81,12 +82,14 @@ void MainWindow::criarMundo(DisplayFile& display){
     modelo2->rotateObjectY(-M_PI/2-1);
     modelo2->rotateObjectZ(M_PI-0.3);
     modelo2->scaleObject(2.5,2.5,2.5);
-    */
+
 }
 
 void MainWindow::paintEvent(QPaintEvent* event){
     QMainWindow::paintEvent(event);
     QPainter painter(this);
+    painter.fillRect(rect(), Qt::black);
+    painter.setPen(Qt::green);
     DisplayFile display;
 
     display.add(new Camera(*pToCamera));
@@ -102,6 +105,7 @@ void MainWindow::paintEvent(QPaintEvent* event){
     //Matriz global(centraliza e rotaciona o mundo)
     display.applyGlobalTransform(pToCamera);
     //Normaliza todos os pontos para SCN
+    display.triggerPerspective(Wxmax, Wxmin, Wymax, Wymin, pToCamera->distance);
     display.triggerNormalize(Wxmax, Wxmin, Wymax, Wymin); // window
 
     //Faz o clipping, removendo todos os objetos fora da tela NAO FUNCIONA AINDA, DEVE TER ALGUM ERRINHO

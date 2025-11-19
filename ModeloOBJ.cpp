@@ -93,7 +93,7 @@ void ModeloOBJ::draw(QPainter& painter) {
             // Modulo (%) para conectar ultima vertice à primeira
             int p2Indice = face.at((i + 1) % face.count());
 
-            // Pega os pontos 2D e desenha, fazendo projeção ortogonal
+                // Pega os pontos 2D e desenha, fazendo projeção ortogonal
             QPointF p12D((normPoints.at(p1Indice)).getX(), (normPoints.at(p1Indice)).getY());
             QPointF p22D((normPoints.at(p2Indice)).getX(), (normPoints.at(p2Indice)).getY());
 

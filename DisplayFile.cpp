@@ -35,13 +35,6 @@ void DisplayFile::triggerTranslate() {
     }
 }
 
-/*void DisplayFile::triggerRotate(double theta){
-    for(auto&obj : objects){
-        if(obj->getType() == ObjectType::Camera) continue;
-        obj->rotateObject(-theta);
-    }
-}*/
-
 void DisplayFile::applyGlobalTransform(Camera* pToCamera) {
     Matriz globalMatrix = getWorldToCameraMatrix(pToCamera);
 
@@ -56,14 +49,21 @@ Matriz DisplayFile::getWorldToCameraMatrix(Camera* pToCamera) {  // matriz globa
     Matriz T(4,4), R(4,4);
     T = T.getTransformMatrix(-centroCamera.getX(), -centroCamera.getY(), -centroCamera.getZ());
 
-    QVector<double> angulo = Ponto::getAnglesfromVectors(pToCamera->getVectorVpn(), Ponto(0,0,0));
+    QVector<double> angulo = Ponto::getAnglesfromVectors(pToCamera->getVectorVpn(), Ponto(0,0,1));
     R = R.getRotateMatrixX(-angulo[0]);
     R = R * R.getRotateMatrixY(-angulo[1]);
 
-    getObject(0)->applyMatrix(R);
+    pToCamera->applyMatrix(R);
 
     Matriz globalMatrix = R * T;
     return globalMatrix;
+}
+
+void DisplayFile::triggerPerspective(double Wxmax, double Wxmin, double Wymax, double Wymin, double d) {
+    for (auto& obj : objects) {
+        if(obj->getType() == ObjectType::Camera) continue;
+        obj->projectObject(Wxmin, Wxmax, Wymin, Wymax, d);
+    }
 }
 
 void DisplayFile::triggerNormalize(double Wxmax, double Wxmin, double Wymax, double Wymin) {
