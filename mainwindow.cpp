@@ -27,8 +27,8 @@ MainWindow::MainWindow(QWidget *parent)
                                      {-250, -250}, {-250, 250}, {250, 250}, {250, -250}
                                  });
 
-    pToCamera->transformObject(150,150,0); //Camera
-    pToCamera->rotateCamera(Ponto(150,149,0));
+    pToCamera->transformObject(150,250,-300); //Camera
+    //pToCamera->rotateCamera(Ponto(150,149,0));
     pToCamera->scaleObject(2,2,0); //Camera
 }
 
@@ -57,7 +57,7 @@ void MainWindow::criarMundo(DisplayFile& display){
         display.add(linha1.release());
     */
 
-    castelo1->scaleObject(1.7, 1.7, 0);
+    castelo1->scaleObject(1.2, 1.2, 0);
     castelo1->rotateObjectX(M_PI);
 
     castelo2->scaleObject(0.5, 0.5, 0);
@@ -104,8 +104,9 @@ void MainWindow::paintEvent(QPaintEvent* event){
 
     //Matriz global(centraliza e rotaciona o mundo)
     display.applyGlobalTransform(pToCamera);
-    //Normaliza todos os pontos para SCN
+    //Aplica a transformação de perspectiva antes de normalizar
     display.triggerPerspective(Wxmax, Wxmin, Wymax, Wymin, pToCamera->distance);
+    //Normaliza todos os pontos para SCN
     display.triggerNormalize(Wxmax, Wxmin, Wymax, Wymin); // window
 
     //Faz o clipping, removendo todos os objetos fora da tela NAO FUNCIONA AINDA, DEVE TER ALGUM ERRINHO

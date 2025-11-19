@@ -96,8 +96,10 @@ void Drawable::projectObject(double Wxmin, double Wxmax, double Wymin, double Wy
     MPer[2][0] = 0; MPer[2][1] = 0; MPer[2][2] = 1; MPer[2][3] = 0;
     MPer[3][0] = 0; MPer[3][1] = 0; MPer[3][2] = 1/d; MPer[3][3] = 0;
 
-    for (auto& ponto : points) {
-        normPoints.append(ponto);
+    if(normPoints.empty()) {
+        for (auto& ponto : points) {
+            normPoints.append(ponto);
+        }
     }
     for (auto& ponto : normPoints) {
         Matriz pontoMatriz(4,1);
