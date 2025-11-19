@@ -44,7 +44,7 @@ public:
     void rotateObjectY(double ang);
     void rotateObjectZ(double ang);
 
-    void projectObject(double Wxmin, double Wxmax, double Wymin, double Wymax, double d);
+    void projectObject( double d);
     void viewportObject(double Vxmin, double Vxmax, double Vymin, double Vymax);
     void normalizeObject(double Wxmin, double Wxmax, double Wymin, double Wymax);
     void applyMatrix(Matriz &M);

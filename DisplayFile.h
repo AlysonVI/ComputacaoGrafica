@@ -14,7 +14,7 @@ public:
     void printAll() const;
 
     void triggerTranslate();//Quando faz na window
-    void triggerPerspective(double Wxmax, double Wxmin, double Wymax, double Wymin, double d);
+    void triggerPerspective(double d);
     void triggerNormalize(double Wxmax, double Wxmin, double Wymax, double Wymin);
     void triggerClipping(double Wxmax, double Wxmin, double Wymax, double Wymin);
     void triggerViewport(double Vxmax, double Vxmin, double Vymax, double Vymin);

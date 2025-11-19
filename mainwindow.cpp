@@ -44,8 +44,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     display.add(castelo3);
     display.add(curva);
 
-    Linha* linha = new Linha("", Ponto(-1000, -1000), Ponto (1000, 1000));
-    display.add(linha);
+
     /*
     // Linha clipada 1
     Ponto p11(500,300);
@@ -75,7 +74,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     modelo1->rotateObjectZ(M_PI);
     modelo1->scaleObject(2.5,2.5,2.5);
     */
-    ModeloOBJ* modelo2 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/Projeto CG/objFiles/Vaporeon.obj");
+    ModeloOBJ* modelo2 = new ModeloOBJ("/Qt/ComputacaoGrafica/objFiles/Vaporeon.obj");
     display.add(modelo2);
     modelo2->transformObject(350,200,0);
     modelo2->rotateObjectX(M_PI/2);
@@ -96,18 +95,17 @@ void MainWindow::paintEvent(QPaintEvent* event){
 
     criarMundo(display);
 
-    QVector<Ponto> pPontosCamera= pToCamera->getPoints();
-    double Wxmin = pPontosCamera[0][0][0];
-    double Wymin = pPontosCamera[0][1][0];
-    double Wxmax = pPontosCamera[2][0][0];
-    double Wymax = pPontosCamera[2][1][0];
 
     //Matriz global(centraliza e rotaciona o mundo)
     display.applyGlobalTransform(pToCamera);
     //Aplica a transformação de perspectiva antes de normalizar
-    display.triggerPerspective(Wxmax, Wxmin, Wymax, Wymin, pToCamera->distance);
+    display.triggerPerspective(pToCamera->distance);
     //Normaliza todos os pontos para SCN
-    display.triggerNormalize(Wxmax, Wxmin, Wymax, Wymin); // window
+
+
+    double halfWidth = 500.0;
+    double halfHeight = 500.0;
+    display.triggerNormalize(halfWidth, -halfWidth, halfHeight, -halfHeight); // window simetrica os valores podem ser fixos
 
     //Faz o clipping, removendo todos os objetos fora da tela NAO FUNCIONA AINDA, DEVE TER ALGUM ERRINHO
     //display.triggerClipping(Wxmax-50, Wxmin+50, Wymax-50, Wymin+50);

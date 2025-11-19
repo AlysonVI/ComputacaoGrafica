@@ -87,7 +87,7 @@ void Drawable::returnFromOrigin(Ponto p) {
     transformObject(p.getX(), p.getY(), p.getZ());
 }
 
-void Drawable::projectObject(double Wxmin, double Wxmax, double Wymin, double Wymax, double d) {
+void Drawable::projectObject(double d) {
 
     Matriz MPer(4,4);
 
@@ -101,17 +101,26 @@ void Drawable::projectObject(double Wxmin, double Wxmax, double Wymin, double Wy
             normPoints.append(ponto);
         }
     }
-    for (auto& ponto : normPoints) {
+    for (auto& ponto : normPoints){
         Matriz pontoMatriz(4,1);
         pontoMatriz[0][0] = ponto.getX();
         pontoMatriz[1][0] = ponto.getY();
         pontoMatriz[2][0] = ponto.getZ();
         pontoMatriz[3][0] = 1;
 
-        Matriz MResultado(4,4);
-        MResultado = MPer * pontoMatriz;
+        Matriz MResultado = MPer * pontoMatriz;
 
-        ponto = Ponto(MResultado[0][0], MResultado[0][1], MResultado[0][2]);
+        double x = MResultado[0][0];
+        double y = MResultado[1][0];
+        double z = MResultado[2][0];
+        double w = MResultado[3][0];
+        if (w != 0){
+            x /= w;
+            y /= w;
+            z /= w;
+        }
+
+        ponto = Ponto(x, y, z);
     }
 }
 

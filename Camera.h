@@ -12,7 +12,7 @@ private:
     Ponto vVector; // u
     Ponto vpn; // Vetor normal ao plano de projeção
 public:
-    const double distance = 60;
+    const double distance = 400;
 
     Ponto getVectorU();
     Ponto getVectorV();

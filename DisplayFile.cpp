@@ -53,16 +53,15 @@ Matriz DisplayFile::getWorldToCameraMatrix(Camera* pToCamera) {  // matriz globa
     R = R.getRotateMatrixX(-angulo[0]);
     R = R * R.getRotateMatrixY(-angulo[1]);
 
-    pToCamera->applyMatrix(R);
 
     Matriz globalMatrix = R * T;
     return globalMatrix;
 }
 
-void DisplayFile::triggerPerspective(double Wxmax, double Wxmin, double Wymax, double Wymin, double d) {
+void DisplayFile::triggerPerspective(double d) {
     for (auto& obj : objects) {
         if(obj->getType() == ObjectType::Camera) continue;
-        obj->projectObject(Wxmin, Wxmax, Wymin, Wymax, d);
+        obj->projectObject(d);
     }
 }
 
