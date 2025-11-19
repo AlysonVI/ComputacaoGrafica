@@ -27,3 +27,19 @@ double Ponto::getY() const {
 double Ponto::getZ() const {
     return (*this)[2][0];
 }
+
+// angulo[0] = angulo relativo a x, angulo[1] = angulo relativo a y
+QVector<double> Ponto::getAnglesfromVectors(Ponto v1, Ponto v2) {
+    double tamv1X = sqrt(v1.getX() * v1.getX() + v1.getZ() * v1.getZ());
+    double tamv1Y = sqrt(v1.getY() * v1.getY() + v1.getZ() * v1.getZ());
+    double tamv2X = sqrt(v2.getY() * v2.getY() + v2.getZ() * v2.getZ());
+    double tamv2Y = sqrt(v2.getX() * v2.getX() + v2.getZ() * v2.getZ());
+
+    // angulo entre a projeção de v1 e v2 no plano yz
+    double angleRelativeToX = acos((v1.getY() * v2.getY() + v1.getZ() * v2.getZ())/ (tamv1X * tamv2X));
+    // angulo entre a projeção de v1 e v2 no plano xz
+    double angleRelativeToY = acos((v1.getX() * v2.getX() + v1.getZ() * v2.getZ())/ (tamv1Y * tamv2Y));
+
+    QVector<double> angles = {angleRelativeToX, angleRelativeToY};
+    return angles;
+}

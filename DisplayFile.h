@@ -3,6 +3,7 @@
 
 #include "Drawable.h"
 #include <QVector>
+#include "Camera.h"
 
 class DisplayFile {
     QVector<Drawable*> objects; //display file
@@ -16,8 +17,8 @@ public:
     void triggerNormalize(double Wxmax, double Wxmin, double Wymax, double Wymin);
     void triggerClipping(double Wxmax, double Wxmin, double Wymax, double Wymin);
     void triggerViewport(double Vxmax, double Vxmin, double Vymax, double Vymin);
-    void applyGlobalTransform(double theta);
-    Matriz getWorldToCameraMatrix(double theta);
+    void applyGlobalTransform(Camera* pToCamera);
+    Matriz getWorldToCameraMatrix(Camera* pToCamera);
     Drawable* getObject(int n);
 };
 

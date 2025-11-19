@@ -5,25 +5,21 @@
 
 class Camera : public Drawable{
 private:
-    double FOV; // angulo de visualização da camera
     Ponto centerOfProjection; // ponto que traça linhas imaginarias ate os pontos da window para criar o frustrum
     void getVPN(); // retorna View Plane Normal (vetor normal do plano de projeção)
 
-    Ponto u; // vetorUp
-    Ponto v; // u
+    Ponto uVector; // vetorUp
+    Ponto vVector; // u
     Ponto vpn; // Vetor normal ao plano de projeção
 public:
-    double angleRelativeToY;
+    Ponto getVectorU();
+    Ponto getVectorV();
+    Ponto getVectorVpn();
+
     Camera(const QString& n, const QVector<Ponto>& pts);
     void draw(QPainter& painter) override;
 
-    void rotateCamera(double Wupx, double Wupy);
-
-    void projectPerspective();
-
-    void setVectorU(Ponto u);
-    void setVectorV(Ponto v);
-    void setVectorVpn(Ponto vpn);
+    void rotateCamera(Ponto focusPoint); // ponto para onde a camera vai olhar
 };
 
 #endif // CAMERA_H

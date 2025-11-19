@@ -5,6 +5,7 @@
 #include <QStringList>
 #include <iostream>
 #include <QVector>
+#include "Ponto.h"
 
 DisplayFile::~DisplayFile(){
     for(auto& obj : objects) delete obj;
@@ -29,8 +30,7 @@ Drawable* DisplayFile::getObject(int n){
 
 void DisplayFile::triggerTranslate() {
     Ponto centroWindow = getObject(0)->getObjectAverage();
-    for(auto&obj : objects){
-        if(obj->getType() == ObjectType::Camera) continue;
+    for(auto&obj : objects) {
         obj->transformObject(-centroWindow.getX(), -centroWindow.getY(), -centroWindow.getZ());
     }
 }
@@ -42,24 +42,25 @@ void DisplayFile::triggerTranslate() {
     }
 }*/
 
-void DisplayFile::applyGlobalTransform(double theta) {
-    Matriz globalMatrix = getWorldToCameraMatrix(theta);
+void DisplayFile::applyGlobalTransform(Camera* pToCamera) {
+    Matriz globalMatrix = getWorldToCameraMatrix(pToCamera);
 
     for(auto&obj : objects){
-        if(obj->getType() == ObjectType::Camera) continue;
         obj->applyMatrix(globalMatrix);
     }
 }
 
-Matriz DisplayFile::getWorldToCameraMatrix(double theta) {  // matriz global para fazer translaçãp para centro e rotação baseado no angulo calculado antes (relativeToX)
-    Ponto centroCamera = getObject(0)->getObjectAverage();
-    double cx = centroCamera.getX();
-    double cy = centroCamera.getY();
-    double cz = centroCamera.getZ();
+Matriz DisplayFile::getWorldToCameraMatrix(Camera* pToCamera) {  // matriz global para fazer translaçãp para centro e rotação baseado no angulo calculado antes (relativeToX)
+    Ponto centroCamera = pToCamera->getObjectAverage();
 
-    Matriz T(3,3), R(3,3);
-    T = T.getTransformMatrix(-cx, -cy, -cz);
-    R = R.getRotateMatrixZ(-theta);
+    Matriz T(4,4), R(4,4);
+    T = T.getTransformMatrix(-centroCamera.getX(), -centroCamera.getY(), -centroCamera.getZ());
+
+    QVector<double> angulo = Ponto::getAnglesfromVectors(pToCamera->getVectorVpn(), Ponto(0,0,0));
+    R = R.getRotateMatrixX(-angulo[0]);
+    R = R * R.getRotateMatrixY(-angulo[1]);
+
+    getObject(0)->applyMatrix(R);
 
     Matriz globalMatrix = R * T;
     return globalMatrix;
@@ -68,7 +69,6 @@ Matriz DisplayFile::getWorldToCameraMatrix(double theta) {  // matriz global par
 void DisplayFile::triggerNormalize(double Wxmax, double Wxmin, double Wymax, double Wymin) {
 
     for (auto& obj : objects) {
-        if(obj->getType() == ObjectType::Camera) continue;
         obj->normalizeObject(Wxmin, Wxmax, Wymin, Wymax);
     }
 }
@@ -84,7 +84,6 @@ void DisplayFile::triggerClipping(double Wxmax, double Wxmin, double Wymax, doub
 void DisplayFile::triggerViewport(double Vxmax, double Vxmin, double Vymax, double Vymin) {
 
     for (auto& obj : objects) {
-        if(obj->getType() == ObjectType::Camera) continue;
         obj->viewportObject(Vxmin, Vxmax, Vymin, Vymax);
     }
 }
