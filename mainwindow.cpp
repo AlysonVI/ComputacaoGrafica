@@ -100,8 +100,7 @@ void MainWindow::paintEvent(QPaintEvent* event){
     double Wymax = pPontosCamera[2][1][0];
 
     //Matriz global(centraliza e rotaciona o mundo)
-    display.applyGlobalTransform(pToCamera->angleRelativeToY);
-
+    display.applyGlobalTransform(pToCamera);
     //Normaliza todos os pontos para SCN
     display.triggerNormalize(Wxmax, Wxmin, Wymax, Wymin); // window
 
@@ -125,29 +124,25 @@ MainWindow::~MainWindow()
 
 // "Direita" (Strafe Right)
 void MainWindow::on_right_clicked() {
-    double d = 50; double t = pToCamera->angleRelativeToY;
-    pToCamera->transformObject(d * cos(t), d * -sin(t), 0);
+    pToCamera->transformObject(50, 0, 0);
     update();
 }
 
 // "Esquerda" (Strafe Left)
 void MainWindow::on_left_clicked() {
-    double d = 50; double t = pToCamera->angleRelativeToY;
-    pToCamera->transformObject(-d * cos(t), d * sin(t), 0); // Inverso do v_right
+    pToCamera->transformObject(-50, 0, 0);
     update();
 }
 
 // "Cima" (Move Forward)
 void MainWindow::on_up_clicked() {
-    double d = 50; double t = pToCamera->angleRelativeToY;
-    pToCamera->transformObject(d * sin(t), d * cos(t), 0); // Usa v_up
+    pToCamera->transformObject(0, 50, 0);
     update();
 }
 
 // "Baixo" (Move Backward)
 void MainWindow::on_down_clicked() {
-    double d = 50; double t = pToCamera->angleRelativeToY;
-    pToCamera->transformObject(-d * sin(t), -d * cos(t), 0); // Inverso do v_up
+    pToCamera->transformObject(0, -50, 0);
     update();
 }
 

@@ -14,6 +14,7 @@ public:
     double getX() const;
     double getY() const;
     double getZ() const;
+    static QVector<double> getAnglesfromVectors(Ponto v1, Ponto v2);
 };
 
 #endif
