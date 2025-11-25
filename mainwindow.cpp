@@ -61,6 +61,7 @@ void MainWindow::criarMundo(DisplayFile& display){
 
     castelo2->scaleObject(0.5, 0.5, 0);
     castelo2->transformObject(0, 100, 0);
+    castelo2->rotateObjectY(M_PI/2);
 
     castelo3->rotateObjectX(-M_PI/5);
 
@@ -156,7 +157,7 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 }
 
 
-void MainWindow::on_xRotate_clicked()
+void MainWindow::on_XRotate_clicked()
 {
     display.getObject(indexG)->rotateObjectX(10);
 }
@@ -165,13 +166,11 @@ void MainWindow::on_xRotate_clicked()
 void MainWindow::on_YRotate_clicked()
 {
     display.getObject(indexG)->rotateObjectY(10);
-
 }
 
 
 void MainWindow::on_ZRotate_clicked()
 {
     display.getObject(indexG)->rotateObjectZ(10);
-
 }
 

@@ -210,7 +210,7 @@ QVector<Ponto> Drawable::clipLine(double X_MIN, double X_MAX, double Y_MIN, doub
                 xNovo = X_MIN;
             }
 
-            // Now update the point that was outside.
+            // Agora atualiza o ponto que estsava fora
             if (codigoFora == codigo1) {
                 x1 = xNovo;
                 y1 = yNovo;

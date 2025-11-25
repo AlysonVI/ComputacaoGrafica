@@ -28,15 +28,13 @@ private slots:
 
     void on_down_clicked();
 
-    void on_pushButton_clicked();
-
     void on_left_clicked();
 
     void on_up_clicked();
 
     void on_comboBox_currentIndexChanged(int index);
 
-    void on_xRotate_clicked();
+    void on_XRotate_clicked();
 
     void on_YRotate_clicked();
 
