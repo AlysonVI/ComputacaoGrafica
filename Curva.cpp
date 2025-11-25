@@ -14,14 +14,17 @@ void Curva::casteljau(const Ponto &p0, const Ponto &p1, const Ponto &p2, int n) 
     else {
         double p11x = (p0.getX() + p1.getX()) / 2;
         double p11y = (p0.getY() + p1.getY()) / 2;
+        double p11z = (p0.getZ() + p1.getZ()) / 2;
         double p12x = (p1.getX() + p2.getX()) / 2;
         double p12y = (p1.getY() + p2.getY()) / 2;
-        Ponto p11(p11x, p11y);
-        Ponto p12(p12x, p12y);
+        double p12z = (p1.getZ() + p2.getZ()) / 2;
+        Ponto p11(p11x, p11y, p11z);
+        Ponto p12(p12x, p12y, p12z);
 
         double p22x = (p11.getX() + p12.getX()) / 2;
         double p22y = (p11.getY() + p12.getY()) / 2;
-        Ponto p22(p22x, p22y);
+        double p22z = (p11.getZ() + p12.getZ()) / 2;
+        Ponto p22(p22x, p22y, p22z);
 
         casteljau(p0, p11, p22, n-1);
         casteljau(p22, p12, p2, n-1);

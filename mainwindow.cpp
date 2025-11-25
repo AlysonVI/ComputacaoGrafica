@@ -37,7 +37,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     Castelo* castelo1 = new Castelo(Ponto(200,200));
     Castelo* castelo2 = new Castelo(Ponto(70,250));
     Castelo* castelo3 = new Castelo(Ponto(300,400));
-    Curva* curva = new Curva("curva", Ponto(100,100), Ponto(200,300), Ponto(400,200), 5);
+    Curva* curva = new Curva("curva", Ponto(200,100,-100), Ponto(250,50,-150), Ponto(250,300,-250), 5);
 
     display.add(castelo1);
     display.add(castelo2);
@@ -75,13 +75,13 @@ void MainWindow::criarMundo(DisplayFile& display){
     modelo1->rotateObjectZ(M_PI);
     modelo1->scaleObject(2.5,2.5,2.5);
     */
-    ModeloOBJ* modelo2 = new ModeloOBJ("/home/atosarruda/Documentos/CG/ComputacaoGrafica/objFiles/Vaporeon.obj");
+    ModeloOBJ* modelo2 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/ProjetoCG/objFiles/Vaporeon.obj");
     display.add(modelo2);
-    modelo2->transformObject(350,200,0);
+    modelo2->transformObject(150,250,-200);
     modelo2->rotateObjectX(M_PI/2);
-    modelo2->rotateObjectY(-M_PI/2-1);
+    modelo2->rotateObjectY(M_PI/4);
     modelo2->rotateObjectZ(M_PI-0.3);
-    modelo2->scaleObject(2.5,2.5,2.5);
+    //modelo2->scaleObject(2.5,2.5,2.5);
 
 }
 
