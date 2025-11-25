@@ -74,7 +74,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     modelo1->rotateObjectZ(M_PI);
     modelo1->scaleObject(2.5,2.5,2.5);
     */
-    ModeloOBJ* modelo2 = new ModeloOBJ("/Qt/ComputacaoGrafica/objFiles/Vaporeon.obj");
+    ModeloOBJ* modelo2 = new ModeloOBJ("/home/atosarruda/Documentos/CG/ComputacaoGrafica/objFiles/Vaporeon.obj");
     display.add(modelo2);
     modelo2->transformObject(350,200,0);
     modelo2->rotateObjectX(M_PI/2);
@@ -147,5 +147,31 @@ void MainWindow::on_up_clicked() {
 void MainWindow::on_down_clicked() {
     pToCamera->transformObject(0, -50, 0);
     update();
+}
+
+
+void MainWindow::on_comboBox_currentIndexChanged(int index)
+{
+   indexG = index;
+}
+
+
+void MainWindow::on_xRotate_clicked()
+{
+    display.getObject(indexG)->rotateObjectX(10);
+}
+
+
+void MainWindow::on_YRotate_clicked()
+{
+    display.getObject(indexG)->rotateObjectY(10);
+
+}
+
+
+void MainWindow::on_ZRotate_clicked()
+{
+    display.getObject(indexG)->rotateObjectZ(10);
+
 }
 

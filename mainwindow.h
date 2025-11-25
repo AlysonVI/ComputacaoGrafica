@@ -16,6 +16,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     DisplayFile display;
 public:
+    int indexG;
     Camera* pToCamera;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -32,6 +33,14 @@ private slots:
     void on_left_clicked();
 
     void on_up_clicked();
+
+    void on_comboBox_currentIndexChanged(int index);
+
+    void on_xRotate_clicked();
+
+    void on_YRotate_clicked();
+
+    void on_ZRotate_clicked();
 
 private:
     int viewportX;

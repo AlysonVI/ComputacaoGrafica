@@ -40,7 +40,7 @@
       <height>74</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout">
+    <layout class="QGridLayout" name="Move">
      <item row="3" column="2">
       <widget class="QPushButton" name="down">
        <property name="sizePolicy">
@@ -278,6 +278,64 @@
 }</string>
     </property>
    </widget>
+   <widget class="QComboBox" name="comboBox">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>620</y>
+      <width>86</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Camera</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>obj1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>obj2</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>620</y>
+      <width>254</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="ZRotate">
+       <property name="text">
+        <string>z</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="xRotate">
+       <property name="text">
+        <string>x</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="YRotate">
+       <property name="text">
+        <string>y</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
    <zorder>FundoD</zorder>
    <zorder>FundoB</zorder>
    <zorder>FundoCuboC</zorder>
@@ -287,6 +345,8 @@
    <zorder>FundoC</zorder>
    <zorder>FundoCuboB</zorder>
    <zorder>FundoCuboD</zorder>
+   <zorder>comboBox</zorder>
+   <zorder>gridLayoutWidget_2</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
