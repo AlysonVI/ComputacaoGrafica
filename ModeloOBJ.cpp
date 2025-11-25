@@ -82,6 +82,7 @@ void ModeloOBJ::draw(QPainter& painter) {
     if (normPoints.isEmpty()) {
         return;
     }
+    painter.setPen(Qt::blue);
     for (const QVector<int>& face : faces) {
 
         // Itera para cada vertice no vetor da face
@@ -100,4 +101,5 @@ void ModeloOBJ::draw(QPainter& painter) {
             painter.drawLine((p12D), (p22D));
         }
     }
+    painter.setPen(Qt::green);
 }
