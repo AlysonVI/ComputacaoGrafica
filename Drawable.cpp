@@ -142,6 +142,7 @@ void Drawable::viewportObject(double Vxmin, double Vxmax, double Vymin, double V
 }
 
 void Drawable::applyMatrix(Matriz &M) {
+    //normPoints.clear();
     for (auto& p : points) {
         Matriz pt(4,1);
         pt[0][0] = p[0][0];
@@ -154,9 +155,23 @@ void Drawable::applyMatrix(Matriz &M) {
         p[0][0] = pt[0][0];
         p[1][0] = pt[1][0];
         p[2][0] = pt[2][0];
+        //normPoints.append(Ponto(pt[0][0], pt[1][0], pt[2][0]));
     }
 }
 
+void Drawable::applyViewMatrix(Matriz &M){
+    normPoints.clear();
+    for (auto& p : points) {
+        Matriz pt(4,1);
+        pt[0][0] = p.getX();
+        pt[1][0] = p.getY();
+        pt[2][0] = p.getZ();
+        pt[3][0] = 1;
+
+        pt = M * pt;
+        normPoints.append(Ponto(pt[0][0], pt[1][0], pt[2][0]));
+    }
+}
 // Tem como entrada o retangulo onde ocorrera o clipping (geralmente vai ser as coordenadas da window), assim como dois pontos
 // Então, a funcao calcula se a linha formada pelos pontos aparece na tela.
 // Daí, retorna vetor de pontos vazio se estiver completamnete fora,

@@ -14,9 +14,10 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    DisplayFile display;
+
 public:
-    int indexG;
+    DisplayFile display;
+    int indexG= 0;
     Camera* pToCamera;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();

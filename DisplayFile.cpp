@@ -39,7 +39,7 @@ void DisplayFile::applyGlobalTransform(Camera* pToCamera) {
     Matriz globalMatrix = getWorldToCameraMatrix(pToCamera);
 
     for(auto&obj : objects){
-        obj->applyMatrix(globalMatrix);
+        obj->applyViewMatrix(globalMatrix);
     }
 }
 

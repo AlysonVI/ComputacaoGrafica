@@ -37,7 +37,7 @@ public:
     QVector<QPointF> *getQPoints();
     virtual void draw(QPainter& painter)= 0; //draw a ser definido (implementação na herança)
 
-
+    void applyViewMatrix(Matriz &M);
     void transformObject(double dX, double dY, double dZ);
     void scaleObject(double sX, double sY, double sZ);
     void rotateObjectX(double ang);

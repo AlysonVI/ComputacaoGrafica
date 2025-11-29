@@ -30,6 +30,10 @@ MainWindow::MainWindow(QWidget *parent)
     pToCamera->transformObject(150,250,-300); //Camera
     //pToCamera->rotateCamera(Ponto(150,149,0));
     pToCamera->scaleObject(2,2,0); //Camera
+
+    this->display.add(new Camera(*pToCamera));
+
+    criarMundo(this->display);
 }
 
 void MainWindow::criarMundo(DisplayFile& display){
@@ -75,7 +79,7 @@ void MainWindow::criarMundo(DisplayFile& display){
     modelo1->rotateObjectZ(M_PI);
     modelo1->scaleObject(2.5,2.5,2.5);
     */
-    ModeloOBJ* modelo2 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/ProjetoCG/objFiles/Vaporeon.obj");
+    ModeloOBJ* modelo2 = new ModeloOBJ("/Qt/ComputacaoGrafica/objFiles/Vaporeon.obj");
     display.add(modelo2);
     modelo2->transformObject(150,250,-200);
     modelo2->rotateObjectX(M_PI/2);
@@ -90,11 +94,6 @@ void MainWindow::paintEvent(QPaintEvent* event){
     QPainter painter(this);
     painter.fillRect(rect(), Qt::black);
     painter.setPen(Qt::green);
-    DisplayFile display;
-
-    display.add(new Camera(*pToCamera));
-
-    criarMundo(display);
 
 
     //Matriz global(centraliza e rotaciona o mundo)
@@ -128,25 +127,37 @@ MainWindow::~MainWindow()
 
 // "Direita" (Strafe Right)
 void MainWindow::on_right_clicked() {
-    pToCamera->transformObject(50, 0, 0);
+    if(indexG == 0)
+        pToCamera->transformObject(50, 0, 0);
+    else
+        display.getObject(indexG)->transformObject(50, 0, 0);
     update();
 }
 
 // "Esquerda" (Strafe Left)
 void MainWindow::on_left_clicked() {
-    pToCamera->transformObject(-50, 0, 0);
+    if(indexG == 0)
+        pToCamera->transformObject(-50, 0, 0);
+    else
+        display.getObject(indexG)->transformObject(-50, 0, 0);
     update();
 }
 
 // "Cima" (Move Forward)
 void MainWindow::on_up_clicked() {
-    pToCamera->transformObject(0, 50, 0);
+    if(indexG == 0)
+        pToCamera->transformObject(0, 50, 0);
+    else
+        display.getObject(indexG)->transformObject(0, 50, 0);
     update();
 }
 
 // "Baixo" (Move Backward)
 void MainWindow::on_down_clicked() {
-    pToCamera->transformObject(0, -50, 0);
+    if(indexG == 0)
+        pToCamera->transformObject(0, -50, 0);
+    else
+        display.getObject(indexG)->transformObject(0, -50, 0);
     update();
 }
 
@@ -160,17 +171,20 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 void MainWindow::on_XRotate_clicked()
 {
     display.getObject(indexG)->rotateObjectX(10);
+    update();
 }
 
 
 void MainWindow::on_YRotate_clicked()
 {
     display.getObject(indexG)->rotateObjectY(10);
+    update();
 }
 
 
 void MainWindow::on_ZRotate_clicked()
 {
     display.getObject(indexG)->rotateObjectZ(10);
+    update();
 }
 
