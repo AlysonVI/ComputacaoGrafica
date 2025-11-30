@@ -12,7 +12,6 @@ public:
     void loadModel(const QString &filePath); // carrega objeto do tipo obj dos arquivos
     void draw(QPainter& painter) override;
     void clipObjectZ() override;
-    void clipObjectXY(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX);
 };
 
 #endif // MODELOOBJ_H

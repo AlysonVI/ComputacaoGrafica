@@ -95,12 +95,13 @@ void Drawable::projectObject(double d) {
     MPer[1][0] = 0; MPer[1][1] = 1; MPer[1][2] = 0; MPer[1][3] = 0;
     MPer[2][0] = 0; MPer[2][1] = 0; MPer[2][2] = 1; MPer[2][3] = 0;
     MPer[3][0] = 0; MPer[3][1] = 0; MPer[3][2] = 1/d; MPer[3][3] = 0;
-
+    /*
     if(normPoints.empty()) {
         for (auto& ponto : points) {
             normPoints.append(ponto);
         }
     }
+    */
     for (auto& ponto : normPoints){
         Matriz pontoMatriz(4,1);
         pontoMatriz[0][0] = ponto.getX();
@@ -125,11 +126,13 @@ void Drawable::projectObject(double d) {
 }
 
 void Drawable::normalizeObject(double Wxmin, double Wxmax, double Wymin, double Wymax) {
+    /*
     if(normPoints.empty()) {
         for (auto& ponto : points) {
             normPoints.append(ponto);
         }
     }
+    */
     for (auto& ponto : normPoints) {
         ponto.toSCN(Wxmin, Wxmax, Wymin, Wymax, true);
     }

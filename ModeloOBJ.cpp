@@ -101,31 +101,6 @@ void ModeloOBJ::clipObjectZ() {
     }
 
     this->normPoints = clippedPoints;
-    this->indicesArestas.clear();
-}
-
-// a mesma coisa que o clipObject de drawable, mas usa arestas ao invés de normPoints, para previnir erros
-void ModeloOBJ::clipObjectXY(double X_MAX, double X_MIN, double Y_MAX, double Y_MIN) {
-    if (indicesArestas.isEmpty()) return;
-
-    QVector<Ponto> clippedPoints;
-
-    // Percorre indicesArestas (2 em 2)
-    for (int i = 0; i < indicesArestas.length() - 1; i += 2) {
-
-        Ponto p1 = normPoints.at(indicesArestas[i]);
-        Ponto p2 = normPoints.at(indicesArestas[i+1]);
-
-        // agora com a linha clipada no plano Z, fazemos o cliping no plano X e Y normalmente
-        QVector<Ponto> linhaXY = clipLine(X_MIN, X_MAX, Y_MIN, Y_MAX, p1, p2);
-
-        if(linhaXY.size() >= 2) { // despreza se a linha for nula, ou seja, fora da tela
-            clippedPoints.append(linhaXY[0]);
-            clippedPoints.append(linhaXY[1]);
-        }
-    }
-
-    this->normPoints = clippedPoints;
 }
 
 void ModeloOBJ::draw(QPainter& painter) {

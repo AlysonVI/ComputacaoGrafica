@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
                                      {-250, -250}, {-250, 250}, {250, 250}, {250, -250}
                                  });
 
-    pToCamera->transformObject(150,250,300); //Camera
+    pToCamera->transformObject(200,250,200); //Camera
     //pToCamera->rotateCamera(Ponto(150,149,0));
     pToCamera->scaleObject(2,2,1); //Camera
 
