@@ -72,11 +72,19 @@ void DisplayFile::triggerNormalize(double Wxmax, double Wxmin, double Wymax, dou
     }
 }
 
-// (COM ERROS) Faz o clip de cada objeto do display file, e salva seus novos pontos clipados em clippedPoints de cada objeto
-void DisplayFile::triggerClipping(double Wxmax, double Wxmin, double Wymax, double Wymin) {
+// Faz o clip de cada objeto do display file no eixo Z, e salva seus novos pontos clipados em normPoints de cada objeto
+void DisplayFile::triggerZClipping() {
 
     for (auto& obj : objects) {
-        obj->clipObject(Wxmax, Wxmin, Wymax, Wymin);
+        obj->clipObjectZ();
+    }
+}
+
+// Faz o clip de cada objeto do display file nos eixos X e Y, e salva seus novos pontos clipados em normPoints de cada objeto
+void DisplayFile::triggerXYClipping(double Wxmax, double Wxmin, double Wymax, double Wymin) {
+
+    for (auto& obj : objects) {
+        obj->clipObjectXY(Wxmax, Wxmin, Wymax, Wymin);
     }
 }
 

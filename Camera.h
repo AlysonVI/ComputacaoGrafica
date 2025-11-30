@@ -12,7 +12,7 @@ private:
     Ponto vVector; // u
     Ponto vpn; // Vetor normal ao plano de projeção
 public:
-    const double distance = 400;
+    const double distance = 400; // define o "fov" da camera
 
     Ponto getVectorU();
     Ponto getVectorV();

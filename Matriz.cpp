@@ -151,11 +151,11 @@ void Matriz::toSCN(double Wxmin, double Wxmax, double Wymin, double Wymax, bool 
 
     double sx = 1.0 / (Wxmax - Wxmin);
     double sy = 1.0 / (Wymax - Wymin);
-    scalePoint(sx, sy,0);
+    scalePoint(sx, sy, 1.0);
 
     if (useMinusOneToOne) {
-        transformPoint(-0.5, -0.5,0);
-        scalePoint(2, 2,0);
+        transformPoint(-0.5, -0.5, 0);
+        scalePoint(2, 2, 1);
     }
 
     xSCN = (*this)[0][0];
@@ -177,6 +177,5 @@ void Matriz::toViewport(double Vxmin, double Vxmax, double Vymin, double Vymax, 
     double yv = Vymin + (1 - y) * (Vymax - Vymin);
     (*this)[0][0] = xv;
     (*this)[1][0] = yv;
-
 }
 

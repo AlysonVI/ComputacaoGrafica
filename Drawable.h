@@ -26,7 +26,6 @@ protected:
     ObjectType type;
     QVector<Ponto> points; //Listagem de pontos (aquilo q é usado nos métodos .draw())
     QVector<Ponto> normPoints; //Pontos SCN
-    QVector<Ponto> clippedPoints; // vetor de pontos que estam na tela
 public:
     Drawable(const QString& n, ObjectType t, const QVector<Ponto>& pts);
     virtual ~Drawable() {}
@@ -52,12 +51,14 @@ public:
     void goToOrigin(Ponto p);
     void returnFromOrigin(Ponto p);
 
-    QVector<Ponto> clipLine(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX, const Ponto& p1, const Ponto& p2); // funciona para ponto tb, é só parrar pq e p2 iguais
+    QVector<Ponto> clipLine(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX, const Ponto& p1, const Ponto& p2);    // funciona para ponto tb, é só parrar pq e p2 iguais
     int computeOutCode(double x, double y, double X_MIN, double X_MAX, double Y_MIN, double Y_MAX);
+    QVector<Ponto> clipLineZ(const Ponto& p1, const Ponto& p2); // permite o clipping volumétrico, pois faz o clipping no plano Z
     double getXfromPoints(int i);
     double getYfromPoints(int i);
     double getZfromPoints(int i);
-    void clipObject(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX);
+    virtual void clipObjectZ(); // clipping apenas no plano Z normalizado (Z = 0)
+    void clipObjectXY(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX); // clipping 2d/3d normal
 };
 
 #endif

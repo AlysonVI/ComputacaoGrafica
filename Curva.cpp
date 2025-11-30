@@ -32,7 +32,9 @@ void Curva::casteljau(const Ponto &p0, const Ponto &p1, const Ponto &p2, int n) 
 }
 
 void Curva::draw(QPainter& painter){
-
+    if (normPoints.isEmpty()) {
+        return;
+    }
     int i = 0;
     for(i = 0; i < (normPoints.size() - 1); i+=2) {
         QPointF p12D(normPoints[i].getX(), normPoints[i].getY());

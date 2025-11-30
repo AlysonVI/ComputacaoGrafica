@@ -16,7 +16,8 @@ public:
     void triggerTranslate();//Quando faz na window
     void triggerPerspective(double d);
     void triggerNormalize(double Wxmax, double Wxmin, double Wymax, double Wymin);
-    void triggerClipping(double Wxmax, double Wxmin, double Wymax, double Wymin);
+    void triggerZClipping();
+    void triggerXYClipping(double Wxmax, double Wxmin, double Wymax, double Wymin);
     void triggerViewport(double Vxmax, double Vxmin, double Vymax, double Vymin);
     void applyGlobalTransform(Camera* pToCamera);
     Matriz getWorldToCameraMatrix(Camera* pToCamera);

@@ -14,7 +14,7 @@ ModeloOBJ::ModeloOBJ(const QString &filePath)
 
 void ModeloOBJ::loadModel(const QString &filePath) {
     this->points.clear();
-    this->faces.clear();
+    this->indicesArestas.clear();
 
     QFile file(filePath);
 
@@ -70,36 +70,77 @@ void ModeloOBJ::loadModel(const QString &filePath) {
                 faceIndices.append(faceIndice);
             }
 
-            // Adiciona essa face para a lista das faces
-            faces.append(faceIndices);
+            for (int i = 0; i < faceIndices.size(); i++) {
+                indicesArestas.append(faceIndices[i]);
+                indicesArestas.append(faceIndices[(i + 1) % faceIndices.size()]);
+            }
         }
     }
 
     file.close();
 }
 
+void ModeloOBJ::clipObjectZ() {
+    if (indicesArestas.isEmpty()) return;
+
+    QVector<Ponto> clippedPoints;
+
+    // Percorre indicesArestas (2 em 2)
+    for (int i = 0; i < indicesArestas.length() - 1; i += 2) {
+
+        Ponto p1 = normPoints.at(indicesArestas[i]);
+        Ponto p2 = normPoints.at(indicesArestas[i+1]);
+
+        QVector<Ponto> linhaZ = clipLineZ(p1, p2);
+
+        // linha dentro da câmera
+        if(linhaZ.size() >= 2) {
+            clippedPoints.append(linhaZ[0]);
+            clippedPoints.append(linhaZ[1]);
+        }
+    }
+
+    this->normPoints = clippedPoints;
+    this->indicesArestas.clear();
+}
+
+// a mesma coisa que o clipObject de drawable, mas usa arestas ao invés de normPoints, para previnir erros
+void ModeloOBJ::clipObjectXY(double X_MAX, double X_MIN, double Y_MAX, double Y_MIN) {
+    if (indicesArestas.isEmpty()) return;
+
+    QVector<Ponto> clippedPoints;
+
+    // Percorre indicesArestas (2 em 2)
+    for (int i = 0; i < indicesArestas.length() - 1; i += 2) {
+
+        Ponto p1 = normPoints.at(indicesArestas[i]);
+        Ponto p2 = normPoints.at(indicesArestas[i+1]);
+
+        // agora com a linha clipada no plano Z, fazemos o cliping no plano X e Y normalmente
+        QVector<Ponto> linhaXY = clipLine(X_MIN, X_MAX, Y_MIN, Y_MAX, p1, p2);
+
+        if(linhaXY.size() >= 2) { // despreza se a linha for nula, ou seja, fora da tela
+            clippedPoints.append(linhaXY[0]);
+            clippedPoints.append(linhaXY[1]);
+        }
+    }
+
+    this->normPoints = clippedPoints;
+}
+
 void ModeloOBJ::draw(QPainter& painter) {
     if (normPoints.isEmpty()) {
         return;
     }
+
     painter.setPen(Qt::blue);
-    for (const QVector<int>& face : faces) {
+    for (int i = 0; i < normPoints.size() - 1; i += 2) {
+        QPointF p1(normPoints[i].getX(), normPoints[i].getY());
+        QPointF p2(normPoints[i+1].getX(), normPoints[i+1].getY());
 
-        // Itera para cada vertice no vetor da face
-        for (int i = 0; i < face.count(); i++) {
-
-            // Ponto inicial da linha
-            int p1Indice = face.at(i);
-
-            // Modulo (%) para conectar ultima vertice à primeira
-            int p2Indice = face.at((i + 1) % face.count());
-
-                // Pega os pontos 2D e desenha, fazendo projeção ortogonal
-            QPointF p12D((normPoints.at(p1Indice)).getX(), (normPoints.at(p1Indice)).getY());
-            QPointF p22D((normPoints.at(p2Indice)).getX(), (normPoints.at(p2Indice)).getY());
-
-            painter.drawLine((p12D), (p22D));
-        }
+        painter.drawLine(p1, p2);
     }
+
     painter.setPen(Qt::green);
 }
+

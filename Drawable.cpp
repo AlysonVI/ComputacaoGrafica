@@ -194,12 +194,12 @@ QVector<Ponto> Drawable::clipLine(double X_MIN, double X_MAX, double Y_MIN, doub
         // Caso 1. Segmento completamente contido na window
         if(codigo1 == DENTRO && codigo2 == DENTRO) {
             QVector<Ponto> linha;
-            linha[0] = Ponto(x1,y1);
-            linha[1] = Ponto(x2,y2);
+            linha.append(Ponto(x1,y1));
+            linha.append(Ponto(x2,y2));
             return linha;
         }
 
-        // Case 2. Segmento completamente fora da window
+        // Caso 2. Segmento completamente fora da window
         else if((codigo1 & codigo2) != DENTRO) {
             QVector<Ponto> linha;
             return linha;
@@ -262,6 +262,48 @@ int Drawable::computeOutCode(double x, double y, double X_MIN, double X_MAX, dou
     return codigo;
 }
 
+QVector<Ponto> Drawable::clipLineZ(const Ponto& p1, const Ponto& p2) {
+    QVector<Ponto> linha; // linha clipada resultante, que será retornada pelo método
+    double zLimite = -0.1; // z mínimo de distância da camera para fazer o clipping
+
+    // Caso 1: Ambos pontos dentro, linha está na tela
+    if ((p1.getZ() <= zLimite) && (p2.getZ() <= zLimite)) {
+        linha.append(p1);
+        linha.append(p2);
+        return linha;
+    }
+
+    // Caso 2: Ambos pontos fora, linha inteira atrás da câmera
+    if ((p1.getZ() > zLimite) && (p2.getZ() > zLimite)) {
+        //cout << "\np1.getZ() = " << p1.getZ() << ", p2.getZ() = " << p2.getZ();
+        return linha; // Retorna vazio
+    }
+
+    // Caso 3: Atravessa o plano da câmera, então é necessário calcular o ponto de intersecção
+    // Fórmula paramétrica da reta: P(t) = P1 + t * (P2 - P1)
+    double t = (zLimite - p1.getZ()) / (p2.getZ() - p1.getZ()); // Isolando t para o eixo Z
+
+    // X e Y do ponto de interseção
+    double xNovo = p1.getX() + t * (p2.getX() - p1.getX());
+    double yNovo = p1.getY() + t * (p2.getY() - p1.getY());
+    double zNovo = zLimite; // Z forçado a estar no plano
+
+    Ponto pNovo(xNovo, yNovo, zNovo);
+
+    if (p1.getZ() <= zLimite) {
+        // Vai de p1 (dentro) até o limite
+        linha.append(p1);
+        linha.append(pNovo);
+    }
+    else {
+        // O começo tava fora, então vai do limite até p2 (dentro)
+        linha.append(pNovo);
+        linha.append(p2);
+    }
+
+    return linha;
+}
+
 double Drawable::getXfromPoints(int i) {
     if(i < this->points.size())
         return points[i].getX();
@@ -283,25 +325,44 @@ double Drawable::getZfromPoints(int i) {
     return 0;
 }
 
-// (ESTA COM ERROS) Tem como entrada as coordenadas do retangulo de corte (geralmente vai ser as coordenadas da window)
-// Funçao computa o clipping de cada linha formada pelos pontos no vetor pointws do objeto, de forma sequencial
-// Todas as linhas feitas a partir desse processo são clippadas e salvas no vetor clippedPoints, em cada objeto
-void Drawable::clipObject(double X_MAX, double X_MIN, double Y_MAX, double Y_MIN) {
+void Drawable::clipObjectZ() {
+    QVector<Ponto> clippedPoints;
 
-    for (int i = 0; i < points.length(); i++) {
-        int p1Indice = i;
-        int p2Indice = (i+1) % points.length();
+    for (int i = 0; i < normPoints.size() - 1; i += 2) {
+        if (i + 1 >= normPoints.size()) break;
 
-        Ponto p1((points.at(p1Indice)).getX(), (points.at(p1Indice)).getY());
-        Ponto p2((points.at(p2Indice)).getX(), (points.at(p2Indice)).getY());
-        QVector<Ponto> linhaClipada = clipLine(X_MIN, X_MAX, Y_MIN, Y_MAX, p1, p2);
+        Ponto p1 = normPoints.at(i);
+        Ponto p2 = normPoints.at(i+1);
 
-        if(!linhaClipada.empty()) {
-            p1 = linhaClipada[0];
-            p2 = linhaClipada[1];
+        QVector<Ponto> linhaZ = clipLineZ(p1, p2);
 
-            clippedPoints.append(p1);
-            clippedPoints.append(p2);
+        // linha dentro da câmera
+        if (linhaZ.size() >= 2) {
+            clippedPoints.append(linhaZ[0]);
+            clippedPoints.append(linhaZ[1]);
         }
     }
+    this->normPoints = clippedPoints;
+}
+
+// Tem como entrada as coordenadas do retangulo de corte (geralmente vai ser as coordenadas da window normalizada)
+// Funçao computa o clipping de cada linha formada pelos pontos no vetor pointws do objeto, de forma sequencial
+// Todas as linhas feitas a partir desse processo são clippadas e salvas no vetor normPoints, em cada objeto
+void Drawable::clipObjectXY(double X_MAX, double X_MIN, double Y_MAX, double Y_MIN) {
+    QVector<Ponto> clippedPoints;
+
+    for (int i = 0; i < normPoints.length() - 1; i += 2) {
+        Ponto p1 = normPoints.at(i);
+        Ponto p2 = normPoints.at(i+1);
+
+        // agora com a linha clipada no plano Z, fazemos o cliping no plano X e Y normalmente
+        QVector<Ponto> linhaXY = clipLine(X_MIN, X_MAX, Y_MIN, Y_MAX, p1, p2);
+
+        if(linhaXY.size() >= 2) { // despreza se a linha for nula, ou seja, fora da tela
+            clippedPoints.append(linhaXY[0]);
+            clippedPoints.append(linhaXY[1]);
+        }
+    }
+
+    this->normPoints = clippedPoints;
 }

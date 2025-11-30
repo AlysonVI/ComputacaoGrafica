@@ -27,17 +27,25 @@ MainWindow::MainWindow(QWidget *parent)
                                      {-250, -250}, {-250, 250}, {250, 250}, {250, -250}
                                  });
 
-    pToCamera->transformObject(150,250,-300); //Camera
+    pToCamera->transformObject(150,250,300); //Camera
     //pToCamera->rotateCamera(Ponto(150,149,0));
-    pToCamera->scaleObject(2,2,0); //Camera
+    pToCamera->scaleObject(2,2,1); //Camera
 
     this->display.add(new Camera(*pToCamera));
 
     criarMundo(this->display);
 }
 
-void MainWindow::criarMundo(DisplayFile& display){
-
+void MainWindow::criarMundo(DisplayFile& display) {
+    // modelo obj
+    /*
+    ModeloOBJ* modelo1 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/ProjetoCG/objFiles/Lopunny.obj");
+    display.add(modelo1);
+    modelo1->transformObject(200,450,0);
+    modelo1->rotateObjectX(M_PI/2-0.3);
+    modelo1->rotateObjectY(M_PI/5);
+    modelo1->rotateObjectZ(M_PI);
+    */
     Castelo* castelo1 = new Castelo(Ponto(200,200));
     Castelo* castelo2 = new Castelo(Ponto(70,250));
     Castelo* castelo3 = new Castelo(Ponto(300,400));
@@ -60,26 +68,17 @@ void MainWindow::criarMundo(DisplayFile& display){
         display.add(linha1.release());
     */
 
-    castelo1->scaleObject(1.2, 1.2, 0);
+    castelo1->scaleObject(1.2, 1.2, 1.0);
     castelo1->rotateObjectX(M_PI);
 
-    castelo2->scaleObject(0.5, 0.5, 0);
+    castelo2->scaleObject(0.5, 0.5, 1.0);
     castelo2->transformObject(0, 100, 0);
     castelo2->rotateObjectY(M_PI/2);
 
     castelo3->rotateObjectX(-M_PI/5);
 
-    // modelos obj
-    /*
-    ModeloOBJ* modelo1 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/Projeto CG/objFiles/Lopunny.obj");
-    display.add(modelo1);
-    modelo1->transformObject(200,450,0);
-    modelo1->rotateObjectX(M_PI/2-0.3);
-    modelo1->rotateObjectY(M_PI/5);
-    modelo1->rotateObjectZ(M_PI);
-    modelo1->scaleObject(2.5,2.5,2.5);
-    */
-    ModeloOBJ* modelo2 = new ModeloOBJ("/Qt/ComputacaoGrafica/objFiles/Vaporeon.obj");
+    // modelo obj
+    ModeloOBJ* modelo2 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/ProjetoCG/objFiles/Vaporeon.obj");
     display.add(modelo2);
     modelo2->transformObject(150,250,-200);
     modelo2->rotateObjectX(M_PI/2);
@@ -99,16 +98,21 @@ void MainWindow::paintEvent(QPaintEvent* event){
     //Matriz global(centraliza e rotaciona o mundo)
     display.applyGlobalTransform(pToCamera);
     //Aplica a transformação de perspectiva antes de normalizar
+
+    //Faz o clipping no eixo Z antes de fazer a perspectiva, para o eixo Z não ser desprezado
+    display.triggerZClipping();
+
     display.triggerPerspective(pToCamera->distance);
     //Normaliza todos os pontos para SCN
 
 
     double halfWidth = 500.0;
     double halfHeight = 500.0;
-    display.triggerNormalize(halfWidth, -halfWidth, halfHeight, -halfHeight); // window simetrica os valores podem ser fixos
+    display.triggerNormalize(-halfWidth, halfWidth, -halfHeight, halfHeight); // window simetrica os valores podem ser fixos
 
-    //Faz o clipping, removendo todos os objetos fora da tela NAO FUNCIONA AINDA, DEVE TER ALGUM ERRINHO
-    //display.triggerClipping(Wxmax-50, Wxmin+50, Wymax-50, Wymin+50);
+    //Faz o clipping, removendo todas as linhas fora da tela
+    double borda = 0.4;
+    display.triggerXYClipping(1-borda,-1+borda,1-borda,-1+borda);
 
     //Transforma SCN para viewport
     display.triggerViewport(width(), 0, height(), 0);
