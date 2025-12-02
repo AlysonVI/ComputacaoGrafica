@@ -9,7 +9,6 @@ Camera::Camera(const QString& n, const QVector<Ponto>& pts)
 
 void Camera::draw(QPainter &painter){}
 
-// Alyson- ta com problemas, não ta concertando o up-vector de novo quando a camera é girada.
 void Camera::rotateCamera(Ponto focusPoint) { // Os argumentos é o ponto onde a camera vai olhar
 
     // angulo[0] = angulo relativo a x, angulo[1] = angulo relativo a y
