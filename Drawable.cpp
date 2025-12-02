@@ -255,41 +255,69 @@ int Drawable::computeOutCode(double x, double y, double X_MIN, double X_MAX, dou
 
 QVector<Ponto> Drawable::clipLineZ(const Ponto& p1, const Ponto& p2) {
     QVector<Ponto> linha; // linha clipada resultante, que será retornada pelo método
-    double zLimite = -0.1; // z mínimo de distância da camera para fazer o clipping
+    double zLimiteMinimo = -0.1, zLimiteMaximo = -1000; // z mínimo e máximo de distância da camera para fazer o clipping
+    double z1 = p1.getZ(), z2 = p2.getZ();
 
     // Caso 1: Ambos pontos dentro, linha está na tela
-    if ((p1.getZ() <= zLimite) && (p2.getZ() <= zLimite)) {
+    if ((z1 <= zLimiteMinimo && z2 <= zLimiteMinimo) && (z1 >= zLimiteMaximo && z2 >= zLimiteMaximo)) {
         linha.append(p1);
         linha.append(p2);
-        return linha;
+        return linha; // Retorna linha sem precisar clippar
     }
 
-    // Caso 2: Ambos pontos fora, linha inteira atrás da câmera
-    if ((p1.getZ() > zLimite) && (p2.getZ() > zLimite)) {
-        //cout << "\np1.getZ() = " << p1.getZ() << ", p2.getZ() = " << p2.getZ();
-        return linha; // Retorna vazio
+    // Caso 2: Ambos pontos fora, linha inteira atrás da câmera ou muito longe
+    if ((z1 > zLimiteMinimo && z2 > zLimiteMinimo) || (z1 < zLimiteMaximo && z2 < zLimiteMaximo)) {
+        return linha; // Retorna vetor vazio
     }
 
-    // Caso 3: Atravessa o plano da câmera, então é necessário calcular o ponto de intersecção
+    // Caso 3: Atravessa o plano da camera/fundo, então é necessário calcular o ponto de intersecção
     // Fórmula paramétrica da reta: P(t) = P1 + t * (P2 - P1)
-    double t = (zLimite - p1.getZ()) / (p2.getZ() - p1.getZ()); // Isolando t para o eixo Z
 
-    // X e Y do ponto de interseção
-    double xNovo = p1.getX() + t * (p2.getX() - p1.getX());
-    double yNovo = p1.getY() + t * (p2.getY() - p1.getY());
-    double zNovo = zLimite; // Z forçado a estar no plano
+    // Caso 3.1: Atravessa o plano do fundo
+    if ((z1 < zLimiteMaximo || z2 < zLimiteMaximo) && (z1 >= zLimiteMinimo && z2 >= zLimiteMinimo)) {
+        double t = (zLimiteMaximo - p1.getZ()) / (p2.getZ() - p1.getZ()); // Isolando t para o eixo Z
 
-    Ponto pNovo(xNovo, yNovo, zNovo);
+        // X e Y do ponto de interseção
+        double xNovo = p1.getX() + t * (p2.getX() - p1.getX());
+        double yNovo = p1.getY() + t * (p2.getY() - p1.getY());
+        double zNovo = zLimiteMaximo; // Z forçado a estar no plano
 
-    if (p1.getZ() <= zLimite) {
-        // Vai de p1 (dentro) até o limite
-        linha.append(p1);
-        linha.append(pNovo);
+        Ponto pNovo(xNovo, yNovo, zNovo);
+
+        // Determina qual dos 2 pontos está fora, para ser substituído
+        if (z1 > zLimiteMaximo) {
+            // Vai de p1 (dentro) até o limite
+            linha.append(p1);
+            linha.append(pNovo);
+        }
+        else {
+            // O começo tava fora, então vai do limite até p2 (dentro)
+            linha.append(pNovo);
+            linha.append(p2);
+        }
     }
-    else {
-        // O começo tava fora, então vai do limite até p2 (dentro)
-        linha.append(pNovo);
-        linha.append(p2);
+    // Caso 3.2: Atravessa o plano da camera
+    if (z1 >= zLimiteMaximo && z2 >= zLimiteMaximo) {
+        double t = (zLimiteMinimo - z1) / (z2 - z1); // Isolando t para o eixo Z
+
+        // X e Y do ponto de interseção
+        double xNovo = p1.getX() + t * (p2.getX() - p1.getX());
+        double yNovo = p1.getY() + t * (p2.getY() - p1.getY());
+        double zNovo = zLimiteMinimo; // Z forçado a estar no plano
+
+        Ponto pNovo(xNovo, yNovo, zNovo);
+
+        // Determina qual dos 2 pontos está fora, para ser substituído
+        if (z1 < zLimiteMinimo) {
+            // Vai de p1 (dentro) até o limite
+            linha.append(p1);
+            linha.append(pNovo);
+        }
+        else {
+            // O começo tava fora, então vai do limite até p2 (dentro)
+            linha.append(pNovo);
+            linha.append(p2);
+        }
     }
 
     return linha;
