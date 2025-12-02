@@ -121,7 +121,25 @@ void MainWindow::paintEvent(QPaintEvent* event){
 
     //display.printAll();
     display.drawAll(painter);
-    cout << "Update event\n";
+
+
+
+    // Representação visual da borda, para fins de debbug
+    viewportX = this->width();
+    viewportY = this->height();
+    double borderSize = viewportX*borda/2;
+    QPointF p1(borderSize, borderSize);
+    QPointF p2(borderSize, viewportY-borderSize);
+    QPointF p3(viewportX-borderSize, viewportY-borderSize);
+    QPointF p4(viewportX-borderSize, borderSize);
+
+    painter.setPen(Qt::red);
+    painter.drawLine(p1,p2);
+    painter.drawLine(p2,p3);
+    painter.drawLine(p3,p4);
+    painter.drawLine(p4,p1);
+
+
 }
 MainWindow::~MainWindow()
 {
