@@ -78,7 +78,7 @@ void MainWindow::criarMundo(DisplayFile& display) {
     castelo3->rotateObjectX(-M_PI/5);
 
     // modelo obj
-    ModeloOBJ* modelo2 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/ProjetoCG/objFiles/Vaporeon.obj");
+    ModeloOBJ* modelo2 = new ModeloOBJ("/Qt/ComputacaoGrafica/objFiles/Vaporeon.obj");
     display.add(modelo2);
     modelo2->transformObject(150,250,-200);
     modelo2->rotateObjectX(M_PI/2);
