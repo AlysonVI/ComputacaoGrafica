@@ -6,8 +6,8 @@
 #include "Camera.h"
 
 class DisplayFile {
-    QVector<Drawable*> objects; //display file
 public:
+    QVector<Drawable*> objects; //display file
     ~DisplayFile();
     void add(Drawable* obj);
     void drawAll(QPainter& painter) const;

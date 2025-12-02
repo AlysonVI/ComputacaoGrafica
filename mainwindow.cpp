@@ -174,21 +174,72 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 
 void MainWindow::on_XRotate_clicked()
 {
-    display.getObject(indexG)->rotateObjectX(10);
+    if(indexG != 0){
+        display.getObject(indexG)->rotateObjectX(10);
+    }
+    else
+    {
+        //pToCamera->rotateCamera(Ponto(100,100,100));
+    }
     update();
 }
 
 
 void MainWindow::on_YRotate_clicked()
 {
-    display.getObject(indexG)->rotateObjectY(10);
+    if(indexG != 0){
+        display.getObject(indexG)->rotateObjectY(10);
+    }
+    else
+    {
+        //pToCamera->rotateCamera(Ponto(100,100,100));
+    }
     update();
 }
 
 
 void MainWindow::on_ZRotate_clicked()
 {
-    display.getObject(indexG)->rotateObjectZ(10);
+    if(indexG != 0){
+        display.getObject(indexG)->rotateObjectZ(10);
+    }
+    else
+    {
+        //pToCamera->rotateCamera(Ponto(100,100,100));
+    }
+    update();
+}
+
+
+void MainWindow::on_spinBox_valueChanged(int arg1)
+{
+    if( arg1 <= display.objects.size()){
+        indexG = arg1;
+    }
+    else
+    {
+        indexG = 0;
+    }
+
+}
+
+
+void MainWindow::on_zGoFront_clicked()
+{
+    if(indexG == 0)
+        pToCamera->transformObject(0, 0, -50);
+    else
+        display.getObject(indexG)->transformObject(0, 0, -50);
+    update();
+}
+
+
+void MainWindow::on_zGoBack_clicked()
+{
+    if(indexG == 0)
+        pToCamera->transformObject(0, 0, 50);
+    else
+        display.getObject(indexG)->transformObject(0, 0, 50);
     update();
 }
 

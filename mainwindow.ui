@@ -36,35 +36,13 @@
      <rect>
       <x>10</x>
       <y>610</y>
-      <width>134</width>
-      <height>74</height>
+      <width>141</width>
+      <height>80</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="Move">
-     <item row="3" column="2">
-      <widget class="QPushButton" name="down">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">#down{
-	background-color:#D3DBE0;
-	border: 1px solid #222;
-}
-#down:hover{
-	background-color:#fff;
-}</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QPushButton" name="left">
+     <item row="0" column="2">
+      <widget class="QPushButton" name="up">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -72,17 +50,17 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">#left{
+        <string notr="true">#up{
 	background-color:#D3DBE0;
 	border-radios: 10px;
 	border: 1px solid #222;
 }
-#left:hover{
+#up:hover{
 	background-color:#fff;
 }</string>
        </property>
        <property name="text">
-        <string/>
+        <string>+y</string>
        </property>
       </widget>
      </item>
@@ -106,12 +84,12 @@
 }</string>
        </property>
        <property name="text">
-        <string/>
+        <string>+x</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="up">
+     <item row="2" column="0">
+      <widget class="QPushButton" name="left">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -119,17 +97,39 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">#up{
+        <string notr="true">#left{
 	background-color:#D3DBE0;
 	border-radios: 10px;
 	border: 1px solid #222;
 }
-#up:hover{
+#left:hover{
 	background-color:#fff;
 }</string>
        </property>
        <property name="text">
-        <string/>
+        <string>-x</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QPushButton" name="down">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Ignored" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">#down{
+	background-color:#D3DBE0;
+	border: 1px solid #222;
+}
+#down:hover{
+	background-color:#fff;
+}</string>
+       </property>
+       <property name="text">
+        <string>-y</string>
        </property>
       </widget>
      </item>
@@ -278,31 +278,6 @@
 }</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
-    <property name="geometry">
-     <rect>
-      <x>340</x>
-      <y>620</y>
-      <width>86</width>
-      <height>26</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>Camera</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>obj1</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>obj2</string>
-     </property>
-    </item>
-   </widget>
    <widget class="QWidget" name="gridLayoutWidget_2">
     <property name="geometry">
      <rect>
@@ -336,6 +311,76 @@
      </item>
     </layout>
    </widget>
+   <widget class="QSpinBox" name="spinBox">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>620</y>
+      <width>44</width>
+      <height>27</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="zGoFront">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>620</y>
+      <width>42</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#right{
+	background-color:#D3DBE0;
+	border-radios: 10px;
+	border: 1px solid #222;
+
+}
+#right:hover{
+	background-color:#fff;
+}</string>
+    </property>
+    <property name="text">
+     <string>Zin</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="zGoBack">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>650</y>
+      <width>42</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#right{
+	background-color:#D3DBE0;
+	border-radios: 10px;
+	border: 1px solid #222;
+
+}
+#right:hover{
+	background-color:#fff;
+}</string>
+    </property>
+    <property name="text">
+     <string>Zout</string>
+    </property>
+   </widget>
    <zorder>FundoD</zorder>
    <zorder>FundoB</zorder>
    <zorder>FundoCuboC</zorder>
@@ -345,8 +390,10 @@
    <zorder>FundoC</zorder>
    <zorder>FundoCuboB</zorder>
    <zorder>FundoCuboD</zorder>
-   <zorder>comboBox</zorder>
    <zorder>gridLayoutWidget_2</zorder>
+   <zorder>spinBox</zorder>
+   <zorder>zGoFront</zorder>
+   <zorder>zGoBack</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -354,7 +401,7 @@
      <x>0</x>
      <y>0</y>
      <width>700</width>
-     <height>20</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

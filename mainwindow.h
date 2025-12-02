@@ -41,6 +41,12 @@ private slots:
 
     void on_ZRotate_clicked();
 
+    void on_spinBox_valueChanged(int arg1);
+
+    void on_zGoFront_clicked();
+
+    void on_zGoBack_clicked();
+
 private:
     int viewportX;
     int viewportY;
