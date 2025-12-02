@@ -165,30 +165,10 @@ void MainWindow::on_down_clicked() {
     update();
 }
 
-
-void MainWindow::on_comboBox_currentIndexChanged(int index)
-{
-   indexG = index;
-}
-
-
-void MainWindow::on_XRotate_clicked()
-{
-    if(indexG != 0){
-        display.getObject(indexG)->rotateObjectX(10);
-    }
-    else
-    {
-        //pToCamera->rotateCamera(Ponto(100,100,100));
-    }
-    update();
-}
-
-
 void MainWindow::on_YRotate_clicked()
 {
     if(indexG != 0){
-        display.getObject(indexG)->rotateObjectY(10);
+        display.getObject(indexG)->rotateObjectY(1);
     }
     else
     {
@@ -201,7 +181,7 @@ void MainWindow::on_YRotate_clicked()
 void MainWindow::on_ZRotate_clicked()
 {
     if(indexG != 0){
-        display.getObject(indexG)->rotateObjectZ(10);
+        display.getObject(indexG)->rotateObjectZ(1);
     }
     else
     {
@@ -240,6 +220,19 @@ void MainWindow::on_zGoBack_clicked()
         pToCamera->transformObject(0, 0, 50);
     else
         display.getObject(indexG)->transformObject(0, 0, 50);
+    update();
+}
+
+
+void MainWindow::on_xRotate_clicked()
+{
+    if(indexG != 0){
+        display.getObject(indexG)->rotateObjectX(1);
+    }
+    else
+    {
+        //pToCamera->rotateCamera(Ponto(100,100,100));
+    }
     update();
 }
 

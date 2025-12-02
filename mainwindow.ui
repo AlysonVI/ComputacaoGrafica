@@ -36,8 +36,8 @@
      <rect>
       <x>10</x>
       <y>610</y>
-      <width>141</width>
-      <height>80</height>
+      <width>131</width>
+      <height>51</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="Move">
@@ -50,14 +50,7 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">#up{
-	background-color:#D3DBE0;
-	border-radios: 10px;
-	border: 1px solid #222;
-}
-#up:hover{
-	background-color:#fff;
-}</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>+y</string>
@@ -73,15 +66,7 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">#right{
-	background-color:#D3DBE0;
-	border-radios: 10px;
-	border: 1px solid #222;
-
-}
-#right:hover{
-	background-color:#fff;
-}</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>+x</string>
@@ -97,14 +82,7 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">#left{
-	background-color:#D3DBE0;
-	border-radios: 10px;
-	border: 1px solid #222;
-}
-#left:hover{
-	background-color:#fff;
-}</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>-x</string>
@@ -120,13 +98,7 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">#down{
-	background-color:#D3DBE0;
-	border: 1px solid #222;
-}
-#down:hover{
-	background-color:#fff;
-}</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>-y</string>
@@ -281,10 +253,10 @@
    <widget class="QWidget" name="gridLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>620</y>
-      <width>254</width>
-      <height>28</height>
+      <x>250</x>
+      <y>600</y>
+      <width>91</width>
+      <height>51</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -314,8 +286,8 @@
    <widget class="QSpinBox" name="spinBox">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>620</y>
+      <x>200</x>
+      <y>610</y>
       <width>44</width>
       <height>27</height>
      </rect>
@@ -324,8 +296,8 @@
    <widget class="QPushButton" name="zGoFront">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>620</y>
+      <x>150</x>
+      <y>610</y>
       <width>42</width>
       <height>22</height>
      </rect>
@@ -354,8 +326,8 @@
    <widget class="QPushButton" name="zGoBack">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>650</y>
+      <x>150</x>
+      <y>640</y>
       <width>42</width>
       <height>22</height>
      </rect>
