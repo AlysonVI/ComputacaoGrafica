@@ -70,6 +70,7 @@ void MainWindow::criarMundo(DisplayFile& display) {
 
     castelo1->scaleObject(1.2, 1.2, 1.0);
     castelo1->rotateObjectX(M_PI);
+    castelo1->transformObject(100, 0, -200);
 
     castelo2->scaleObject(0.5, 0.5, 1.0);
     castelo2->transformObject(0, 100, 0);
