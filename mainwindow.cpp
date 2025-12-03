@@ -186,6 +186,20 @@ void MainWindow::on_down_clicked() {
     update();
 }
 
+void MainWindow::on_xRotate_clicked()
+{
+    if(indexG != 0){
+        display.getObject(indexG)->rotateObjectX(1);
+    }
+    else
+    {
+        Ponto newVpn = pToCamera->getVectorVpn();
+        newVpn.rotatePointX(1);
+        pToCamera->setVectorVpn(newVpn);
+    }
+    update();
+}
+
 void MainWindow::on_YRotate_clicked()
 {
     if(indexG != 0){
@@ -193,11 +207,12 @@ void MainWindow::on_YRotate_clicked()
     }
     else
     {
-        //pToCamera->rotateCamera(Ponto(100,100,100));
+        Ponto newVpn = pToCamera->getVectorVpn();
+        newVpn.rotatePointY(1);
+        pToCamera->setVectorVpn(newVpn);
     }
     update();
 }
-
 
 void MainWindow::on_ZRotate_clicked()
 {
@@ -206,7 +221,9 @@ void MainWindow::on_ZRotate_clicked()
     }
     else
     {
-        //pToCamera->rotateCamera(Ponto(100,100,100));
+        Ponto newVpn = pToCamera->getVectorVpn();
+        newVpn.rotatePointZ(1);
+        pToCamera->setVectorVpn(newVpn);
     }
     update();
 }
@@ -241,19 +258,6 @@ void MainWindow::on_zGoBack_clicked()
         pToCamera->transformObject(0, 0, 50);
     else
         display.getObject(indexG)->transformObject(0, 0, 50);
-    update();
-}
-
-
-void MainWindow::on_xRotate_clicked()
-{
-    if(indexG != 0){
-        display.getObject(indexG)->rotateObjectX(1);
-    }
-    else
-    {
-        //pToCamera->rotateCamera(Ponto(100,100,100));
-    }
     update();
 }
 
