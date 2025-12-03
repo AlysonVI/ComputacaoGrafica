@@ -365,7 +365,7 @@ void Drawable::clipObjectZ() {
 }
 
 // Tem como entrada as coordenadas do retangulo de corte (geralmente vai ser as coordenadas da window normalizada)
-// Funçao computa o clipping de cada linha formada pelos pontos no vetor pointws do objeto, de forma sequencial
+// Funçao computa o clipping de cada linha formada pelos pontos no vetor normPoints do objeto, de forma sequencial
 // Todas as linhas feitas a partir desse processo são clippadas e salvas no vetor normPoints, em cada objeto
 void Drawable::clipObjectXY(double X_MAX, double X_MIN, double Y_MAX, double Y_MIN) {
     QVector<Ponto> clippedPoints;
