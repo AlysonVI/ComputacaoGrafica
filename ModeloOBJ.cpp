@@ -4,7 +4,7 @@
 #include <QTextStream>
 #include <QStringList>
 #include <iostream>
-#include <QDebug>  // Use QDebug/qWarning em vez de iostream
+#include <QDebug>
 #include <QFileInfo> // Para pegar o nome do arquivo
 
 ModeloOBJ::ModeloOBJ(const QString &filePath)
@@ -12,6 +12,7 @@ ModeloOBJ::ModeloOBJ(const QString &filePath)
     loadModel(filePath);
 }
 
+// Carrega um arquivo do tipo obj, faz o parsing e armazena as informações locais assim como os pontos em indicesArestas
 void ModeloOBJ::loadModel(const QString &filePath) {
     this->points.clear();
     this->indicesArestas.clear();
@@ -80,6 +81,9 @@ void ModeloOBJ::loadModel(const QString &filePath) {
     file.close();
 }
 
+// Funciona da mesma maneira que o clipObjectZ em drawable, mas com ajustes para usar o vetor indicesArestas
+// Função computa o clipping no eixo Z de cada linha formada pelos pontos do tipo obj, de forma sequencial, tanto no plano da
+// Window, quanto do fundo. Todas as linhas feitas a partir desse processo são clippadas e salvas no vetor normPoints, em cada objeto
 void ModeloOBJ::clipObjectZ() {
     if (indicesArestas.isEmpty()) return;
 

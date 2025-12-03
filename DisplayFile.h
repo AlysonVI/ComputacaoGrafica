@@ -7,13 +7,13 @@
 
 class DisplayFile {
 public:
-    QVector<Drawable*> objects; //display file
+    QVector<Drawable*> objects; // Display file
     ~DisplayFile();
     void add(Drawable* obj);
     void drawAll(QPainter& painter) const;
     void printAll() const;
 
-    void triggerTranslate();//Quando faz na window
+    void triggerTranslate(); // Quando faz na window
     void triggerPerspective(double d);
     void triggerNormalize(double Wxmax, double Wxmin, double Wymax, double Wymin);
     void triggerZClipping();
@@ -23,6 +23,5 @@ public:
     Matriz getWorldToCameraMatrix(Camera* pToCamera);
     Drawable* getObject(int n);
 };
-
 
 #endif

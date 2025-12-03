@@ -6,7 +6,6 @@
 #include <QPainter>
 #include <math.h>
 #include "Castelo.h"
-#include <memory>
 #include "Drawable.h"
 #include "Polygon.h"
 #include "Curva.h"
@@ -16,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-
     ui->setupUi(this);
     viewportX = this->width();
     viewportY = this->height();
@@ -37,58 +35,49 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::criarMundo(DisplayFile& display) {
-    // modelo obj
-    /*
-    ModeloOBJ* modelo1 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/ProjetoCG/objFiles/Lopunny.obj");
-    display.add(modelo1);
-    modelo1->transformObject(200,450,0);
-    modelo1->rotateObjectX(M_PI/2-0.3);
-    modelo1->rotateObjectY(M_PI/5);
-    modelo1->rotateObjectZ(M_PI);
-    */
     Castelo* castelo1 = new Castelo(Ponto(200,200));
-    Castelo* castelo2 = new Castelo(Ponto(70,250));
-    Castelo* castelo3 = new Castelo(Ponto(300,400));
-    Curva* curva = new Curva("curva", Ponto(200,100,-100), Ponto(250,50,-150), Ponto(250,300,-250), 5);
-
-    display.add(castelo1);
-    display.add(castelo2);
-    display.add(castelo3);
-    display.add(curva);
-
-
-    /*
-    // Linha clipada 1
-    Ponto p11(500,300);
-    Ponto p21(-50,-50);
-    auto linha1 = clipLine(pToBorderRectangle.getXfromPoints(1), pToBorderRectangle.getXfromPoints(2),
-                                            pToBorderRectangle.getYfromPoints(0), pToBorderRectangle.getYfromPoints(1), p11, p21);
-                                            // Se substituir pToBorderRectangle por pToCamera, o clipping ocorrera na camera ao inves da borda
-    if(linha1)
-        display.add(linha1.release());
-    */
-
-    castelo1->scaleObject(1.2, 1.2, 1.0);
+    castelo1->scaleObject(1.2, 1.2, 1.2);
     castelo1->rotateObjectX(M_PI);
     castelo1->transformObject(100, 0, -200);
 
+    Castelo* castelo2 = new Castelo(Ponto(70,250));
     castelo2->scaleObject(0.5, 0.5, 1.0);
     castelo2->transformObject(0, 100, 0);
     castelo2->rotateObjectY(M_PI/2);
 
-    castelo3->rotateObjectX(-M_PI/5);
+    Castelo* castelo3 = new Castelo(Ponto(300,400));
+    castelo3->rotateObjectZ(-M_PI/5);
+    castelo3->rotateObjectX(M_PI/5);
+    castelo3->transformObject(-100, -100, 100);
 
-    // modelo obj
-    // Path do alyson: /home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/ProjetoCG/objFiles/Vaporeon.obj
-    // Path do Leandro: /Qt/ComputacaoGrafica/objFiles/Vaporeon.obj
-    ModeloOBJ* modelo2 = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/ProjetoCG/objFiles/Vaporeon.obj");
-    display.add(modelo2);
-    modelo2->transformObject(150,250,-200);
-    modelo2->rotateObjectX(M_PI/2);
-    modelo2->rotateObjectY(M_PI/4);
-    modelo2->rotateObjectZ(M_PI-0.3);
-    //modelo2->scaleObject(2.5,2.5,2.5);
+    display.add(castelo1);
+    display.add(castelo2);
+    display.add(castelo3);
 
+    Curva* curva = new Curva("curva", Ponto(200,100,-100), Ponto(250,50,-150), Ponto(250,300,-250), 5);
+    curva->rotateObjectY(M_PI/2);
+    display.add(curva);
+
+
+    // Modelos obj dos pokemons que estão na pasta junto com o projeto, comentei o Lopunny para economizar processamento
+    /*
+    ModeloOBJ* modeloLopunny = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/ProjetoCG/objFiles/Lopunny.obj");
+    modeloLopunny->transformObject(200,350,-200);
+    modeloLopunny->rotateObjectX(M_PI/2-0.3);
+    modeloLopunny->rotateObjectY(M_PI/5);
+    modeloLopunny->rotateObjectZ(M_PI);
+    modeloLopunny->scaleObject(0.6,0.6,0.6);
+
+    display.add(modeloLopunny);
+    */
+
+    ModeloOBJ* modeloVaporeon = new ModeloOBJ("/home/alysonvi/Documentos/UTFPR/Periodo4/ComputacaoGrafica/ProjetoCG/objFiles/Vaporeon.obj");
+    modeloVaporeon->transformObject(50,250,-100);
+    modeloVaporeon->rotateObjectX(M_PI/2);
+    modeloVaporeon->rotateObjectY(M_PI/4);
+    modeloVaporeon->rotateObjectZ(M_PI-0.3);
+
+    display.add(modeloVaporeon);
 }
 
 void MainWindow::paintEvent(QPaintEvent* event){
@@ -97,17 +86,14 @@ void MainWindow::paintEvent(QPaintEvent* event){
     painter.fillRect(rect(), Qt::black);
     painter.setPen(Qt::green);
 
-
     //Matriz global(centraliza e rotaciona o mundo)
     display.applyGlobalTransform(pToCamera);
-    //Aplica a transformação de perspectiva antes de normalizar
 
     //Faz o clipping no eixo Z antes de fazer a perspectiva, para o eixo Z não ser desprezado
     display.triggerZClipping();
 
+    //Aplica a transformação de perspectiva antes de normalizar
     display.triggerPerspective(pToCamera->distance);
-    //Normaliza todos os pontos para SCN
-
 
     double halfWidth = 500.0;
     double halfHeight = 500.0;
@@ -120,17 +106,14 @@ void MainWindow::paintEvent(QPaintEvent* event){
     //Transforma SCN para viewport
     display.triggerViewport(width(), 0, height(), 0);
 
-    //painter.setWindow(-worldX, worldY, this->width(), this->height());
-
     //display.printAll();
     display.drawAll(painter);
 
-
-
-    // Representação visual da borda, para fins de debbug
+    // Representação visual da borda (retangulo vermelho)
     viewportX = this->width();
     viewportY = this->height();
     double borderSize = viewportX*borda/2;
+
     QPointF p1(borderSize, borderSize);
     QPointF p2(borderSize, viewportY-borderSize);
     QPointF p3(viewportX-borderSize, viewportY-borderSize);
@@ -141,16 +124,15 @@ void MainWindow::paintEvent(QPaintEvent* event){
     painter.drawLine(p2,p3);
     painter.drawLine(p3,p4);
     painter.drawLine(p4,p1);
-
-
 }
+
 MainWindow::~MainWindow()
 {
     delete ui;
     delete pToCamera;
 }
 
-// "Direita" (Strafe Right)
+// Move objeto selecionado para a direita
 void MainWindow::on_right_clicked() {
     if(indexG == 0)
         pToCamera->transformObject(50, 0, 0);
@@ -159,7 +141,7 @@ void MainWindow::on_right_clicked() {
     update();
 }
 
-// "Esquerda" (Strafe Left)
+// Move objeto selecionado para a esquerda
 void MainWindow::on_left_clicked() {
     if(indexG == 0)
         pToCamera->transformObject(-50, 0, 0);
@@ -168,7 +150,7 @@ void MainWindow::on_left_clicked() {
     update();
 }
 
-// "Cima" (Move Forward)
+// Move objeto selecionado para cima
 void MainWindow::on_up_clicked() {
     if(indexG == 0)
         pToCamera->transformObject(0, 50, 0);
@@ -177,7 +159,7 @@ void MainWindow::on_up_clicked() {
     update();
 }
 
-// "Baixo" (Move Backward)
+// Move objeto selecionado para baixo
 void MainWindow::on_down_clicked() {
     if(indexG == 0)
         pToCamera->transformObject(0, -50, 0);
@@ -186,13 +168,11 @@ void MainWindow::on_down_clicked() {
     update();
 }
 
-void MainWindow::on_xRotate_clicked()
-{
-    if(indexG != 0){
+// Rotaciona objeto selecionado em relação ao eixo X
+void MainWindow::on_xRotate_clicked() {
+    if(indexG != 0)
         display.getObject(indexG)->rotateObjectX(1);
-    }
-    else
-    {
+    else {
         Ponto newVpn = pToCamera->getVectorVpn();
         newVpn.rotatePointX(1);
         pToCamera->setVectorVpn(newVpn);
@@ -200,13 +180,11 @@ void MainWindow::on_xRotate_clicked()
     update();
 }
 
-void MainWindow::on_YRotate_clicked()
-{
-    if(indexG != 0){
+// Rotaciona objeto selecionado em relação ao eixo Y
+void MainWindow::on_YRotate_clicked() {
+    if(indexG != 0)
         display.getObject(indexG)->rotateObjectY(1);
-    }
-    else
-    {
+    else {
         Ponto newVpn = pToCamera->getVectorVpn();
         newVpn.rotatePointY(1);
         pToCamera->setVectorVpn(newVpn);
@@ -214,13 +192,11 @@ void MainWindow::on_YRotate_clicked()
     update();
 }
 
-void MainWindow::on_ZRotate_clicked()
-{
-    if(indexG != 0){
+// Rotaciona objeto selecionado em relação ao eixo Z
+void MainWindow::on_ZRotate_clicked() {
+    if(indexG != 0)
         display.getObject(indexG)->rotateObjectZ(1);
-    }
-    else
-    {
+    else {
         Ponto newVpn = pToCamera->getVectorVpn();
         newVpn.rotatePointZ(1);
         pToCamera->setVectorVpn(newVpn);
@@ -228,22 +204,16 @@ void MainWindow::on_ZRotate_clicked()
     update();
 }
 
-
-void MainWindow::on_spinBox_valueChanged(int arg1)
-{
-    if( arg1 <= display.objects.size()){
+// Lógica na Spinbox para mudar o valor
+void MainWindow::on_spinBox_valueChanged(int arg1) {
+    if(arg1 <= display.objects.size())
         indexG = arg1;
-    }
     else
-    {
         indexG = 0;
-    }
-
 }
 
-
-void MainWindow::on_zGoFront_clicked()
-{
+// Move objeto selecionado para frente
+void MainWindow::on_zGoFront_clicked() {
     if(indexG == 0)
         pToCamera->transformObject(0, 0, -50);
     else
@@ -251,13 +221,11 @@ void MainWindow::on_zGoFront_clicked()
     update();
 }
 
-
-void MainWindow::on_zGoBack_clicked()
-{
+// Move objeto selecionado para trás
+void MainWindow::on_zGoBack_clicked() {
     if(indexG == 0)
         pToCamera->transformObject(0, 0, 50);
     else
         display.getObject(indexG)->transformObject(0, 0, 50);
     update();
 }
-

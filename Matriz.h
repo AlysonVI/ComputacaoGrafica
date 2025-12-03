@@ -1,18 +1,21 @@
 #ifndef MATRIZ_H
 #define MATRIZ_H
+
 #include <vector>
+
 using namespace std;
 
 class Matriz : public vector<vector<double>>
 {
 public:
-    double xSCN; //normalizada
+    // Coordenadas normalizadas
+    double xSCN;
     double ySCN;
     double zSCN;
 
-    Matriz(int l, int c); //Construtor da matriz, l para Linha e C para colunas
-    Matriz operator * (Matriz m); //operador de multiplicação de matriz
-    Matriz operator + (Matriz m); //operador de soma de matriz
+    Matriz(int l, int c); // Construtor da matriz, l para Linha e c para colunas
+    Matriz operator * (Matriz m); // Operador de multiplicação de matrizes
+    Matriz operator + (Matriz m); // Operador de soma de matrizes
 
     void transformPoint(double dX, double dY, double dZ);
     void scalePoint(double sX, double sY, double sZ);

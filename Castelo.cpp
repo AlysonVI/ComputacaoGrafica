@@ -57,6 +57,7 @@ void Castelo::draw(QPainter& painter) { // faz projecao ortogonal
     if (normPoints.isEmpty()) {
         return;
     }
+
     painter.setPen(Qt::gray);
     int i = 0;
     for(i = 0; i < (normPoints.size() - 1); i+=2) {

@@ -6,16 +6,15 @@ using namespace std;
 
 Matriz::Matriz(int l, int c) : vector<vector<double>>(l, vector<double>(c)) {}
 
+// Operador de multiplicação de matrizes
 Matriz Matriz::operator* (Matriz m){
-
     if((*this)[0].size() != m.size()) {
-
         cout << "Numero de colunas da primeira matriz é diferente do numero de linhas da segunda matriz";
-
         return m;
     }
 
     Matriz produto(this->size(), m[0].size());
+
     for (size_t i = 0; i < this->size(); i++) {
         for (size_t j = 0; j < m[0].size(); j++) {
             double soma = 0;
@@ -25,9 +24,10 @@ Matriz Matriz::operator* (Matriz m){
         }
     }
 
-    return produto; //retorna cópia, variavel criada é excluida ao fim da execução.
+    return produto; // Retorna cópia, variavel criada é excluida ao fim da execução.
 }
 
+// Operador de soma de matrizes
 Matriz Matriz::operator + (Matriz m){
     if (this->size() != m.size() || (*this)[0].size() != m[0].size()) {
         cout << "Matrizes têm tamanhos diferentes\n";
@@ -41,9 +41,11 @@ Matriz Matriz::operator + (Matriz m){
             soma[i][j] = (*this)[i][j] + m[i][j];
         }
     }
+
     return soma;
 }
 
+// Faz translação do ponto
 void Matriz::transformPoint(double dX, double dY, double dZ) {
     Matriz finalMatrix = getTransformMatrix(dX, dY, dZ) * (*this);
 
@@ -53,7 +55,7 @@ void Matriz::transformPoint(double dX, double dY, double dZ) {
     (*this)[3][0] = finalMatrix[3][0];
 }
 
-
+// Faz escala do ponto
 void Matriz::scalePoint(double sX, double sY, double sZ) {
     Matriz finalMatrix = getScaleMatrix(sX, sY, sZ) * (*this);
 
@@ -63,6 +65,7 @@ void Matriz::scalePoint(double sX, double sY, double sZ) {
     (*this)[3][0] = finalMatrix[3][0];
 }
 
+// Faz rotação do ponto em relação ao eixo X
 void Matriz::rotatePointX(double ang) {
     Matriz finalMatrix = getRotateMatrixX(ang) * (*this);
 
@@ -72,6 +75,7 @@ void Matriz::rotatePointX(double ang) {
     (*this)[3][0] = finalMatrix[3][0];
 }
 
+// Faz rotação do ponto em relação ao eixo Y
 void Matriz::rotatePointY(double ang) {
     Matriz finalMatrix = getRotateMatrixY(ang) * (*this);
 
@@ -81,6 +85,7 @@ void Matriz::rotatePointY(double ang) {
     (*this)[3][0] = finalMatrix[3][0];
 }
 
+// Faz rotação do ponto em relação ao eixo Z
 void Matriz::rotatePointZ(double ang) {
     Matriz finalMatrix = getRotateMatrixZ(ang) * (*this);
 
@@ -90,6 +95,7 @@ void Matriz::rotatePointZ(double ang) {
     (*this)[3][0] = finalMatrix[3][0];
 }
 
+// Retorna matriz de transformação
 Matriz Matriz::getTransformMatrix(double dX, double dY, double dZ) {
     Matriz transformMatrix(4,4);
 
@@ -101,6 +107,7 @@ Matriz Matriz::getTransformMatrix(double dX, double dY, double dZ) {
     return transformMatrix;
 }
 
+// Retorna matriz de escala
 Matriz Matriz::getScaleMatrix(double sX, double sY, double sZ) {
     Matriz scaleMatrix(4,4);
 
@@ -112,6 +119,7 @@ Matriz Matriz::getScaleMatrix(double sX, double sY, double sZ) {
     return scaleMatrix;
 }
 
+// Retorna matriz de rotação em relação ao eixo X
 Matriz Matriz::getRotateMatrixX(double ang) {
     Matriz rotateMatrix(4,4);
 
@@ -123,6 +131,7 @@ Matriz Matriz::getRotateMatrixX(double ang) {
     return rotateMatrix;
 }
 
+// Retorna matriz de rotação em relação ao eixo Y
 Matriz Matriz::getRotateMatrixY(double ang) {
     Matriz rotateMatrix(4,4);
 
@@ -134,6 +143,7 @@ Matriz Matriz::getRotateMatrixY(double ang) {
     return rotateMatrix;
 }
 
+// Retorna matriz de rotação em relação ao eixo Z
 Matriz Matriz::getRotateMatrixZ(double ang) {
     Matriz rotateMatrix(4,4);
 
@@ -145,8 +155,8 @@ Matriz Matriz::getRotateMatrixZ(double ang) {
     return rotateMatrix;
 }
 
+// Faz a normalização do ponto
 void Matriz::toSCN(double Wxmin, double Wxmax, double Wymin, double Wymax, bool useMinusOneToOne) {
-
     transformPoint(-Wxmin, -Wymin,0);
 
     double sx = 1.0 / (Wxmax - Wxmin);
@@ -163,8 +173,8 @@ void Matriz::toSCN(double Wxmin, double Wxmax, double Wymin, double Wymax, bool 
     zSCN = (*this)[2][0];
 }
 
+// Faz a transformação de viewport
 void Matriz::toViewport(double Vxmin, double Vxmax, double Vymin, double Vymax, bool scnMinusOneToOne) {
-
     double x = (*this)[0][0];
     double y = (*this)[1][0];
 
