@@ -7,5 +7,6 @@ void Polygon::draw(QPainter& painter){
     if (normPoints.isEmpty()) {
         return;
     }
+
     painter.drawPolygon(*getQPoints());
 }

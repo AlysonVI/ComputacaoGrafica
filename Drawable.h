@@ -9,8 +9,6 @@
 #include <iostream>
 #include "Ponto.h"
 
-class Linha;
-
 enum class ObjectType {
     Linha,
     Polygon,
@@ -24,8 +22,8 @@ class Drawable {
 protected:
     QString nome;
     ObjectType type;
-    QVector<Ponto> points; //Listagem de pontos (aquilo q é usado nos métodos .draw())
-    QVector<Ponto> normPoints; //Pontos SCN
+    QVector<Ponto> points; // Listagem de pontos (aquilo q é usado nos métodos .draw())
+    QVector<Ponto> normPoints; // Pontos SCN
 public:
     Drawable(const QString& n, ObjectType t, const QVector<Ponto>& pts);
     virtual ~Drawable() {}
@@ -34,7 +32,7 @@ public:
     ObjectType getType() const { return type; }
     QVector<Ponto> getPoints() const { return points; }
     QVector<QPointF> *getQPoints();
-    virtual void draw(QPainter& painter)= 0; //draw a ser definido (implementação na herança)
+    virtual void draw(QPainter& painter)= 0; // Draw a ser definido (implementação na herança)
 
     void applyViewMatrix(Matriz &M);
     void transformObject(double dX, double dY, double dZ);
@@ -43,7 +41,7 @@ public:
     void rotateObjectY(double ang);
     void rotateObjectZ(double ang);
 
-    void projectObject( double d);
+    void projectObject(double d);
     void viewportObject(double Vxmin, double Vxmax, double Vymin, double Vymax);
     void normalizeObject(double Wxmin, double Wxmax, double Wymin, double Wymax);
     void applyMatrix(Matriz &M);
@@ -51,14 +49,11 @@ public:
     void goToOrigin(Ponto p);
     void returnFromOrigin(Ponto p);
 
-    QVector<Ponto> clipLine(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX, const Ponto& p1, const Ponto& p2);    // funciona para ponto tb, é só parrar pq e p2 iguais
+    QVector<Ponto> clipLineXY(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX, const Ponto& p1, const Ponto& p2);
     int computeOutCode(double x, double y, double X_MIN, double X_MAX, double Y_MIN, double Y_MAX);
-    QVector<Ponto> clipLineZ(const Ponto& p1, const Ponto& p2); // permite o clipping volumétrico, pois faz o clipping no plano Z
-    double getXfromPoints(int i);
-    double getYfromPoints(int i);
-    double getZfromPoints(int i);
-    virtual void clipObjectZ(); // clipping apenas no plano Z normalizado (Z = 0)
-    void clipObjectXY(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX); // clipping 2d/3d normal
+    QVector<Ponto> clipLineZ(const Ponto& p1, const Ponto& p2); // Permite o clipping volumétrico, pois faz o clipping no plano Z
+    virtual void clipObjectZ(); // Clipping no plano Z normalizado (Z = 0)
+    void clipObjectXY(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX); // clipping 2D/3D normal
 };
 
 #endif

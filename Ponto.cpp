@@ -10,7 +10,7 @@ Ponto::Ponto(double x, double y, double z)
 
 Ponto::Ponto(double x, double y) : Ponto(x,y,0) {}
 
-QPointF* Ponto::convertToQPointF(){
+QPointF* Ponto::convertToQPointF() {
     return (new QPointF((*this)[0][0], (*this)[1][0]));
 }
 

@@ -5,6 +5,7 @@
 #include "DisplayFile.h"
 #include "Camera.h"
 #include "Polygon.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -17,7 +18,7 @@ class MainWindow : public QMainWindow
 
 public:
     DisplayFile display;
-    int indexG= 0;
+    int indexG = 0;
     Camera* pToCamera;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -49,9 +50,9 @@ private:
     int viewportX;
     int viewportY;
 
-
     void criarMundo(DisplayFile& display);
 
     Ui::MainWindow *ui;
 };
-#endif // MAINWINDOW_H
+
+#endif

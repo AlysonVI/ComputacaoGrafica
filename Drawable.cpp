@@ -1,4 +1,3 @@
-#include <memory>
 #include <iostream>
 #include "Drawable.h"
 #include "Linha.h"
@@ -8,20 +7,25 @@ using namespace std;
 Drawable::Drawable(const QString& n, ObjectType t, const QVector<Ponto>& pts)
     : nome(n), type(t), points(pts) {}
 
+// Retorna Referência para um vetor com os pontos normalizados do objeto
 QVector<QPointF>* Drawable::getQPoints() {
     QVector<QPointF> *pointerToVector= new QVector<QPointF>;
-    for(auto& aux : normPoints){
+
+    for(auto& aux : normPoints) {
         pointerToVector->append(*(aux.convertToQPointF()));
     }
+
     return pointerToVector;
 }
 
+// Transforma (transporta) o objeto
 void Drawable::transformObject(double dX, double dY, double dZ) {
     for(auto& aux: points) {
         aux.transformPoint(dX, dY, dZ);
     }
 }
 
+// Escala o objeto
 void Drawable::scaleObject(double sX, double sY, double sZ) {
     Ponto avgPoint = getObjectAverage();
     this->goToOrigin(avgPoint);
@@ -29,9 +33,11 @@ void Drawable::scaleObject(double sX, double sY, double sZ) {
     for(auto& aux: points) {
         aux.scalePoint(sX, sY, sZ);
     }
+
     this->returnFromOrigin(avgPoint);
 }
 
+// Rotaciona objeto em relação ao eixo X
 void Drawable::rotateObjectX(double ang) {
     Ponto avgPoint = getObjectAverage();
     this->goToOrigin(avgPoint);
@@ -39,9 +45,11 @@ void Drawable::rotateObjectX(double ang) {
     for(auto& aux: points) {
         aux.rotatePointX(ang);
     }
+
     this->returnFromOrigin(avgPoint);
 }
 
+// Rotaciona objeto em relação ao eixo Y
 void Drawable::rotateObjectY(double ang) {
     Ponto avgPoint = getObjectAverage();
     this->goToOrigin(avgPoint);
@@ -49,9 +57,11 @@ void Drawable::rotateObjectY(double ang) {
     for(auto& aux: points) {
         aux.rotatePointY(ang);
     }
+
     this->returnFromOrigin(avgPoint);
 }
 
+// Rotaciona objeto em relação ao eixo Z
 void Drawable::rotateObjectZ(double ang) {
     Ponto avgPoint = getObjectAverage();
     this->goToOrigin(avgPoint);
@@ -59,6 +69,7 @@ void Drawable::rotateObjectZ(double ang) {
     for(auto& aux: points) {
         aux.rotatePointZ(ang);
     }
+
     this->returnFromOrigin(avgPoint);
 }
 
@@ -71,24 +82,23 @@ Ponto Drawable::getObjectAverage() {
         somaY += ponto.getY();
         somaZ += ponto.getZ();
     }
+
     int numPoints = points.size();
     return Ponto(somaX/numPoints, somaY/numPoints, somaZ/numPoints);
 }
 
-// transporta matriz pro 0,0
+// Transporta matriz para o 0,0,0
 void Drawable::goToOrigin(Ponto p) {
-
     transformObject(-p.getX(), -p.getY(), -p.getZ());
 }
 
-// tras objeto de volta do 0,0
+// Trás objeto de volta do 0,0,0
 void Drawable::returnFromOrigin(Ponto p) {
-
     transformObject(p.getX(), p.getY(), p.getZ());
 }
 
+// Faz a transformação de projeção no objeto
 void Drawable::projectObject(double d) {
-
     Matriz MPer(4,4);
 
     MPer[0][0] = 1; MPer[0][1] = 0; MPer[0][2] = 0; MPer[0][3] = 0;
@@ -119,21 +129,22 @@ void Drawable::projectObject(double d) {
     }
 }
 
+// Normaliza o objeto em relação à window
 void Drawable::normalizeObject(double Wxmin, double Wxmax, double Wymin, double Wymax) {
-
     for (auto& ponto : normPoints) {
         ponto.toSCN(Wxmin, Wxmax, Wymin, Wymax, true);
     }
 }
 
+// Faz a transofrmação de viewport no objeto
 void Drawable::viewportObject(double Vxmin, double Vxmax, double Vymin, double Vymax) {
     for (auto& ponto : normPoints) { // MUDE ESSA SEÇAO DE points PARA clippedPoints PARA A VIEWPORT DOS PONTOS CLIPADOS FUNCIONAR
         ponto.toViewport(Vxmin, Vxmax, Vymin, Vymax, true);
     }
 }
 
+// Aplica matriz informada em cada ponto do objeto
 void Drawable::applyMatrix(Matriz &M) {
-    //normPoints.clear();
     for (auto& p : points) {
         Matriz pt(4,1);
         pt[0][0] = p[0][0];
@@ -146,10 +157,10 @@ void Drawable::applyMatrix(Matriz &M) {
         p[0][0] = pt[0][0];
         p[1][0] = pt[1][0];
         p[2][0] = pt[2][0];
-        //normPoints.append(Ponto(pt[0][0], pt[1][0], pt[2][0]));
     }
 }
 
+// Aplica matriz de visualização
 void Drawable::applyViewMatrix(Matriz &M){
     normPoints.clear();
     for (auto& p : points) {
@@ -163,11 +174,12 @@ void Drawable::applyViewMatrix(Matriz &M){
         normPoints.append(Ponto(pt[0][0], pt[1][0], pt[2][0]));
     }
 }
-// Tem como entrada o retangulo onde ocorrera o clipping (geralmente vai ser as coordenadas da window), assim como dois pontos
-// Então, a funcao calcula se a linha formada pelos pontos aparece na tela.
-// Daí, retorna vetor de pontos vazio se estiver completamnete fora,
-// ou retorna vetor de pontos dos pontos ja clipados, pra estar dentro do espaço informado
-QVector<Ponto> Drawable::clipLine(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX, const Ponto& p1, const Ponto& p2) {
+
+// Tem como entrada o retangulo onde ocorrerá o clipping (geralmente vai ser as coordenadas da window), assim como dois pontos
+// Então, a função calcula se a linha formada pelos pontos aparece na tela.
+// Então, retorna vetor de pontos vazio se estiver completamente fora,
+// ou retorna vetor de pontos dos pontos já clipados, pra estar dentro do espaço informado
+QVector<Ponto> Drawable::clipLineXY(double X_MIN, double X_MAX, double Y_MIN, double Y_MAX, const Ponto& p1, const Ponto& p2) {
     double x1 = p1.getX(), y1 = p1.getY();
     double x2 = p2.getX(), y2 = p2.getY();
 
@@ -181,7 +193,7 @@ QVector<Ponto> Drawable::clipLine(double X_MIN, double X_MAX, double Y_MIN, doub
     int codigo1 = this->computeOutCode(x1, y1, X_MIN, X_MAX, Y_MIN, Y_MAX);
     int codigo2 = this->computeOutCode(x2, y2, X_MIN, X_MAX, Y_MIN, Y_MAX);
 
-    while(true) {
+    while(true) { // Loop que repete o clipping se os pontos da window estiverem em locais diferentes
         // Caso 1. Segmento completamente contido na window
         if(codigo1 == DENTRO && codigo2 == DENTRO) {
             QVector<Ponto> linha;
@@ -201,22 +213,22 @@ QVector<Ponto> Drawable::clipLine(double X_MIN, double X_MAX, double Y_MIN, doub
             double xNovo, yNovo;
             int codigoFora = (codigo1 != DENTRO) ? codigo1 : codigo2;
 
-            // Calculate intersection point
-            if (codigoFora & CIMA) { // Point is above the clip window
+            // Calcula ponto de interseção
+            if (codigoFora & CIMA) { // Ponto acima da window
                 xNovo = x1 + (x2 - x1) * (Y_MIN - y1) / (y2 - y1);
                 yNovo = Y_MIN;
-            } else if (codigoFora & BAIXO) { // Point is below the clip window
+            } else if (codigoFora & BAIXO) { // // Ponto abaixo da window
                 xNovo = x1 + (x2 - x1) * (Y_MAX - y1) / (y2 - y1);
                 yNovo = Y_MAX;
-            } else if (codigoFora & DIREITA) { // Point is to the right of clip window
+            } else if (codigoFora & DIREITA) { // // Ponto à direita da window
                 yNovo = y1 + (y2 - y1) * (X_MAX - x1) / (x2 - x1);
                 xNovo = X_MAX;
-            } else if (codigoFora & ESQUERDA) { // Point is to the left of clip window
+            } else if (codigoFora & ESQUERDA) { // // Ponto à esquerda da window
                 yNovo = y1 + (y2 - y1) * (X_MIN - x1) / (x2 - x1);
                 xNovo = X_MIN;
             }
 
-            // Agora atualiza o ponto que estsava fora
+            // Agora atualiza o ponto que estava fora
             if (codigoFora == codigo1) {
                 x1 = xNovo;
                 y1 = yNovo;
@@ -232,7 +244,7 @@ QVector<Ponto> Drawable::clipLine(double X_MIN, double X_MAX, double Y_MIN, doub
 
 // Computa o codigo de saída do ponto da reta, usado para clipping
 int Drawable::computeOutCode(double x, double y, double X_MIN, double X_MAX, double Y_MIN, double Y_MAX) {
-    // códigos de região
+    // Códigos de região
     const int DENTRO = 0;   // 0000
     const int ESQUERDA = 1; // 0001
     const int DIREITA = 2;  // 0010
@@ -253,6 +265,7 @@ int Drawable::computeOutCode(double x, double y, double X_MIN, double X_MAX, dou
     return codigo;
 }
 
+//
 QVector<Ponto> Drawable::clipLineZ(const Ponto& p1, const Ponto& p2) {
     QVector<Ponto> linha; // linha clipada resultante, que será retornada pelo método
     double zLimiteMinimo = -0.1, zLimiteMaximo = -1000; // z mínimo e máximo de distância da camera para fazer o clipping
@@ -323,27 +336,8 @@ QVector<Ponto> Drawable::clipLineZ(const Ponto& p1, const Ponto& p2) {
     return linha;
 }
 
-double Drawable::getXfromPoints(int i) {
-    if(i < this->points.size())
-        return points[i].getX();
-    cout<<"\nErro, indice informado maior que a quantidade de pontos do objeto\n";
-    return 0;
-}
-
-double Drawable::getYfromPoints(int i) {
-    if(i < this->points.size())
-        return points[i].getY();
-    cout<<"\nErro, indice informado maior que a quantidade de pontos do objeto\n";
-    return 0;
-}
-
-double Drawable::getZfromPoints(int i) {
-    if(i < this->points.size())
-        return points[i].getZ();
-    cout<<"\nErro, indice informado maior que a quantidade de pontos do objeto\n";
-    return 0;
-}
-
+// Funçao computa o clipping no eixo Z de cada linha formada pelos pontos do objeto, de forma sequencial, tanto no plano da
+// Window, quanto do fundo. Todas as linhas feitas a partir desse processo são clippadas e salvas no vetor normPoints, em cada objeto
 void Drawable::clipObjectZ() {
     QVector<Ponto> clippedPoints;
 
@@ -361,6 +355,7 @@ void Drawable::clipObjectZ() {
             clippedPoints.append(linhaZ[1]);
         }
     }
+
     this->normPoints = clippedPoints;
 }
 
@@ -375,7 +370,7 @@ void Drawable::clipObjectXY(double X_MAX, double X_MIN, double Y_MAX, double Y_M
         Ponto p2 = normPoints.at(i+1);
 
         // agora com a linha clipada no plano Z, fazemos o cliping no plano X e Y normalmente
-        QVector<Ponto> linhaXY = clipLine(X_MIN, X_MAX, Y_MIN, Y_MAX, p1, p2);
+        QVector<Ponto> linhaXY = clipLineXY(X_MIN, X_MAX, Y_MIN, Y_MAX, p1, p2);
 
         if(linhaXY.size() >= 2) { // despreza se a linha for nula, ou seja, fora da tela
             clippedPoints.append(linhaXY[0]);
